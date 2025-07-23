@@ -15,31 +15,18 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-
 import Pricing from "./pricing";
 import Footer from "./footer";
 
-/* ---------- FAQ ---------- */
+/* ------------ FAQ ------------ */
 const faqs = [
-  {
-    q: "What is QUARK?",
-    a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone.",
-  },
-  {
-    q: "Is there a free plan?",
-    a: "Yes. You can start free with limited daily chats and upgrade anytime.",
-  },
-  {
-    q: "Which models do you support?",
-    a: "We provide access to leading OpenAI models like GPT‑4.1 mini, GPT‑4.5, and more—depending on your plan.",
-  },
-  {
-    q: "Can I cancel anytime?",
-    a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like.",
-  },
+  { q: "What is QUARK?", a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone." },
+  { q: "Is there a free plan?", a: "Yes. You can start free with limited daily chats and upgrade anytime." },
+  { q: "Which models do you support?", a: "We provide access to leading OpenAI models like GPT‑4.1 mini, GPT‑4.5, and more—depending on your plan." },
+  { q: "Can I cancel anytime?", a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like." },
 ];
 
-/* ---------- STATS ---------- */
+/* ------------ STATS ------------ */
 type StatItem = {
   id: string;
   value: number;
@@ -51,21 +38,20 @@ type StatItem = {
 const ICON_CLS = "w-10 h-10 text-[#0EA5E9]"; // ocean blue
 
 const statsData: StatItem[] = [
-  { id: "users",     value: 50_000_000,   suffix: "+", label: "Users",                 icon: <Download     className={ICON_CLS} /> },
-  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",         icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                   label: "Countries Using QUARK",      icon: <Globe2       className={ICON_CLS} /> },
-  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",      icon: <Sparkles     className={ICON_CLS} /> },
+  { id: "users",     value: 50_000_000,   suffix: "+", label: "Users",                icon: <Download     className={ICON_CLS} /> },
+  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",        icon: <CheckCircle2 className={ICON_CLS} /> },
+  { id: "countries", value: 236,                  label: "Countries Using QUARK",     icon: <Globe2       className={ICON_CLS} /> },
+  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",    icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
-/* Formatter M/B/K */
 function shortNumber(n: number): string {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
-  if (n >= 1_000_000)    return (n / 1_000_000).toFixed(0) + "M";
-  if (n >= 1_000)        return (n / 1_000).toFixed(0) + "K";
+  if (n >= 1_000_000)     return (n / 1_000_000).toFixed(0) + "M";
+  if (n >= 1_000)         return (n / 1_000).toFixed(0) + "K";
   return n.toString();
 }
 
-/* ---------- Rotating Words ---------- */
+/* ------------ Rotating words ------------ */
 function RotatingWords({
   words,
   interval = 2500,
@@ -85,22 +71,20 @@ function RotatingWords({
   }, [interval, words.length]);
 
   return (
-    <span className={`relative inline-block h-[1em] overflow-hidden align-baseline ${className}`}>
+    <span className={`relative inline-block h-[1.05em] overflow-hidden align-baseline ${className}`}>
       <span
         className="block will-change-transform transition-transform duration-700 ease-out"
         style={{ transform: `translateY(-${idx * 100}%)` }}
       >
         {words.map((w) => (
-          <span key={w} className="block">
-            {w}
-          </span>
+          <span key={w} className="block leading-[1.05]">{w}</span>
         ))}
       </span>
     </span>
   );
 }
 
-/* ---------- MAIN ---------- */
+/* ------------ MAIN ------------ */
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -110,16 +94,12 @@ export default function MobileHome() {
       {/* Header */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setMenuOpen((p) => !p)}
-          className="p-2 text-white"
-        >
+        <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </header>
 
-      {/* Fullscreen Menu */}
+      {/* Fullscreen menu */}
       {menuOpen && (
         <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
           {[
@@ -137,7 +117,6 @@ export default function MobileHome() {
               {item.name}
             </a>
           ))}
-
           <Link
             href="https://app.mrktedge.ai/auth"
             onClick={() => setMenuOpen(false)}
@@ -151,12 +130,11 @@ export default function MobileHome() {
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-hidden">
         {/* Ocean blue glow */}
-        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 -z-10" />
+        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70" />
 
         <h1 className="text-4xl leading-tight font-bold mb-4">
-          The AI assistant that
-          <br />
-          <span className="inline-flex items-baseline gap-2 mt-1 whitespace-nowrap">
+          <span className="block">The AI assistant that</span>
+          <span className="mt-1 inline-flex justify-center gap-2 flex-wrap items-baseline">
             <RotatingWords
               words={["adapts", "learns", "evolves", "understands", "accelerates"]}
               className="text-gradient-blue"
@@ -187,7 +165,7 @@ export default function MobileHome() {
 
         <div className="relative mt-10 w-full max-w-sm mx-auto">
           <Image
-            src="/mobile-hero.png" /* pastikan file ada di /public */
+            src="/mobile-hero.png"          // pastikan file ini ada di /public
             alt="App preview"
             width={360}
             height={240}
@@ -197,24 +175,15 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* Logos Section */}
+      {/* Logos */}
       <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
-        <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">
-          POWERED BY
-        </p>
+        <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
         <div className="flex justify-center items-center">
-          <Image
-            src="/OpenAI-white.png"
-            alt="OpenAI logo"
-            width={130}
-            height={80}
-            className="w-auto h-auto"
-            priority
-          />
+          <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
         </div>
       </section>
 
-      {/* CHAT DEMO */}
+      {/* Chat demo */}
       <section id="features" className="px-5 py-16 space-y-8">
         <h2 className="text-2xl font-bold mb-6 text-center">Chat that feels natural</h2>
         <div className="space-y-4 max-w-sm mx-auto">
@@ -233,7 +202,7 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* FEATURE CARDS */}
+      {/* Feature cards */}
       <section className="px-5 py-16 bg-zinc-900/20" id="capabilities">
         <h2 className="text-2xl font-bold text-center mb-10">Do more with QUARK</h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
@@ -251,10 +220,10 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* POWER IN NUMBERS */}
+      {/* Numbers */}
       <NumbersSection />
 
-      {/* PRICING */}
+      {/* Pricing */}
       <Pricing />
 
       {/* FAQ */}
@@ -270,9 +239,7 @@ export default function MobileHome() {
                   onClick={() => setFaqOpen(opened ? null : idx)}
                 >
                   {item.q}
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`}
-                  />
+                  <ChevronDown className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`} />
                 </button>
                 {opened && (
                   <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
@@ -283,19 +250,19 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* Footer */}
       <Footer />
     </div>
   );
 }
 
-/* ---------- Numbers Section ---------- */
+/* ------------ Numbers Section ------------ */
 function NumbersSection() {
   const { ref, inView } = useInView({ threshold: 0.35, rootMargin: "0px 0px -20% 0px" });
   const [runId, setRunId] = useState(0);
 
   useEffect(() => {
-    if (inView) setRunId((r) => r + 1); // restart tiap masuk viewport
+    if (inView) setRunId((r) => r + 1);
   }, [inView]);
 
   return (
@@ -321,7 +288,7 @@ function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
             key={`${item.id}-${runKey}`}
             start={0}
             end={item.value}
-            duration={8.0} // pelankan/cepatkan di sini
+            duration={8}
             formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
           />
         </p>
