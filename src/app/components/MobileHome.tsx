@@ -1,6 +1,7 @@
+/* src/app/components/MobileHome.tsx */
 "use client";
 
-import { useState, useRef, useEffect, ReactNode } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CountUp from "react-countup";
@@ -13,29 +14,18 @@ import {
   Globe2,
   Sparkles,
 } from "lucide-react";
+import { useInView } from "react-intersection-observer";
 import Pricing from "./pricing";
 
-/* -------------------- FAQ -------------------- */
+/* ---------- FAQ ---------- */
 const faqs = [
-  {
-    q: "What is QUARK?",
-    a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone.",
-  },
-  {
-    q: "Is there a free plan?",
-    a: "Yes. You can start free with limited daily chats and upgrade anytime.",
-  },
-  {
-    q: "Which models do you support?",
-    a: "We provide access to leading OpenAI models like GPT‑4.1 mini, GPT‑4.5, and more—depending on your plan.",
-  },
-  {
-    q: "Can I cancel anytime?",
-    a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like.",
-  },
+  { q: "What is QUARK?", a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone." },
+  { q: "Is there a free plan?", a: "Yes. You can start free with limited daily chats and upgrade anytime." },
+  { q: "Which models do you support?", a: "We provide access to leading OpenAI models like GPT‑4.1 mini, GPT‑4.5, and more—depending on your plan." },
+  { q: "Can I cancel anytime?", a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like." },
 ];
 
-/* -------------------- STATS -------------------- */
+/* ---------- STATS ---------- */
 type StatItem = {
   id: string;
   value: number;
@@ -45,54 +35,13 @@ type StatItem = {
 };
 
 const statsData: StatItem[] = [
-  {
-    id: "downloads",
-    value: 50_000_000,
-    suffix: "+",
-    label: "Downloads",
-    icon: <Download className="w-10 h-10 text-emerald-400" />,
-  },
-  {
-    id: "tasks",
-    value: 1_000_000_000,
-    suffix: "+",
-    label: "Solved Tasks",
-    icon: <CheckCircle2 className="w-10 h-10 text-emerald-400" />,
-  },
-  {
-    id: "countries",
-    value: 236,
-    label: "Countries Using QUARK",
-    icon: <Globe2 className="w-10 h-10 text-emerald-400" />,
-  },
-  {
-    id: "reviews",
-    value: 650_000,
-    suffix: "+",
-    label: "Top Star Reviews",
-    icon: <Sparkles className="w-10 h-10 text-emerald-400" />,
-  },
+  { id: "downloads", value: 50_000_000, suffix: "+", label: "Downloads", icon: <Download className="w-10 h-10 text-emerald-400" /> },
+  { id: "tasks", value: 1_000_000_000, suffix: "+", label: "Solved Tasks", icon: <CheckCircle2 className="w-10 h-10 text-emerald-400" /> },
+  { id: "countries", value: 236, label: "Countries Using QUARK", icon: <Globe2 className="w-10 h-10 text-emerald-400" /> },
+  { id: "reviews", value: 650_000, suffix: "+", label: "Top Star Reviews", icon: <Sparkles className="w-10 h-10 text-emerald-400" /> },
 ];
 
-/* -------------------- HOOKS -------------------- */
-function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
-  const ref = useRef<T>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([entry]) => {
-      setInView(entry.isIntersecting);
-    }, options);
-    io.observe(el);
-    return () => io.disconnect();
-  }, [options]);
-
-  return [ref, inView] as const;
-}
-
-/* Short number formatter for CountUp */
+/* Short formatter (M/B/K) */
 function shortNumber(n: number): string {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(0) + "M";
@@ -100,7 +49,7 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* -------------------- MAIN COMPONENT -------------------- */
+/* ---------- MAIN ---------- */
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -121,7 +70,7 @@ export default function MobileHome() {
         </button>
       </header>
 
-      {/* Mobile Menu */}
+      {/* Fullscreen Menu */}
       {menuOpen && (
         <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
           {[
@@ -154,13 +103,10 @@ export default function MobileHome() {
         <h1 className="text-4xl leading-tight font-bold mb-4">
           The AI assistant that
           <br />
-          <span className="bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">
-            adapts to your world
-          </span>
+          <span className="text-gradient-blue">adapts to your world</span>
         </h1>
         <p className="text-white/80 text-base mb-8">
-          Chat, create, analyze, and automate—all from your phone. Built for
-          productivity and creativity.
+          Chat, create, analyze, and automate—all from your phone. Built for productivity and creativity.
         </p>
         <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
@@ -179,7 +125,7 @@ export default function MobileHome() {
 
         <div className="relative mt-10 w-full max-w-sm mx-auto">
           <Image
-            src="/mobile-hero.png" // ganti dengan screenshot asli
+            src="/mobile-hero.png"            /* ganti dengan screenshot asli */
             alt="App preview"
             width={360}
             height={240}
@@ -191,9 +137,7 @@ export default function MobileHome() {
 
       {/* CHAT DEMO */}
       <section id="features" className="px-5 py-16 space-y-8">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Chat that feels natural
-        </h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Chat that feels natural</h2>
         <div className="space-y-4 max-w-sm mx-auto">
           <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
             Give me a 3-sentence summary of this PDF (uploading now).
@@ -212,38 +156,15 @@ export default function MobileHome() {
 
       {/* FEATURE CARDS */}
       <section className="px-5 py-16 bg-zinc-900/20" id="capabilities">
-        <h2 className="text-2xl font-bold text-center mb-10">
-          Do more with QUARK
-        </h2>
+        <h2 className="text-2xl font-bold text-center mb-10">Do more with QUARK</h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
-            {
-              title: "Write & create",
-              desc: "Blogs, emails, ads, scripts—get quality content in seconds.",
-              img: "/feature-write.png",
-            },
-            {
-              title: "Analyze files",
-              desc: "Drop PDFs, spreadsheets, slides—get instant insights.",
-              img: "/feature-analyze.png",
-            },
-            {
-              title: "Automate tasks",
-              desc: "Turn routines into one-click workflows and save hours.",
-              img: "/feature-automate.png",
-            },
+            { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
+            { title: "Analyze files", desc: "Drop PDFs, spreadsheets, slides—get instant insights.", img: "/feature-analyze.png" },
+            { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.", img: "/feature-automate.png" },
           ].map((f) => (
-            <div
-              key={f.title}
-              className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800"
-            >
-              <Image
-                src={f.img}
-                alt={f.title}
-                width={500}
-                height={300}
-                className="rounded-lg w-full h-auto mb-4"
-              />
+            <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
+              <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
               <p className="text-sm text-white/70">{f.desc}</p>
             </div>
@@ -270,16 +191,10 @@ export default function MobileHome() {
                   onClick={() => setFaqOpen(opened ? null : idx)}
                 >
                   {item.q}
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform ${
-                      opened ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
+                  <ChevronDown className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`} />
                 </button>
                 {opened && (
-                  <p className="mt-2 text-white/70 text-sm leading-relaxed">
-                    {item.a}
-                  </p>
+                  <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
                 )}
               </div>
             );
@@ -287,7 +202,7 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* MINI FOOTER */}
+      {/* FOOTER MINI */}
       <footer className="px-5 py-12 text-center text-white/60 text-xs">
         © {new Date().getFullYear()} QUARK. All rights reserved.
       </footer>
@@ -295,24 +210,20 @@ export default function MobileHome() {
   );
 }
 
-/* -------------------- NUMBERS SECTION -------------------- */
+/* ---------- Numbers Section ---------- */
 function NumbersSection() {
-  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.35 });
-  // counter agar CountUp restart tiap kali masuk viewport
+  const { ref, inView } = useInView({ threshold: 0.35, rootMargin: "0px 0px -20% 0px" });
   const [runId, setRunId] = useState(0);
 
+  // restart setiap masuk viewport
   useEffect(() => {
     if (inView) setRunId((r) => r + 1);
   }, [inView]);
 
   return (
     <section ref={ref} className="px-5 py-16" id="numbers">
-      <h2 className="text-3xl font-bold text-center mb-3">
-        QUARK’s Power in Numbers
-      </h2>
-      <p className="text-center text-white/60 mb-10 text-base">
-        What we’ve achieved
-      </p>
+      <h2 className="text-3xl font-bold text-center mb-3">QUARK’s Power in Numbers</h2>
+      <p className="text-center text-white/60 mb-10 text-base">What we’ve achieved</p>
 
       <div className="flex flex-col gap-6 max-w-md mx-auto">
         {statsData.map((s) => (
@@ -332,7 +243,7 @@ function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
             key={`${item.id}-${runKey}`}
             start={0}
             end={item.value}
-            duration={1.3}
+            duration={1.4}
             formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
           />
         </p>

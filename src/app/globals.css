@@ -1,7 +1,7 @@
 /* ---- Tailwind v4 ---- */
 @import "tailwindcss";
 
-/* ----- Base (dibungkus @layer base) ----- */
+/* ----- Base ----- */
 @layer base {
   :root {
     --background: #ffffff;
@@ -28,30 +28,27 @@
   * { -webkit-tap-highlight-color: transparent; }
 }
 
-/* ----- Utilities & custom classes ----- */
+/* ---------- Animations / helpers ---------- */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in {
-  animation: fade-in .25s ease-out both;
-}
+.animate-fade-in { animation: fade-in .25s ease-out both; }
 
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
 .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(12px);
+  opacity: 0; transform: translateY(12px);
   transition: opacity .2s, transform .2s;
 }
 .reveal-on-scroll.is-visible {
-  opacity: 1;
-  transform: none;
+  opacity: 1; transform: none;
   animation: fade-up .35s ease-out both;
 }
 
+/* Gradient divider antar section */
 .gradient-divider {
   pointer-events: none;
   height: 120px;
@@ -64,6 +61,7 @@
   filter: blur(24px);
 }
 
+/* Glow card hover */
 .glow-card {
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
@@ -73,10 +71,13 @@
   border-color: #ffffff99;
 }
 
+/* ----- Tailwind utilities layer ----- */
 @layer utilities {
   .text-gradient-blue {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-200;
   }
+
+  /* angka rata + siap animasi countup */
   .countup {
     font-variant-numeric: tabular-nums;
     will-change: contents;
