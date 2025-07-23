@@ -36,13 +36,13 @@ type StatItem = {
   icon: ReactNode;
 };
 
-const ICON_CLS = "w-10 h-10 text-[#0EA5E9]"; // ocean blue
+const ICON_CLS = "w-10 h-10 text-[#0EA5E9]";
 
 const statsData: StatItem[] = [
-  { id: "users",     value: 50_000_000,   suffix: "+", label: "Users",                 icon: <Download     className={ICON_CLS} /> },
-  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",         icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                   label: "Countries Using QUARK",     icon: <Globe2       className={ICON_CLS} /> },
-  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",     icon: <Sparkles     className={ICON_CLS} /> },
+  { id: "users",     value: 50_000_000,    suffix: "+", label: "Users",               icon: <Download     className={ICON_CLS} /> },
+  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",        icon: <CheckCircle2 className={ICON_CLS} /> },
+  { id: "countries", value: 236,                   label: "Countries Using QUARK",    icon: <Globe2       className={ICON_CLS} /> },
+  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",    icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
 /* ---------- Helpers ---------- */
@@ -53,59 +53,25 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ---------- Rotating words (pause + slide) ---------- */
-function RotatingWords({
-  words,
-  stay = 4000,   // berhenti 4 detik
-  slide = 600,   // durasi geser 0.6 detik
-  className = "",
-}: {
-  words: string[];
-  stay?: number;
-  slide?: number;
-  className?: string;
-}) {
-  const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState<"stay" | "slide">("stay");
-
-  // Timer untuk tiap fase
+/* ---------- Word cycle hook (no rotate animation) ---------- */
+function useWordCycle(words: string[], delay = 4000) {
+  const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const t = setTimeout(() => {
-      if (phase === "stay") {
-        setPhase("slide");
-      } else {
-        setIndex((i) => (i + 1) % words.length);
-        setPhase("stay");
-      }
-    }, phase === "stay" ? stay : slide);
-
+    const t = setTimeout(() => setIdx(i => (i + 1) % words.length), delay);
     return () => clearTimeout(t);
-  }, [phase, stay, slide, words.length]);
-
-  // Hitung target translateY
-  const target = phase === "slide" ? (index + 1) % words.length : index;
-
-  return (
-    <span className={`relative inline-block h-[1.2em] overflow-hidden align-baseline ${className}`}>
-      <span
-        className="flex flex-col will-change-transform"
-        style={{
-          transform: `translateY(-${target * 100}%)`,
-          transition: phase === "slide" ? `transform ${slide}ms ease-out` : "none",
-        }}
-      >
-        {words.map((w) => (
-          <span key={w} className="leading-none">{w}</span>
-        ))}
-      </span>
-    </span>
-  );
+  }, [idx, words, delay]);
+  return words[idx];
 }
 
-/* ---------- COMPONENT ---------- */
+/* ---------- MAIN ---------- */
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
+
+  const headlineWord = useWordCycle(
+    ["adapts", "learns", "evolves", "understands", "accelerates"],
+    4000
+  );
 
   return (
     <div className="bg-black text-white font-inter">
@@ -120,12 +86,10 @@ export default function MobileHome() {
       {/* Fullscreen menu */}
       {menuOpen && (
         <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
-          {[
-            { name: "Features", href: "#features" },
+          {[{ name: "Features", href: "#features" },
             { name: "Pricing",  href: "#pricing" },
             { name: "FAQ",      href: "#faq" },
-            { name: "Blog",     href: "/blog" },
-          ].map(item => (
+            { name: "Blog",     href: "/blog" }].map(item => (
             <a
               key={item.name}
               href={item.href}
@@ -153,12 +117,12 @@ export default function MobileHome() {
         <h1 className="text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
           <span className="mt-1 flex flex-wrap justify-center gap-2 items-baseline">
-            <RotatingWords
-              words={["adapts", "learns", "evolves", "understands", "accelerates"]}
-              className="text-gradient-blue"
-              stay={4000}
-              slide={600}
-            />
+            <span
+              key={headlineWord} // trigger re-render for small fade
+              className="text-gradient-blue transition-opacity duration-300"
+            >
+              {headlineWord}
+            </span>
             <span className="leading-tight">to your world</span>
           </span>
         </h1>
