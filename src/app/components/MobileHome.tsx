@@ -71,15 +71,22 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- BLUE GLOW (cross‑browser, no mask-image) ---------- */
+/* ---------- BLUE GLOW (aman di iOS) ---------- */
 function HeroGlow() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 -top-40 h-[1200px] -z-10 overflow-visible">
-      {/* radial blobs */}
-      <div className="absolute -top-56 right-[-220px] w-[1000px] h-[1000px] rounded-full bg-sky-400/35 blur-[200px]" />
-      <div className="absolute top-[240px] right-[-120px] w-[780px] h-[780px] rounded-full bg-sky-500/15 blur-[180px]" />
-      {/* linear fade to bottom (pakai gradient alpha, aman di iOS) */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/100" />
+    <div className="pointer-events-none absolute inset-x-0 top-0 h-[1200px] -z-10">
+      {/* radial gradient pakai inline style supaya Safari oke */}
+      <div
+        className="absolute top-0 right-0 w-full h-full"
+        style={{
+          background:
+            "radial-gradient(ellipse at right top, rgba(56,189,248,0.40) 0%, rgba(56,189,248,0.20) 35%, rgba(56,189,248,0.08) 60%, rgba(56,189,248,0.00) 85%)",
+          filter: "blur(120px)",
+          transform: "translate3d(0,0,0)",
+        }}
+      />
+      {/* fade hitam ke bawah biar pudar di POWERED BY */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black" />
     </div>
   );
 }
@@ -93,8 +100,8 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER: tetap sticky */}
-      <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
+      {/* HEADER FIXED */}
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -103,7 +110,7 @@ export default function MobileHome() {
 
       {/* MENU OVERLAY */}
       {menuOpen && (
-        <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
+        <nav className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
           {[
             { name: "Features", href: "#features" },
             { name: "Pricing",  href: "#pricing"  },
@@ -129,7 +136,10 @@ export default function MobileHome() {
         </nav>
       )}
 
-      {/* HERO + POWERED BY wrapper agar glow hanya di bagian ini */}
+      {/* OFFSET untuk header fixed */}
+      <div className="pt-14" />
+
+      {/* WRAPPER HERO + POWERED BY + GLOW */}
       <div className="relative">
         <HeroGlow />
 
