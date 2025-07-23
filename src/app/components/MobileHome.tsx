@@ -81,23 +81,22 @@ export default function MobileHome() {
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
 
-      {/* ==== BLUE GLOW LAYER (di atas background, di bawah konten) ==== */}
+      {/* ===== BLUE GLOW LAYER (fixed, di atas bg hitam, fade ke bawah) ===== */}
       <div
-        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1600px] h-[1400px] z-0"
+        className="pointer-events-none fixed inset-x-0 -top-48 h-[1400px] z-10"
         style={{
           background:
-            "radial-gradient(closest-side at 80% -10%, rgba(56,189,248,0.55), rgba(56,189,248,0.18) 55%, transparent 80%)",
-          filter: "blur(180px)",
+            "radial-gradient(1000px 1000px at 85% -5%, rgba(56,189,248,0.55) 0%, rgba(56,189,248,0.22) 45%, rgba(56,189,248,0) 80%)",
           WebkitMaskImage:
             "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.45) 60%, rgba(0,0,0,0) 100%)",
           maskImage:
             "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.45) 60%, rgba(0,0,0,0) 100%)",
+          mixBlendMode: "normal",
         }}
       />
 
-      {/* ==== ALL CONTENT ==== */}
-      <div className="relative z-10">
-
+      {/* semua konten di atasnya */}
+      <div className="relative z-20">
         {/* Header */}
         <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
           <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
@@ -270,6 +269,7 @@ function StatCard({ item }: { item: StatItem }) {
 
   const started = useRef(false);
 
+  // jangan ubah bagian ini (CountUp)
   const id = useId();
   const { start, reset } = useCountUp({
     ref: id,
