@@ -80,153 +80,166 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* LAYER SINAR BIRU BESAR */}
+
+      {/* ==== BLUE GLOW LAYER (di atas background, di bawah konten) ==== */}
       <div
-        className="pointer-events-none absolute inset-x-0 -top-40 h-[1200px] -z-10
-                   bg-gradient-to-b from-sky-400/30 via-sky-400/10 to-transparent blur-[180px]"
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1600px] h-[1400px] z-0"
+        style={{
+          background:
+            "radial-gradient(closest-side at 80% -10%, rgba(56,189,248,0.55), rgba(56,189,248,0.18) 55%, transparent 80%)",
+          filter: "blur(180px)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.45) 60%, rgba(0,0,0,0) 100%)",
+          maskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.45) 60%, rgba(0,0,0,0) 100%)",
+        }}
       />
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
-        <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
-        <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
-          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </header>
+      {/* ==== ALL CONTENT ==== */}
+      <div className="relative z-10">
 
-      {/* Fullscreen menu */}
-      {menuOpen && (
-        <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
-          {[
-            { name: "Features", href: "#features" },
-            { name: "Pricing",  href: "#pricing"  },
-            { name: "FAQ",      href: "#faq"      },
-            { name: "Blog",     href: "/blog"     },
-          ].map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-xl font-semibold"
+        {/* Header */}
+        <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
+          <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
+          <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
+            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </header>
+
+        {/* Fullscreen menu */}
+        {menuOpen && (
+          <nav className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
+            {[
+              { name: "Features", href: "#features" },
+              { name: "Pricing",  href: "#pricing"  },
+              { name: "FAQ",      href: "#faq"      },
+              { name: "Blog",     href: "/blog"     },
+            ].map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-xl font-semibold"
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.name}
+              </a>
+            ))}
+            <Link
+              href="https://app.mrktedge.ai/auth"
               onClick={() => setMenuOpen(false)}
+              className="mt-4 w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-800 to-blue-400 font-semibold"
             >
-              {item.name}
-            </a>
-          ))}
-          <Link
-            href="https://app.mrktedge.ai/auth"
-            onClick={() => setMenuOpen(false)}
-            className="mt-4 w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-800 to-blue-400 font-semibold"
-          >
-            Get Started
-          </Link>
-        </nav>
-      )}
+              Get Started
+            </Link>
+          </nav>
+        )}
 
-      {/* HERO */}
-      <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
-        <h1 className="text-4xl leading-tight font-bold mb-4">
-          <span className="block">The AI assistant that</span>
+        {/* HERO */}
+        <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
+          <h1 className="text-4xl leading-tight font-bold mb-4">
+            <span className="block">The AI assistant that</span>
 
-          <span className="block min-h-[1.1em]">
-            <span
-              key={headlineWord}
-              className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
-            >
-              {headlineWord}
+            <span className="block min-h-[1.1em]">
+              <span
+                key={headlineWord}
+                className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
+              >
+                {headlineWord}
+              </span>
             </span>
-          </span>
 
-          <span className="block">to your world</span>
-        </h1>
+            <span className="block">to your world</span>
+          </h1>
 
-        <p className="text-white/80 text-base mb-8">
-          Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
-        </p>
+          <p className="text-white/80 text-base mb-8">
+            Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
+          </p>
 
-        <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
-          <Link
-            href="#pricing"
-            className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
-          >
-            Get Started
-          </Link>
-          <a
-            href="#features"
-            className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
-          >
-            Explore Features
-          </a>
-        </div>
+          <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
+            <Link
+              href="#pricing"
+              className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
+            >
+              Get Started
+            </Link>
+            <a
+              href="#features"
+              className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
+            >
+              Explore Features
+            </a>
+          </div>
 
-        <div className="relative mt-10 w-full max-w-sm mx-auto">
-          <Image
-            src="/hero-dashboard.png"
-            alt="App preview"
-            width={360}
-            height={240}
-            className="rounded-xl shadow-lg w-full h-auto"
-            priority
-          />
-        </div>
-      </section>
+          <div className="relative mt-10 w-full max-w-sm mx-auto">
+            <Image
+              src="/hero-dashboard.png"
+              alt="App preview"
+              width={360}
+              height={240}
+              className="rounded-xl shadow-lg w-full h-auto"
+              priority
+            />
+          </div>
+        </section>
 
-      {/* Logos */}
-      <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
-        <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
-        <div className="flex justify-center items-center">
-          <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
-        </div>
-      </section>
+        {/* Logos */}
+        <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
+          <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
+          <div className="flex justify-center items-center">
+            <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
+          </div>
+        </section>
 
-      {/* Features */}
-      <section className="px-5 py-16 bg-zinc-900/20" id="capabilities">
-        <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
-        <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
-          {[
-            { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
-            { title: "Analyze files",  desc: "Drop PDFs, spreadsheets, slides—get instant insights.",       img: "/feature-analyze.png" },
-            { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.",      img: "/feature-automate.png" },
-          ].map((f) => (
-            <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
-              <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-              <p className="text-sm text-white/70">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Numbers */}
-      <NumbersSection />
-
-      {/* Pricing */}
-      <Pricing />
-
-      {/* FAQ */}
-      <section id="faq" className="px-5 py-16">
-        <h2 className="text-2xl font-bold text-center mb-8">FAQ</h2>
-        <div className="max-w-md mx-auto divide-y divide-zinc-800">
-          {faqs.map((item, idx) => {
-            const opened = faqOpen === idx;
-            return (
-              <div key={idx} className="py-4">
-                <button
-                  className="w-full flex items-center justify-between text-left text-sm font-medium"
-                  onClick={() => setFaqOpen(opened ? null : idx)}
-                >
-                  {item.q}
-                  <ChevronDown className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`} />
-                </button>
-                {opened && (
-                  <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
-                )}
+        {/* Features */}
+        <section className="px-5 py-16 bg-zinc-900/20" id="capabilities">
+          <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
+          <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
+            {[
+              { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
+              { title: "Analyze files",  desc: "Drop PDFs, spreadsheets, slides—get instant insights.",       img: "/feature-analyze.png" },
+              { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.",      img: "/feature-automate.png" },
+            ].map((f) => (
+              <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
+                <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
+                <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+                <p className="text-sm text-white/70">{f.desc}</p>
               </div>
-            );
-          })}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
 
-      <Footer />
+        {/* Numbers */}
+        <NumbersSection />
+
+        {/* Pricing */}
+        <Pricing />
+
+        {/* FAQ */}
+        <section id="faq" className="px-5 py-16">
+          <h2 className="text-2xl font-bold text-center mb-8">FAQ</h2>
+          <div className="max-w-md mx-auto divide-y divide-zinc-800">
+            {faqs.map((item, idx) => {
+              const opened = faqOpen === idx;
+              return (
+                <div key={idx} className="py-4">
+                  <button
+                    className="w-full flex items-center justify-between text-left text-sm font-medium"
+                    onClick={() => setFaqOpen(opened ? null : idx)}
+                  >
+                    {item.q}
+                    <ChevronDown className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`} />
+                  </button>
+                  {opened && (
+                    <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <Footer />
+      </div>
     </div>
   );
 }
@@ -257,7 +270,6 @@ function StatCard({ item }: { item: StatItem }) {
 
   const started = useRef(false);
 
-  // === Opsi #1 (disarankan): pakai string id dari useId ===
   const id = useId();
   const { start, reset } = useCountUp({
     ref: id,
