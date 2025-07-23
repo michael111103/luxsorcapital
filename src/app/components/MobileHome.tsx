@@ -4,17 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
+import Pricing from "./pricing";
 
 // If you already have a Pricing component, you can import it and render it near the bottom.
 // import Pricing from "./pricing";
-
-/**
- * MobileHome.tsx
- * -----------------------------------------------------
- * Simple mobile-first landing page inspired by chaton.ai layout.
- * Replace every dummy image (png) with your real assets later.
- * All sections stacked vertically, tailored for small screens.
- */
 
 const faqs = [
   {
@@ -197,22 +190,8 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* PRICING CTA */}
-      <section className="px-5 py-20 bg-zinc-900/20 text-center" id="cta">
-        <h2 className="text-2xl font-bold mb-4">Ready to get started?</h2>
-        <p className="text-white/70 text-sm mb-6 max-w-xs mx-auto">
-          Choose a plan that fits you. Upgrade or cancel anytime.
-        </p>
-        <Link
-          href="#pricing"
-          className="inline-block px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 font-semibold text-sm"
-        >
-          View Pricing
-        </Link>
-      </section>
-
-      {/* If you want to render Pricing component here on mobile page */}
-      {/* <Pricing /> */}
+      {/* PRICING */}
+      <Pricing />
 
       {/* FAQ */}
       <section id="faq" className="px-5 py-16">
