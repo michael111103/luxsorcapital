@@ -45,7 +45,7 @@ const statsData: StatItem[] = [
   { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",     icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
-/* Short formatter (M/B/K) */
+/* ---------- Helpers ---------- */
 function shortNumber(n: number): string {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
   if (n >= 1_000_000)     return (n / 1_000_000).toFixed(0) + "M";
@@ -53,28 +53,47 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ---------- Rotating words ---------- */
+/* ---------- Rotating Words (pause + slide) ---------- */
 function RotatingWords({
   words,
-  interval = 2500,
+  stay = 4000,          // ms berhenti di tiap kata
+  slide = 600,          // ms durasi animasi slide
   className = "",
 }: {
   words: string[];
-  interval?: number;
+  stay?: number;
+  slide?: number;
   className?: string;
 }) {
-  const [idx, setIdx] = useState(0);
+  const [current, setCurrent] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  // loop: tunggu stay -> animate -> ganti index
+  useEffect(() => {
+    const stayTimer = setTimeout(() => setAnimating(true), stay);
+    return () => clearTimeout(stayTimer);
+  }, [current, stay]);
 
   useEffect(() => {
-    const id = setInterval(() => setIdx(i => (i + 1) % words.length), interval);
-    return () => clearInterval(id);
-  }, [interval, words.length]);
+    if (!animating) return;
+    const slideTimer = setTimeout(() => {
+      setAnimating(false);
+      setCurrent(i => (i + 1) % words.length);
+    }, slide);
+    return () => clearTimeout(slideTimer);
+  }, [animating, slide, words.length]);
+
+  // posisi target (saat animasi bergerak ke next index)
+  const targetIndex = animating ? (current + 1) % words.length : current;
 
   return (
-    <span className={`relative inline-block h-[1em] overflow-hidden align-baseline ${className}`}>
+    <span className={`relative inline-block h-[1.2em] overflow-hidden align-baseline ${className}`}>
       <span
-        className="flex flex-col transition-transform duration-700 ease-out will-change-transform"
-        style={{ transform: `translateY(-${idx * 100}%)` }}
+        className="flex flex-col will-change-transform"
+        style={{
+          transform: `translateY(-${targetIndex * 100}%)`,
+          transition: animating ? `transform ${slide}ms ease-out` : "none",
+        }}
       >
         {words.map(w => (
           <span key={w} className="leading-none">{w}</span>
@@ -84,7 +103,7 @@ function RotatingWords({
   );
 }
 
-/* ---------- MAIN ---------- */
+/* ---------- COMPONENT ---------- */
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -130,17 +149,18 @@ export default function MobileHome() {
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
         {/* Ocean blue glow */}
-        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70 -z-10" />
+        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70 z-0" />
 
         <h1 className="text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
-          <span className="mt-1 inline-flex justify-center gap-2 items-baseline whitespace-nowrap">
+          <span className="mt-1 flex flex-wrap justify-center gap-2 items-baseline">
             <RotatingWords
               words={["adapts", "learns", "evolves", "understands", "accelerates"]}
               className="text-gradient-blue"
-              interval={2600}
+              stay={4000}
+              slide={600}
             />
-            <span>to your world</span>
+            <span className="leading-tight">to your world</span>
           </span>
         </h1>
 
@@ -165,7 +185,7 @@ export default function MobileHome() {
 
         <div className="relative mt-10 w-full max-w-sm mx-auto">
           <Image
-            src="/mobile-hero.png" /* pastikan file ada di /public */
+            src="/mobile-hero.png"
             alt="App preview"
             width={360}
             height={240}
@@ -262,7 +282,7 @@ function NumbersSection() {
   const [runId, setRunId] = useState(0);
 
   useEffect(() => {
-    if (inView) setRunId(r => r + 1); // restart tiap muncul lagi
+    if (inView) setRunId(r => r + 1);
   }, [inView]);
 
   return (
