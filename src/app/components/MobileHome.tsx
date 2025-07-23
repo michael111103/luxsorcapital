@@ -1,14 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import CountUp from "react-countup";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Download,
+  CheckCircle2,
+  Globe2,
+  Sparkles,
+} from "lucide-react";
 import Pricing from "./pricing";
 
-// If you already have a Pricing component, you can import it and render it near the bottom.
-// import Pricing from "./pricing";
-
+/* -------------------- FAQ -------------------- */
 const faqs = [
   {
     q: "What is QUARK?",
@@ -28,33 +35,94 @@ const faqs = [
   },
 ];
 
-const stats = [
-  { label: "Messages processed", value: "12M+" },
-  { label: "Users", value: "250k+" },
-  { label: "Countries", value: "120+" },
-  { label: "Avg. response time", value: "<1s" },
+/* -------------------- STATS -------------------- */
+type StatItem = {
+  id: string;
+  value: number;
+  suffix?: string;
+  label: string;
+  icon: ReactNode;
+};
+
+const statsData: StatItem[] = [
+  {
+    id: "downloads",
+    value: 50_000_000,
+    suffix: "+",
+    label: "Downloads",
+    icon: <Download className="w-10 h-10 text-emerald-400" />,
+  },
+  {
+    id: "tasks",
+    value: 1_000_000_000,
+    suffix: "+",
+    label: "Solved Tasks",
+    icon: <CheckCircle2 className="w-10 h-10 text-emerald-400" />,
+  },
+  {
+    id: "countries",
+    value: 236,
+    label: "Countries Using QUARK",
+    icon: <Globe2 className="w-10 h-10 text-emerald-400" />,
+  },
+  {
+    id: "reviews",
+    value: 650_000,
+    suffix: "+",
+    label: "Top Star Reviews",
+    icon: <Sparkles className="w-10 h-10 text-emerald-400" />,
+  },
 ];
 
+/* -------------------- HOOKS -------------------- */
+function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
+  const ref = useRef<T>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => {
+      setInView(entry.isIntersecting);
+    }, options);
+    io.observe(el);
+    return () => io.disconnect();
+  }, [options]);
+
+  return [ref, inView] as const;
+}
+
+/* Short number formatter for CountUp */
+function shortNumber(n: number): string {
+  if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(0) + "M";
+  if (n >= 1_000) return (n / 1_000).toFixed(0) + "K";
+  return n.toString();
+}
+
+/* -------------------- MAIN COMPONENT -------------------- */
 export default function MobileHome() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   return (
     <div className="bg-black text-white font-inter">
-      {/* Sticky top bar */}
+      {/* Header */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
-        <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
+        <Link href="/" className="text-lg font-bold tracking-wide">
+          QUARK
+        </Link>
         <button
           aria-label="Toggle menu"
-          onClick={() => setOpen((p) => !p)}
+          onClick={() => setMenuOpen((p) => !p)}
           className="p-2 text-white"
         >
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </header>
 
-      {/* Mobile menu overlay */}
-      {open && (
+      {/* Mobile Menu */}
+      {menuOpen && (
         <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
           {[
             { name: "Features", href: "#features" },
@@ -66,15 +134,14 @@ export default function MobileHome() {
               key={item.name}
               href={item.href}
               className="text-xl font-semibold"
-              onClick={() => setOpen(false)}
+              onClick={() => setMenuOpen(false)}
             >
               {item.name}
             </a>
           ))}
-
           <Link
             href="https://app.mrktedge.ai/auth"
-            onClick={() => setOpen(false)}
+            onClick={() => setMenuOpen(false)}
             className="mt-4 w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-800 to-blue-400 font-semibold"
           >
             Get Started
@@ -87,10 +154,13 @@ export default function MobileHome() {
         <h1 className="text-4xl leading-tight font-bold mb-4">
           The AI assistant that
           <br />
-          <span className="bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">adapts to your world</span>
+          <span className="bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">
+            adapts to your world
+          </span>
         </h1>
         <p className="text-white/80 text-base mb-8">
-          Chat, create, analyze, and automate—all from your phone. Built for productivity and creativity.
+          Chat, create, analyze, and automate—all from your phone. Built for
+          productivity and creativity.
         </p>
         <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
@@ -109,7 +179,7 @@ export default function MobileHome() {
 
         <div className="relative mt-10 w-full max-w-sm mx-auto">
           <Image
-            src="/mobile-hero.png" // TODO: replace with real screenshot
+            src="/mobile-hero.png" // ganti dengan screenshot asli
             alt="App preview"
             width={360}
             height={240}
@@ -119,19 +189,18 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* CHAT BUBBLES / DEMO */}
+      {/* CHAT DEMO */}
       <section id="features" className="px-5 py-16 space-y-8">
-        <h2 className="text-2xl font-bold mb-6 text-center">Chat that feels natural</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Chat that feels natural
+        </h2>
         <div className="space-y-4 max-w-sm mx-auto">
-          {/* user bubble */}
           <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
             Give me a 3-sentence summary of this PDF (uploading now).
           </div>
-          {/* ai bubble */}
           <div className="max-w-[85%] mr-auto bg-zinc-800 p-3 rounded-2xl rounded-tl-none text-sm text-white/90 shadow">
             Sure! Here’s the concise summary…
           </div>
-          {/* another */}
           <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
             Generate a marketing plan for an eco-friendly bottle startup.
           </div>
@@ -141,15 +210,17 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* FEATURES GRID */}
+      {/* FEATURE CARDS */}
       <section className="px-5 py-16 bg-zinc-900/20" id="capabilities">
-        <h2 className="text-2xl font-bold text-center mb-10">Do more with QUARK</h2>
+        <h2 className="text-2xl font-bold text-center mb-10">
+          Do more with QUARK
+        </h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
             {
               title: "Write & create",
               desc: "Blogs, emails, ads, scripts—get quality content in seconds.",
-              img: "/feature-write.png", // dummy
+              img: "/feature-write.png",
             },
             {
               title: "Analyze files",
@@ -162,7 +233,10 @@ export default function MobileHome() {
               img: "/feature-automate.png",
             },
           ].map((f) => (
-            <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
+            <div
+              key={f.title}
+              className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800"
+            >
               <Image
                 src={f.img}
                 alt={f.title}
@@ -177,18 +251,8 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* POWER IN NUMBERS / STATS */}
-      <section className="px-5 py-16" id="numbers">
-        <h2 className="text-2xl font-bold text-center mb-8">Power in numbers</h2>
-        <div className="grid grid-cols-2 gap-6 max-w-xs mx-auto text-center">
-          {stats.map((s) => (
-            <div key={s.label} className="space-y-1">
-              <p className="text-2xl font-bold">{s.value}</p>
-              <p className="text-[11px] uppercase tracking-wide text-white/60">{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* POWER IN NUMBERS */}
+      <NumbersSection />
 
       {/* PRICING */}
       <Pricing />
@@ -198,20 +262,24 @@ export default function MobileHome() {
         <h2 className="text-2xl font-bold text-center mb-8">FAQ</h2>
         <div className="max-w-md mx-auto divide-y divide-zinc-800">
           {faqs.map((item, idx) => {
-            const open = faqOpen === idx;
+            const opened = faqOpen === idx;
             return (
               <div key={idx} className="py-4">
                 <button
                   className="w-full flex items-center justify-between text-left text-sm font-medium"
-                  onClick={() => setFaqOpen(open ? null : idx)}
+                  onClick={() => setFaqOpen(opened ? null : idx)}
                 >
                   {item.q}
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform ${open ? "rotate-180" : "rotate-0"}`}
+                    className={`w-4 h-4 transition-transform ${
+                      opened ? "rotate-180" : "rotate-0"
+                    }`}
                   />
                 </button>
-                {open && (
-                  <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
+                {opened && (
+                  <p className="mt-2 text-white/70 text-sm leading-relaxed">
+                    {item.a}
+                  </p>
                 )}
               </div>
             );
@@ -219,7 +287,7 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* Footer mini (optional, or import your Footer component) */}
+      {/* MINI FOOTER */}
       <footer className="px-5 py-12 text-center text-white/60 text-xs">
         © {new Date().getFullYear()} QUARK. All rights reserved.
       </footer>
@@ -227,7 +295,50 @@ export default function MobileHome() {
   );
 }
 
-// simple fade-in animation utility (optional)
-// Add this to globals.css if you haven't:
-// .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
-// @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+/* -------------------- NUMBERS SECTION -------------------- */
+function NumbersSection() {
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.35 });
+  // counter agar CountUp restart tiap kali masuk viewport
+  const [runId, setRunId] = useState(0);
+
+  useEffect(() => {
+    if (inView) setRunId((r) => r + 1);
+  }, [inView]);
+
+  return (
+    <section ref={ref} className="px-5 py-16" id="numbers">
+      <h2 className="text-3xl font-bold text-center mb-3">
+        QUARK’s Power in Numbers
+      </h2>
+      <p className="text-center text-white/60 mb-10 text-base">
+        What we’ve achieved
+      </p>
+
+      <div className="flex flex-col gap-6 max-w-md mx-auto">
+        {statsData.map((s) => (
+          <StatCard key={s.id} item={s} runKey={runId} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
+  return (
+    <div className="rounded-3xl bg-zinc-900/80 border border-zinc-800 px-6 py-8 flex items-center justify-between shadow-sm">
+      <div>
+        <p className="text-5xl font-extrabold leading-none countup">
+          <CountUp
+            key={`${item.id}-${runKey}`}
+            start={0}
+            end={item.value}
+            duration={1.3}
+            formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
+          />
+        </p>
+        <p className="mt-3 text-lg text-white/70">{item.label}</p>
+      </div>
+      {item.icon}
+    </div>
+  );
+}
