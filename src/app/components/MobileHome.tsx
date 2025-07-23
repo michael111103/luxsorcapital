@@ -69,7 +69,7 @@ export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
-  const headlineWord = useWordCycle(WORDS, 4000);
+  const headlineWord = useWordCycle(WORDS, 3000);
 
   return (
     <div className="bg-black text-white font-inter">
@@ -112,7 +112,17 @@ export default function MobileHome() {
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
         {/* glow */}
-        <div className="absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70 z-0" />
+        <div 
+          className="pointer-events-none absolute -top-56 right-[-200px]
+          w-[1000px] h-[1000px] rounded-full
+          bg-sky-400/25 blur-[220px] -z-10"
+        />
+
+        <div 
+          className="pointer-events-none absolute top-1/3 right-[-120px]
+          w-[700px] h-[700px] rounded-full
+         bg-sky-500/10 blur-[180px] -z-10"
+        />        
 
         {/* wrap content to stay above glow */}
         <div className="relative z-10 w-full">
@@ -152,7 +162,7 @@ export default function MobileHome() {
 
           <div className="relative mt-10 w-full max-w-sm mx-auto">
             <Image
-              src="/mobile-hero.png"
+              src="/hero-dashboard.png"
               alt="App preview"
               width={360}
               height={240}
@@ -173,7 +183,7 @@ export default function MobileHome() {
 
       {/* Feature cards */}
       <section className="px-5 py-16 bg-zinc-900/20" id="capabilities">
-        <h2 className="text-2xl font-bold text-center mb-10">Do more with QUARK</h2>
+        <h2 className="text-2xl font-bold text-center mb-10">Explore Quark's Features</h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
             { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
