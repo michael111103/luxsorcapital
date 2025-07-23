@@ -71,15 +71,13 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- FIXED BLUE GLOW ---------- */
+/* ---------- Fixed Blue Glow ---------- */
 function BlueGlow() {
   return (
     <div className="pointer-events-none fixed top-0 left-0 w-screen h-[1300px] z-0">
-      {/* core glow */}
       <div className="absolute -top-72 right-[-220px] w-[1200px] h-[1200px] rounded-full bg-sky-400/45 blur-[240px]" />
-      {/* secondary glow */}
       <div className="absolute top-[260px] right-[-120px] w-[850px] h-[850px] rounded-full bg-sky-500/15 blur-[200px]" />
-      {/* fade mask downward */}
+      {/* fade out ke bawah */}
       <div
         className="absolute inset-0 bg-black"
         style={{
@@ -102,47 +100,56 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* blue glow behind everything */}
       <BlueGlow />
 
-      {/* Header (sticky) */}
-      <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
+      {/* HEADER: fixed supaya selalu ikut scroll */}
+      <header className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
-        <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
-          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        <button aria-label="Toggle menu" onClick={() => setMenuOpen(true)} className="p-2 text-white">
+          <Menu className="w-6 h-6" />
         </button>
       </header>
 
-      {/* Fullscreen menu */}
+      {/* MENU OVERLAY */}
       {menuOpen && (
         <nav className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
-          {[
-            { name: "Features", href: "#features" },
-            { name: "Pricing",  href: "#pricing"  },
-            { name: "FAQ",      href: "#faq"      },
-            { name: "Blog",     href: "/blog"     },
-          ].map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-xl font-semibold"
-              onClick={() => setMenuOpen(false)}
-            >
-              {item.name}
-            </a>
-          ))}
-          <Link
-            href="https://app.mrktedge.ai/auth"
+          <button
+            aria-label="Close menu"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-800 to-blue-400 font-semibold"
+            className="absolute top-4 right-4 p-2 text-white"
           >
-            Get Started
-          </Link>
+            <X className="w-6 h-6" />
+          </button>
+
+          <div className="mt-10 flex flex-col gap-6">
+            {[
+              { name: "Features", href: "#features" },
+              { name: "Pricing",  href: "#pricing"  },
+              { name: "FAQ",      href: "#faq"      },
+              { name: "Blog",     href: "/blog"     },
+            ].map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-xl font-semibold"
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.name}
+              </a>
+            ))}
+            <Link
+              href="https://app.mrktedge.ai/auth"
+              onClick={() => setMenuOpen(false)}
+              className="mt-4 w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-800 to-blue-400 font-semibold"
+            >
+              Get Started
+            </Link>
+          </div>
         </nav>
       )}
 
-      {/* CONTENT */}
-      <main className="relative z-10">
+      {/* MAIN CONTENT (beri padding-top agar tidak ketutup header fixed) */}
+      <main className="relative z-10 pt-14">
         {/* HERO */}
         <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
           <h1 className="text-4xl leading-tight font-bold mb-4">
@@ -200,7 +207,7 @@ export default function MobileHome() {
         </section>
 
         {/* Features */}
-        <section className="px-5 py-16 bg-zinc-900/20" id="capabilities">
+        <section className="px-5 py-16 bg-zinc-900/20" id="features">
           <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
           <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
             {[
@@ -269,7 +276,7 @@ function NumbersSection() {
   );
 }
 
-/* ---- StatCard: animasi hanya saat benar2 masuk viewport ---- */
+/* ---- StatCard (CountUp tetap) ---- */
 function StatCard({ item }: { item: StatItem }) {
   const { ref, inView } = useInView({
     threshold: 0.6,
@@ -279,7 +286,6 @@ function StatCard({ item }: { item: StatItem }) {
 
   const started = useRef(false);
 
-  // CountUp (TIDAK diubah)
   const id = useId();
   const { start, reset } = useCountUp({
     ref: id,
