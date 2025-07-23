@@ -71,22 +71,23 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- FIXED BLUE GLOW ---------- */
-function BlueGlow() {
+/* ---------- STATIC BLUE GLOW (hanya di area hero -> powered by) ---------- */
+function HeroGlow() {
   return (
-    <div
-      className="pointer-events-none fixed top-0 left-0 w-full h-[1050px] -z-10"
-      style={{
-        WebkitMaskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 30%, rgba(0,0,0,.35) 70%, rgba(0,0,0,0) 100%)",
-        maskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 30%, rgba(0,0,0,.35) 70%, rgba(0,0,0,0) 100%)",
-        WebkitMaskRepeat: "no-repeat",
-        maskRepeat: "no-repeat",
-      }}
-    >
-      <div className="absolute -top-72 right-[-220px] w-[1200px] h-[1200px] rounded-full bg-sky-400/45 blur-[240px]" />
-      <div className="absolute top-[260px] right-[-120px] w-[850px] h-[850px] rounded-full bg-sky-500/15 blur-[200px]" />
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-visible">
+      {/* 2 blob biru */}
+      <div className="absolute -top-44 right-[-200px] w-[1100px] h-[1100px] rounded-full bg-sky-400/35 blur-[220px]" />
+      <div className="absolute top-[240px] right-[-120px] w-[800px] h-[800px] rounded-full bg-sky-500/15 blur-[200px]" />
+      {/* fade out ke bawah */}
+      <div
+        className="absolute inset-0"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 25%, rgba(0,0,0,.45) 70%, rgba(0,0,0,0) 100%)",
+          maskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 25%, rgba(0,0,0,.45) 70%, rgba(0,0,0,0) 100%)",
+        }}
+      />
     </div>
   );
 }
@@ -100,10 +101,7 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* Glow tetap di viewport */}
-      <BlueGlow />
-
-      {/* HEADER (tidak diubah) */}
+      {/* HEADER - biarkan sticky */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
@@ -111,7 +109,7 @@ export default function MobileHome() {
         </button>
       </header>
 
-      {/* Fullscreen menu */}
+      {/* MENU OVERLAY */}
       {menuOpen && (
         <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
           {[
@@ -139,10 +137,12 @@ export default function MobileHome() {
         </nav>
       )}
 
-      {/* CONTENT */}
-      <main className="relative z-10">
+      {/* WRAPPER untuk HERO + POWERED BY agar glow hanya di area ini */}
+      <div className="relative">
+        <HeroGlow />
+
         {/* HERO */}
-        <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
+        <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible z-10">
           <h1 className="text-4xl leading-tight font-bold mb-4">
             <span className="block">The AI assistant that</span>
 
@@ -189,64 +189,64 @@ export default function MobileHome() {
           </div>
         </section>
 
-        {/* Logos */}
-        <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
+        {/* POWERED BY */}
+        <section className="relative z-10 w-full bg-black py-20 px-6 flex flex-col items-center">
           <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
           <div className="flex justify-center items-center">
             <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
           </div>
         </section>
+      </div>
 
-        {/* Features */}
-        <section className="px-5 py-16 bg-zinc-900/20" id="features">
-          <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
-          <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
-            {[
-              { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
-              { title: "Analyze files",  desc: "Drop PDFs, spreadsheets, slides—get instant insights.",       img: "/feature-analyze.png" },
-              { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.",      img: "/feature-automate.png" },
-            ].map((f) => (
-              <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
-                <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-                <p className="text-sm text-white/70">{f.desc}</p>
+      {/* Features */}
+      <section className="px-5 py-16 bg-zinc-900/20" id="features">
+        <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
+        <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
+          {[
+            { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
+            { title: "Analyze files",  desc: "Drop PDFs, spreadsheets, slides—get instant insights.",       img: "/feature-analyze.png" },
+            { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.",      img: "/feature-automate.png" },
+          ].map((f) => (
+            <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
+              <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
+              <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+              <p className="text-sm text-white/70">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Numbers */}
+      <NumbersSection />
+
+      {/* Pricing */}
+      <Pricing />
+
+      {/* FAQ */}
+      <section id="faq" className="px-5 py-16">
+        <h2 className="text-2xl font-bold text-center mb-8">FAQ</h2>
+        <div className="max-w-md mx-auto divide-y divide-zinc-800">
+          {faqs.map((item, idx) => {
+            const opened = faqOpen === idx;
+            return (
+              <div key={idx} className="py-4">
+                <button
+                  className="w-full flex items-center justify-between text-left text-sm font-medium"
+                  onClick={() => setFaqOpen(opened ? null : idx)}
+                >
+                  {item.q}
+                  <ChevronDown className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`} />
+                </button>
+                {opened && (
+                  <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
+                )}
               </div>
-            ))}
-          </div>
-        </section>
+            );
+          })}
+        </div>
+      </section>
 
-        {/* Numbers */}
-        <NumbersSection />
-
-        {/* Pricing */}
-        <Pricing />
-
-        {/* FAQ */}
-        <section id="faq" className="px-5 py-16">
-          <h2 className="text-2xl font-bold text-center mb-8">FAQ</h2>
-          <div className="max-w-md mx-auto divide-y divide-zinc-800">
-            {faqs.map((item, idx) => {
-              const opened = faqOpen === idx;
-              return (
-                <div key={idx} className="py-4">
-                  <button
-                    className="w-full flex items-center justify-between text-left text-sm font-medium"
-                    onClick={() => setFaqOpen(opened ? null : idx)}
-                  >
-                    {item.q}
-                    <ChevronDown className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`} />
-                  </button>
-                  {opened && (
-                    <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <Footer />
-      </main>
+      <Footer />
     </div>
   );
 }
