@@ -17,9 +17,9 @@ import {
 import { useInView } from "react-intersection-observer";
 
 import Pricing from "./pricing";
-import Footer from "./footer"; // ⬅️ pakai footer.tsx kamu
+import Footer from "./footer";
 
-/* ---------- FAQ ---------- */
+/* ---------------- FAQ ---------------- */
 const faqs = [
   { q: "What is QUARK?", a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone." },
   { q: "Is there a free plan?", a: "Yes. You can start free with limited daily chats and upgrade anytime." },
@@ -27,7 +27,7 @@ const faqs = [
   { q: "Can I cancel anytime?", a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like." },
 ];
 
-/* ---------- STATS ---------- */
+/* ---------------- STATS ---------------- */
 type StatItem = {
   id: string;
   value: number;
@@ -36,13 +36,13 @@ type StatItem = {
   icon: ReactNode;
 };
 
-const ICON_CLS = "w-10 h-10 text-[#0EA5E9]"
+const ICON_CLS = "w-10 h-10 text-[#0EA5E9]"; // ocean blue
 
 const statsData: StatItem[] = [
-  { id: "users",     value: 50_000_000,  suffix: "+", label: "Users",                icon: <Download     className={ICON_CLS} /> },
-  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",        icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                 label: "Countries Using QUARK",      icon: <Globe2       className={ICON_CLS} /> },
-  { id: "reviews",   value: 650_000,     suffix: "+", label: "Top Star Reviews",      icon: <Sparkles     className={ICON_CLS} /> },
+  { id: "users",     value: 50_000_000,   suffix: "+", label: "Users",                 icon: <Download     className={ICON_CLS} /> },
+  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",         icon: <CheckCircle2 className={ICON_CLS} /> },
+  { id: "countries", value: 236,                  label: "Countries Using QUARK",       icon: <Globe2       className={ICON_CLS} /> },
+  { id: "reviews",   value: 650_000,      suffix: "+", label: "Top Star Reviews",       icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
 /* Short formatter (M/B/K) */
@@ -53,7 +53,40 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ---------- MAIN ---------- */
+/* ------------ Rotating words component ------------ */
+function RotatingWords({
+  words,
+  interval = 2500,
+  className = "",
+}: {
+  words: string[];
+  interval?: number;
+  className?: string;
+}) {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIdx((i) => (i + 1) % words.length);
+    }, interval);
+    return () => clearInterval(id);
+  }, [interval, words.length]);
+
+  return (
+    <span className={`relative inline-block overflow-hidden align-baseline ${className}`}>
+      <span
+        className="block transition-transform duration-700 ease-out"
+        style={{ transform: `translateY(-${idx * 100}%)` }}
+      >
+        {words.map((w) => (
+          <span key={w} className="block">{w}</span>
+        ))}
+      </span>
+    </span>
+  );
+}
+
+/* ---------------- MAIN ---------------- */
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -63,11 +96,7 @@ export default function MobileHome() {
       {/* Header */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setMenuOpen((p) => !p)}
-          className="p-2 text-white"
-        >
+        <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </header>
@@ -101,19 +130,29 @@ export default function MobileHome() {
       )}
 
       {/* HERO */}
-      <section className="px-5 pt-10 pb-16 flex flex-col items-center text-center">
+      <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-hidden">
+        {/* Ocean blue corner glow */}
+        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3" />
+
         <h1 className="text-4xl leading-tight font-bold mb-4">
           The AI assistant that
           <br />
-          <span className="text-gradient-blue">adapts to your world</span>
+          <RotatingWords
+            words={["adapts", "learns", "evolves", "understands", "accelerates"]}
+            className="text-gradient-blue"
+            interval={2600}
+          />{" "}
+          to your world
         </h1>
+
         <p className="text-white/80 text-base mb-8">
           Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
         </p>
+
         <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
             href="#pricing"
-            className="py-3 rounded-full bg-blue-400 hover:bg-blue-500 text-white font-semibold text-sm shadow text-center"
+            className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
           >
             Try QUARK Free
           </Link>
@@ -127,7 +166,7 @@ export default function MobileHome() {
 
         <div className="relative mt-10 w-full max-w-sm mx-auto">
           <Image
-            src="/mobile-hero.png"         /* ganti dengan screenshot asli */
+            src="/mobile-hero.png"        /* pastikan file ini ada di /public */
             alt="App preview"
             width={360}
             height={240}
@@ -151,6 +190,25 @@ export default function MobileHome() {
             className="w-auto h-auto"
             priority
           />
+        </div>
+      </section>
+
+      {/* CHAT DEMO */}
+      <section id="features" className="px-5 py-16 space-y-8">
+        <h2 className="text-2xl font-bold mb-6 text-center">Chat that feels natural</h2>
+        <div className="space-y-4 max-w-sm mx-auto">
+          <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
+            Give me a 3-sentence summary of this PDF (uploading now).
+          </div>
+          <div className="max-w-[85%] mr-auto bg-zinc-800 p-3 rounded-2xl rounded-tl-none text-sm text-white/90 shadow">
+            Sure! Here’s the concise summary…
+          </div>
+          <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
+            Generate a marketing plan for an eco-friendly bottle startup.
+          </div>
+          <div className="max-w-[85%] mr-auto bg-zinc-800 p-3 rounded-2xl rounded-tl-none text-sm text-white/90 shadow">
+            Absolutely! Here’s a step-by-step launch plan…
+          </div>
         </div>
       </section>
 
@@ -202,20 +260,19 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* FOOTER (pakai komponen) */}
+      {/* FOOTER */}
       <Footer />
     </div>
   );
 }
 
-/* ---------- Numbers Section ---------- */
+/* ---------------- Numbers Section ---------------- */
 function NumbersSection() {
   const { ref, inView } = useInView({ threshold: 0.35, rootMargin: "0px 0px -20% 0px" });
   const [runId, setRunId] = useState(0);
 
-  // restart setiap masuk viewport
   useEffect(() => {
-    if (inView) setRunId((r) => r + 1);
+    if (inView) setRunId((r) => r + 1); // restart tiap masuk viewport
   }, [inView]);
 
   return (
@@ -241,7 +298,7 @@ function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
             key={`${item.id}-${runKey}`}
             start={0}
             end={item.value}
-            duration={8.4} // perlahankan / percepat di sini
+            duration={8.0}                         // ubah kecepatan di sini
             formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
           />
         </p>
