@@ -53,10 +53,9 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ---------- Word cycle (ganti tiap 4 detik) ---------- */
+/* ---------- Word cycle ---------- */
 const WORDS = ["adapts", "learns", "evolves", "understands", "accelerates"];
-
-function useWordCycle(words: string[], delay = 4000) {
+function useWordCycle(words: string[], delay = 3000) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     const t = setTimeout(() => setIdx(i => (i + 1) % words.length), delay);
@@ -87,9 +86,9 @@ export default function MobileHome() {
         <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
           {[
             { name: "Features", href: "#features" },
-            { name: "Pricing",  href: "#pricing" },
-            { name: "FAQ",      href: "#faq" },
-            { name: "Blog",     href: "/blog" },
+            { name: "Pricing",  href: "#pricing"  },
+            { name: "FAQ",      href: "#faq"      },
+            { name: "Blog",     href: "/blog"     },
           ].map(item => (
             <a
               key={item.name}
@@ -112,53 +111,55 @@ export default function MobileHome() {
 
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
-        {/* Ocean blue glow */}
-        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70 -z-10" />
+        {/* glow */}
+        <div className="absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70 z-0" />
 
-        <h1 className="text-4xl leading-tight font-bold mb-4">
-          <span className="block">The AI assistant that</span>
+        {/* wrap content to stay above glow */}
+        <div className="relative z-10 w-full">
+          <h1 className="text-4xl leading-tight font-bold mb-4">
+            <span className="block">The AI assistant that</span>
 
-          {/* baris tengah dinamis */}
-          <span className="block min-h-[1.1em] text-gradient-blue">
-            <span
-              key={headlineWord}
-              className="inline-block transition-opacity duration-300"
-            >
-              {headlineWord}
+            <span className="block min-h-[1.1em]">
+              <span
+                key={headlineWord}
+                className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
+              >
+                {headlineWord}
+              </span>
             </span>
-          </span>
 
-          <span className="block">to your world</span>
-        </h1>
+            <span className="block">to your world</span>
+          </h1>
 
-        <p className="text-white/80 text-base mb-8">
-          Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
-        </p>
+          <p className="text-white/80 text-base mb-8">
+            Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
+          </p>
 
-        <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
-          <Link
-            href="#pricing"
-            className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
-          >
-            Get Started
-          </Link>
-          <a
-            href="#features"
-            className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
-          >
-            Explore Features
-          </a>
-        </div>
+          <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
+            <Link
+              href="#pricing"
+              className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
+            >
+              Get Started
+            </Link>
+            <a
+              href="#features"
+              className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
+            >
+              Explore Features
+            </a>
+          </div>
 
-        <div className="relative mt-10 w-full max-w-sm mx-auto">
-          <Image
-            src="/mobile-hero.png"
-            alt="App preview"
-            width={360}
-            height={240}
-            className="rounded-xl shadow-lg w-full h-auto"
-            priority
-          />
+          <div className="relative mt-10 w-full max-w-sm mx-auto">
+            <Image
+              src="/mobile-hero.png"
+              alt="App preview"
+              width={360}
+              height={240}
+              className="rounded-xl shadow-lg w-full h-auto"
+              priority
+            />
+          </div>
         </div>
       </section>
 
