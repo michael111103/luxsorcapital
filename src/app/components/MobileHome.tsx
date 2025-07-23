@@ -71,23 +71,15 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- STATIC BLUE GLOW (hanya di area hero -> powered by) ---------- */
+/* ---------- BLUE GLOW (cross‑browser, no mask-image) ---------- */
 function HeroGlow() {
   return (
-    <div className="pointer-events-none absolute inset-0 -z-10 overflow-visible">
-      {/* 2 blob biru */}
-      <div className="absolute -top-44 right-[-200px] w-[1100px] h-[1100px] rounded-full bg-sky-400/35 blur-[220px]" />
-      <div className="absolute top-[240px] right-[-120px] w-[800px] h-[800px] rounded-full bg-sky-500/15 blur-[200px]" />
-      {/* fade out ke bawah */}
-      <div
-        className="absolute inset-0"
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 25%, rgba(0,0,0,.45) 70%, rgba(0,0,0,0) 100%)",
-          maskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 25%, rgba(0,0,0,.45) 70%, rgba(0,0,0,0) 100%)",
-        }}
-      />
+    <div className="pointer-events-none absolute inset-x-0 -top-40 h-[1200px] -z-10 overflow-visible">
+      {/* radial blobs */}
+      <div className="absolute -top-56 right-[-220px] w-[1000px] h-[1000px] rounded-full bg-sky-400/35 blur-[200px]" />
+      <div className="absolute top-[240px] right-[-120px] w-[780px] h-[780px] rounded-full bg-sky-500/15 blur-[180px]" />
+      {/* linear fade to bottom (pakai gradient alpha, aman di iOS) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/100" />
     </div>
   );
 }
@@ -101,7 +93,7 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER - biarkan sticky */}
+      {/* HEADER: tetap sticky */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
@@ -137,7 +129,7 @@ export default function MobileHome() {
         </nav>
       )}
 
-      {/* WRAPPER untuk HERO + POWERED BY agar glow hanya di area ini */}
+      {/* HERO + POWERED BY wrapper agar glow hanya di bagian ini */}
       <div className="relative">
         <HeroGlow />
 
