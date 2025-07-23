@@ -15,7 +15,9 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useInView } from "react-intersection-observer";
+
 import Pricing from "./pricing";
+import Footer from "./footer"; // ⬅️ pakai footer.tsx kamu
 
 /* ---------- FAQ ---------- */
 const faqs = [
@@ -34,18 +36,20 @@ type StatItem = {
   icon: ReactNode;
 };
 
+const ICON_CLS = "w-10 h-10 text-[#0EA5E9]"
+
 const statsData: StatItem[] = [
-  { id: "users", value: 50_000_000, suffix: "+", label: "Users", icon: <Download className="w-10 h-10 text-emerald-400" /> },
-  { id: "tasks", value: 1_000_000_000, suffix: "+", label: "Solved Tasks", icon: <CheckCircle2 className="w-10 h-10 text-emerald-400" /> },
-  { id: "countries", value: 236, label: "Countries Using QUARK", icon: <Globe2 className="w-10 h-10 text-emerald-400" /> },
-  { id: "reviews", value: 650_000, suffix: "+", label: "Top Star Reviews", icon: <Sparkles className="w-10 h-10 text-emerald-400" /> },
+  { id: "users",     value: 50_000_000,  suffix: "+", label: "Users",                icon: <Download     className={ICON_CLS} /> },
+  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",        icon: <CheckCircle2 className={ICON_CLS} /> },
+  { id: "countries", value: 236,                 label: "Countries Using QUARK",      icon: <Globe2       className={ICON_CLS} /> },
+  { id: "reviews",   value: 650_000,     suffix: "+", label: "Top Star Reviews",      icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
 /* Short formatter (M/B/K) */
 function shortNumber(n: number): string {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(0) + "M";
-  if (n >= 1_000) return (n / 1_000).toFixed(0) + "K";
+  if (n >= 1_000_000)    return (n / 1_000_000).toFixed(0) + "M";
+  if (n >= 1_000)        return (n / 1_000).toFixed(0) + "K";
   return n.toString();
 }
 
@@ -58,9 +62,7 @@ export default function MobileHome() {
     <div className="bg-black text-white font-inter">
       {/* Header */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
-        <Link href="/" className="text-lg font-bold tracking-wide">
-          QUARK
-        </Link>
+        <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button
           aria-label="Toggle menu"
           onClick={() => setMenuOpen((p) => !p)}
@@ -75,9 +77,9 @@ export default function MobileHome() {
         <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
           {[
             { name: "Features", href: "#features" },
-            { name: "Pricing", href: "#pricing" },
-            { name: "FAQ", href: "#faq" },
-            { name: "Blog", href: "/blog" },
+            { name: "Pricing",  href: "#pricing" },
+            { name: "FAQ",      href: "#faq" },
+            { name: "Blog",     href: "/blog" },
           ].map((item) => (
             <a
               key={item.name}
@@ -111,7 +113,7 @@ export default function MobileHome() {
         <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
             href="#pricing"
-            className="py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow text-center"
+            className="py-3 rounded-full bg-blue-400 hover:bg-blue-500 text-white font-semibold text-sm shadow text-center"
           >
             Try QUARK Free
           </Link>
@@ -125,7 +127,7 @@ export default function MobileHome() {
 
         <div className="relative mt-10 w-full max-w-sm mx-auto">
           <Image
-            src="/mobile-hero.png"            /* ganti dengan screenshot asli */
+            src="/mobile-hero.png"         /* ganti dengan screenshot asli */
             alt="App preview"
             width={360}
             height={240}
@@ -135,22 +137,20 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* CHAT DEMO */}
-      <section id="features" className="px-5 py-16 space-y-8">
-        <h2 className="text-2xl font-bold mb-6 text-center">Chat that feels natural</h2>
-        <div className="space-y-4 max-w-sm mx-auto">
-          <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
-            Give me a 3-sentence summary of this PDF (uploading now).
-          </div>
-          <div className="max-w-[85%] mr-auto bg-zinc-800 p-3 rounded-2xl rounded-tl-none text-sm text-white/90 shadow">
-            Sure! Here’s the concise summary…
-          </div>
-          <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
-            Generate a marketing plan for an eco-friendly bottle startup.
-          </div>
-          <div className="max-w-[85%] mr-auto bg-zinc-800 p-3 rounded-2xl rounded-tl-none text-sm text-white/90 shadow">
-            Absolutely! Here’s a step-by-step launch plan…
-          </div>
+      {/* Logos Section */}
+      <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
+        <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">
+          POWERED BY
+        </p>
+        <div className="flex justify-center items-center">
+          <Image
+            src="/OpenAI-white.png"
+            alt="OpenAI logo"
+            width={130}
+            height={80}
+            className="w-auto h-auto"
+            priority
+          />
         </div>
       </section>
 
@@ -160,8 +160,8 @@ export default function MobileHome() {
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
             { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
-            { title: "Analyze files", desc: "Drop PDFs, spreadsheets, slides—get instant insights.", img: "/feature-analyze.png" },
-            { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.", img: "/feature-automate.png" },
+            { title: "Analyze files",  desc: "Drop PDFs, spreadsheets, slides—get instant insights.",       img: "/feature-analyze.png" },
+            { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.",      img: "/feature-automate.png" },
           ].map((f) => (
             <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
               <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
@@ -202,10 +202,8 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* FOOTER MINI */}
-      <footer className="px-5 py-12 text-center text-white/60 text-xs">
-        © {new Date().getFullYear()} QUARK. All rights reserved.
-      </footer>
+      {/* FOOTER (pakai komponen) */}
+      <Footer />
     </div>
   );
 }
@@ -243,7 +241,7 @@ function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
             key={`${item.id}-${runKey}`}
             start={0}
             end={item.value}
-            duration={8.4}
+            duration={8.4} // perlahankan / percepat di sini
             formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
           />
         </p>
