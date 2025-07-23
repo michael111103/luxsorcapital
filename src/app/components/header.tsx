@@ -50,7 +50,7 @@ export function SiteHeader({ onNavigate }: { onNavigate?: (href: string) => void
         <div className="flex items-center gap-4">
           <Link
             href="https://app.mrktedge.ai/auth"
-            className="px-5 py-2 rounded-md font-semibold text-white bg-gradient-to-r from-gray-800 to-gray-400 hover:brightness-110 shadow-md transition-all"
+            className="px-5 py-2 rounded-md font-semibold text-white bg-gradient-to-r from-blue-800 to-blue-400 hover:brightness-110 shadow-md transition-all"
           >
             Log In
           </Link>
