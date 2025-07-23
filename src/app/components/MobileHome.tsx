@@ -243,7 +243,7 @@ function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
             key={`${item.id}-${runKey}`}
             start={0}
             end={item.value}
-            duration={3.4}
+            duration={8.4}
             formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
           />
         </p>
