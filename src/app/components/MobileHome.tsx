@@ -19,15 +19,27 @@ import { useInView } from "react-intersection-observer";
 import Pricing from "./pricing";
 import Footer from "./footer";
 
-/* ---------------- FAQ ---------------- */
+/* ---------- FAQ ---------- */
 const faqs = [
-  { q: "What is QUARK?", a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone." },
-  { q: "Is there a free plan?", a: "Yes. You can start free with limited daily chats and upgrade anytime." },
-  { q: "Which models do you support?", a: "We provide access to leading OpenAI models like GPT‑4.1 mini, GPT‑4.5, and more—depending on your plan." },
-  { q: "Can I cancel anytime?", a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like." },
+  {
+    q: "What is QUARK?",
+    a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone.",
+  },
+  {
+    q: "Is there a free plan?",
+    a: "Yes. You can start free with limited daily chats and upgrade anytime.",
+  },
+  {
+    q: "Which models do you support?",
+    a: "We provide access to leading OpenAI models like GPT‑4.1 mini, GPT‑4.5, and more—depending on your plan.",
+  },
+  {
+    q: "Can I cancel anytime?",
+    a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like.",
+  },
 ];
 
-/* ---------------- STATS ---------------- */
+/* ---------- STATS ---------- */
 type StatItem = {
   id: string;
   value: number;
@@ -41,11 +53,11 @@ const ICON_CLS = "w-10 h-10 text-[#0EA5E9]"; // ocean blue
 const statsData: StatItem[] = [
   { id: "users",     value: 50_000_000,   suffix: "+", label: "Users",                 icon: <Download     className={ICON_CLS} /> },
   { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",         icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                  label: "Countries Using QUARK",       icon: <Globe2       className={ICON_CLS} /> },
-  { id: "reviews",   value: 650_000,      suffix: "+", label: "Top Star Reviews",       icon: <Sparkles     className={ICON_CLS} /> },
+  { id: "countries", value: 236,                   label: "Countries Using QUARK",      icon: <Globe2       className={ICON_CLS} /> },
+  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",      icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
-/* Short formatter (M/B/K) */
+/* Formatter M/B/K */
 function shortNumber(n: number): string {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
   if (n >= 1_000_000)    return (n / 1_000_000).toFixed(0) + "M";
@@ -53,7 +65,7 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ------------ Rotating words component ------------ */
+/* ---------- Rotating Words ---------- */
 function RotatingWords({
   words,
   interval = 2500,
@@ -73,20 +85,22 @@ function RotatingWords({
   }, [interval, words.length]);
 
   return (
-    <span className={`relative inline-block overflow-hidden align-baseline ${className}`}>
+    <span className={`relative inline-block h-[1em] overflow-hidden align-baseline ${className}`}>
       <span
-        className="block transition-transform duration-700 ease-out"
+        className="block will-change-transform transition-transform duration-700 ease-out"
         style={{ transform: `translateY(-${idx * 100}%)` }}
       >
         {words.map((w) => (
-          <span key={w} className="block">{w}</span>
+          <span key={w} className="block">
+            {w}
+          </span>
         ))}
       </span>
     </span>
   );
 }
 
-/* ---------------- MAIN ---------------- */
+/* ---------- MAIN ---------- */
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -96,7 +110,11 @@ export default function MobileHome() {
       {/* Header */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
-        <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
+        <button
+          aria-label="Toggle menu"
+          onClick={() => setMenuOpen((p) => !p)}
+          className="p-2 text-white"
+        >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </header>
@@ -119,6 +137,7 @@ export default function MobileHome() {
               {item.name}
             </a>
           ))}
+
           <Link
             href="https://app.mrktedge.ai/auth"
             onClick={() => setMenuOpen(false)}
@@ -131,18 +150,20 @@ export default function MobileHome() {
 
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-hidden">
-        {/* Ocean blue corner glow */}
-        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3" />
+        {/* Ocean blue glow */}
+        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 -z-10" />
 
         <h1 className="text-4xl leading-tight font-bold mb-4">
           The AI assistant that
           <br />
-          <RotatingWords
-            words={["adapts", "learns", "evolves", "understands", "accelerates"]}
-            className="text-gradient-blue"
-            interval={2600}
-          />{" "}
-          to your world
+          <span className="inline-flex items-baseline gap-2 mt-1 whitespace-nowrap">
+            <RotatingWords
+              words={["adapts", "learns", "evolves", "understands", "accelerates"]}
+              className="text-gradient-blue"
+              interval={2600}
+            />
+            <span>to your world</span>
+          </span>
         </h1>
 
         <p className="text-white/80 text-base mb-8">
@@ -166,7 +187,7 @@ export default function MobileHome() {
 
         <div className="relative mt-10 w-full max-w-sm mx-auto">
           <Image
-            src="/mobile-hero.png"        /* pastikan file ini ada di /public */
+            src="/mobile-hero.png" /* pastikan file ada di /public */
             alt="App preview"
             width={360}
             height={240}
@@ -249,7 +270,9 @@ export default function MobileHome() {
                   onClick={() => setFaqOpen(opened ? null : idx)}
                 >
                   {item.q}
-                  <ChevronDown className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`} />
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`}
+                  />
                 </button>
                 {opened && (
                   <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
@@ -266,7 +289,7 @@ export default function MobileHome() {
   );
 }
 
-/* ---------------- Numbers Section ---------------- */
+/* ---------- Numbers Section ---------- */
 function NumbersSection() {
   const { ref, inView } = useInView({ threshold: 0.35, rootMargin: "0px 0px -20% 0px" });
   const [runId, setRunId] = useState(0);
@@ -298,7 +321,7 @@ function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
             key={`${item.id}-${runKey}`}
             start={0}
             end={item.value}
-            duration={8.0}                         // ubah kecepatan di sini
+            duration={8.0} // pelankan/cepatkan di sini
             formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
           />
         </p>
