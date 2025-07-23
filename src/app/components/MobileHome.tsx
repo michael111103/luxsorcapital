@@ -53,7 +53,9 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ---------- Word cycle hook (no rotate animation) ---------- */
+/* ---------- Word cycle (ganti tiap 4 detik) ---------- */
+const WORDS = ["adapts", "learns", "evolves", "understands", "accelerates"];
+
 function useWordCycle(words: string[], delay = 4000) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
@@ -68,10 +70,7 @@ export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
-  const headlineWord = useWordCycle(
-    ["adapts", "learns", "evolves", "understands", "accelerates"],
-    4000
-  );
+  const headlineWord = useWordCycle(WORDS, 4000);
 
   return (
     <div className="bg-black text-white font-inter">
@@ -86,10 +85,12 @@ export default function MobileHome() {
       {/* Fullscreen menu */}
       {menuOpen && (
         <nav className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
-          {[{ name: "Features", href: "#features" },
+          {[
+            { name: "Features", href: "#features" },
             { name: "Pricing",  href: "#pricing" },
             { name: "FAQ",      href: "#faq" },
-            { name: "Blog",     href: "/blog" }].map(item => (
+            { name: "Blog",     href: "/blog" },
+          ].map(item => (
             <a
               key={item.name}
               href={item.href}
@@ -112,19 +113,22 @@ export default function MobileHome() {
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
         {/* Ocean blue glow */}
-        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70 z-0" />
+        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70 -z-10" />
 
         <h1 className="text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
-          <span className="mt-1 flex flex-wrap justify-center gap-2 items-baseline">
+
+          {/* baris tengah dinamis */}
+          <span className="block min-h-[1.1em] text-gradient-blue">
             <span
-              key={headlineWord} // trigger re-render for small fade
-              className="text-gradient-blue transition-opacity duration-300"
+              key={headlineWord}
+              className="inline-block transition-opacity duration-300"
             >
               {headlineWord}
             </span>
-            <span className="leading-tight">to your world</span>
           </span>
+
+          <span className="block">to your world</span>
         </h1>
 
         <p className="text-white/80 text-base mb-8">
@@ -136,7 +140,7 @@ export default function MobileHome() {
             href="#pricing"
             className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
           >
-            Try QUARK Free
+            Get Started
           </Link>
           <a
             href="#features"
@@ -163,25 +167,6 @@ export default function MobileHome() {
         <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
         <div className="flex justify-center items-center">
           <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
-        </div>
-      </section>
-
-      {/* Chat demo */}
-      <section id="features" className="px-5 py-16 space-y-8">
-        <h2 className="text-2xl font-bold mb-6 text-center">Chat that feels natural</h2>
-        <div className="space-y-4 max-w-sm mx-auto">
-          <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
-            Give me a 3-sentence summary of this PDF (uploading now).
-          </div>
-          <div className="max-w-[85%] mr-auto bg-zinc-800 p-3 rounded-2xl rounded-tl-none text-sm text-white/90 shadow">
-            Sure! Here’s the concise summary…
-          </div>
-          <div className="max-w-[85%] ml-auto bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow">
-            Generate a marketing plan for an eco-friendly bottle startup.
-          </div>
-          <div className="max-w-[85%] mr-auto bg-zinc-800 p-3 rounded-2xl rounded-tl-none text-sm text-white/90 shadow">
-            Absolutely! Here’s a step-by-step launch plan…
-          </div>
         </div>
       </section>
 

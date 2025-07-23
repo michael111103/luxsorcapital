@@ -39,7 +39,7 @@ export default function HomePage() {
               href="#"
               className="px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow"
             >
-              Try QUARK Free
+              Get Started
             </a>
             <a
               href="#"
