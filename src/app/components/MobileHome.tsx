@@ -15,10 +15,11 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useInView } from "react-intersection-observer";
+
 import Pricing from "./pricing";
 import Footer from "./footer";
 
-/* ------------ FAQ ------------ */
+/* ---------- FAQ ---------- */
 const faqs = [
   { q: "What is QUARK?", a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone." },
   { q: "Is there a free plan?", a: "Yes. You can start free with limited daily chats and upgrade anytime." },
@@ -26,7 +27,7 @@ const faqs = [
   { q: "Can I cancel anytime?", a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like." },
 ];
 
-/* ------------ STATS ------------ */
+/* ---------- STATS ---------- */
 type StatItem = {
   id: string;
   value: number;
@@ -38,12 +39,13 @@ type StatItem = {
 const ICON_CLS = "w-10 h-10 text-[#0EA5E9]"; // ocean blue
 
 const statsData: StatItem[] = [
-  { id: "users",     value: 50_000_000,   suffix: "+", label: "Users",                icon: <Download     className={ICON_CLS} /> },
-  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",        icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                  label: "Countries Using QUARK",     icon: <Globe2       className={ICON_CLS} /> },
-  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",    icon: <Sparkles     className={ICON_CLS} /> },
+  { id: "users",     value: 50_000_000,   suffix: "+", label: "Users",                 icon: <Download     className={ICON_CLS} /> },
+  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",         icon: <CheckCircle2 className={ICON_CLS} /> },
+  { id: "countries", value: 236,                   label: "Countries Using QUARK",     icon: <Globe2       className={ICON_CLS} /> },
+  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",     icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
+/* Short formatter (M/B/K) */
 function shortNumber(n: number): string {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
   if (n >= 1_000_000)     return (n / 1_000_000).toFixed(0) + "M";
@@ -51,7 +53,7 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ------------ Rotating words ------------ */
+/* ---------- Rotating words ---------- */
 function RotatingWords({
   words,
   interval = 2500,
@@ -64,27 +66,25 @@ function RotatingWords({
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setIdx((i) => (i + 1) % words.length);
-    }, interval);
+    const id = setInterval(() => setIdx(i => (i + 1) % words.length), interval);
     return () => clearInterval(id);
   }, [interval, words.length]);
 
   return (
-    <span className={`relative inline-block h-[1.05em] overflow-hidden align-baseline ${className}`}>
+    <span className={`relative inline-block h-[1em] overflow-hidden align-baseline ${className}`}>
       <span
-        className="block will-change-transform transition-transform duration-700 ease-out"
+        className="flex flex-col transition-transform duration-700 ease-out will-change-transform"
         style={{ transform: `translateY(-${idx * 100}%)` }}
       >
-        {words.map((w) => (
-          <span key={w} className="block leading-[1.05]">{w}</span>
+        {words.map(w => (
+          <span key={w} className="leading-none">{w}</span>
         ))}
       </span>
     </span>
   );
 }
 
-/* ------------ MAIN ------------ */
+/* ---------- MAIN ---------- */
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -94,7 +94,7 @@ export default function MobileHome() {
       {/* Header */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
-        <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
+        <button aria-label="Toggle menu" onClick={() => setMenuOpen(p => !p)} className="p-2 text-white">
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </header>
@@ -107,7 +107,7 @@ export default function MobileHome() {
             { name: "Pricing",  href: "#pricing" },
             { name: "FAQ",      href: "#faq" },
             { name: "Blog",     href: "/blog" },
-          ].map((item) => (
+          ].map(item => (
             <a
               key={item.name}
               href={item.href}
@@ -128,13 +128,13 @@ export default function MobileHome() {
       )}
 
       {/* HERO */}
-      <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-hidden">
+      <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
         {/* Ocean blue glow */}
-        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70" />
+        <div className="pointer-events-none absolute -top-24 right-0 w-[320px] h-[320px] bg-sky-400/30 blur-3xl rounded-full translate-x-1/3 opacity-70 -z-10" />
 
         <h1 className="text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
-          <span className="mt-1 inline-flex justify-center gap-2 flex-wrap items-baseline">
+          <span className="mt-1 inline-flex justify-center gap-2 items-baseline whitespace-nowrap">
             <RotatingWords
               words={["adapts", "learns", "evolves", "understands", "accelerates"]}
               className="text-gradient-blue"
@@ -165,7 +165,7 @@ export default function MobileHome() {
 
         <div className="relative mt-10 w-full max-w-sm mx-auto">
           <Image
-            src="/mobile-hero.png"          // pastikan file ini ada di /public
+            src="/mobile-hero.png" /* pastikan file ada di /public */
             alt="App preview"
             width={360}
             height={240}
@@ -210,7 +210,7 @@ export default function MobileHome() {
             { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
             { title: "Analyze files",  desc: "Drop PDFs, spreadsheets, slides—get instant insights.",       img: "/feature-analyze.png" },
             { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.",      img: "/feature-automate.png" },
-          ].map((f) => (
+          ].map(f => (
             <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
               <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
@@ -256,13 +256,13 @@ export default function MobileHome() {
   );
 }
 
-/* ------------ Numbers Section ------------ */
+/* ---------- Numbers Section ---------- */
 function NumbersSection() {
   const { ref, inView } = useInView({ threshold: 0.35, rootMargin: "0px 0px -20% 0px" });
   const [runId, setRunId] = useState(0);
 
   useEffect(() => {
-    if (inView) setRunId((r) => r + 1);
+    if (inView) setRunId(r => r + 1); // restart tiap muncul lagi
   }, [inView]);
 
   return (
@@ -271,7 +271,7 @@ function NumbersSection() {
       <p className="text-center text-white/60 mb-10 text-base">What we’ve achieved</p>
 
       <div className="flex flex-col gap-6 max-w-md mx-auto">
-        {statsData.map((s) => (
+        {statsData.map(s => (
           <StatCard key={s.id} item={s} runKey={runId} />
         ))}
       </div>
@@ -289,7 +289,7 @@ function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
             start={0}
             end={item.value}
             duration={8}
-            formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
+            formattingFn={n => shortNumber(n) + (item.suffix || "")}
           />
         </p>
         <p className="mt-3 text-lg text-white/70">{item.label}</p>

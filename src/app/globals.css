@@ -73,11 +73,6 @@
 
 /* ----- Tailwind utilities layer ----- */
 @layer utilities {
-  .text-gradient-blue {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-200;
-  }
-
-  /* angka rata + siap animasi countup */
   .countup {
     font-variant-numeric: tabular-nums;
     will-change: contents;
