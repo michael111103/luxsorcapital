@@ -79,23 +79,23 @@ export default function MobileHome() {
   const headlineWord = useWordCycle(WORDS, 3000);
 
   return (
-    <div className="bg-black text-white font-inter relative overflow-x-hidden">
+    <div className="relative bg-black text-white font-inter overflow-x-hidden">
 
-      {/* ===== BLUE GLOW LAYER (fixed, di atas bg hitam, fade ke bawah) ===== */}
+      {/* === BLUE GLOW (tetap di atas, tidak ikut scroll) === */}
       <div
-        className="pointer-events-none fixed inset-x-0 -top-48 h-[1400px] z-10"
+        aria-hidden
+        className="pointer-events-none fixed inset-x-0 top-0 h-[1300px] z-10"
         style={{
           background:
-            "radial-gradient(1000px 1000px at 85% -5%, rgba(56,189,248,0.55) 0%, rgba(56,189,248,0.22) 45%, rgba(56,189,248,0) 80%)",
+            "radial-gradient(1000px 900px at 90% -8%, rgba(56,189,248,0.55) 0%, rgba(56,189,248,0.22) 45%, rgba(56,189,248,0) 80%)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.45) 60%, rgba(0,0,0,0) 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.8) 25%, rgba(0,0,0,.4) 60%, rgba(0,0,0,0) 100%)",
           maskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.45) 60%, rgba(0,0,0,0) 100%)",
-          mixBlendMode: "normal",
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.8) 25%, rgba(0,0,0,.4) 60%, rgba(0,0,0,0) 100%)",
         }}
       />
 
-      {/* semua konten di atasnya */}
+      {/* Semua konten di atas glow */}
       <div className="relative z-20">
         {/* Header */}
         <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
@@ -269,7 +269,7 @@ function StatCard({ item }: { item: StatItem }) {
 
   const started = useRef(false);
 
-  // jangan ubah bagian ini (CountUp)
+  // JANGAN DIUBAH: CountUp logic
   const id = useId();
   const { start, reset } = useCountUp({
     ref: id,
