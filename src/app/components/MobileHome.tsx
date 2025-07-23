@@ -53,11 +53,11 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ---------- Rotating Words (pause + slide) ---------- */
+/* ---------- Rotating words (pause + slide) ---------- */
 function RotatingWords({
   words,
-  stay = 4000,          // ms berhenti di tiap kata
-  slide = 600,          // ms durasi animasi slide
+  stay = 4000,   // berhenti 4 detik
+  slide = 600,   // durasi geser 0.6 detik
   className = "",
 }: {
   words: string[];
@@ -65,37 +65,36 @@ function RotatingWords({
   slide?: number;
   className?: string;
 }) {
-  const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState<"stay" | "slide">("stay");
 
-  // loop: tunggu stay -> animate -> ganti index
+  // Timer untuk tiap fase
   useEffect(() => {
-    const stayTimer = setTimeout(() => setAnimating(true), stay);
-    return () => clearTimeout(stayTimer);
-  }, [current, stay]);
+    const t = setTimeout(() => {
+      if (phase === "stay") {
+        setPhase("slide");
+      } else {
+        setIndex((i) => (i + 1) % words.length);
+        setPhase("stay");
+      }
+    }, phase === "stay" ? stay : slide);
 
-  useEffect(() => {
-    if (!animating) return;
-    const slideTimer = setTimeout(() => {
-      setAnimating(false);
-      setCurrent(i => (i + 1) % words.length);
-    }, slide);
-    return () => clearTimeout(slideTimer);
-  }, [animating, slide, words.length]);
+    return () => clearTimeout(t);
+  }, [phase, stay, slide, words.length]);
 
-  // posisi target (saat animasi bergerak ke next index)
-  const targetIndex = animating ? (current + 1) % words.length : current;
+  // Hitung target translateY
+  const target = phase === "slide" ? (index + 1) % words.length : index;
 
   return (
     <span className={`relative inline-block h-[1.2em] overflow-hidden align-baseline ${className}`}>
       <span
         className="flex flex-col will-change-transform"
         style={{
-          transform: `translateY(-${targetIndex * 100}%)`,
-          transition: animating ? `transform ${slide}ms ease-out` : "none",
+          transform: `translateY(-${target * 100}%)`,
+          transition: phase === "slide" ? `transform ${slide}ms ease-out` : "none",
         }}
       >
-        {words.map(w => (
+        {words.map((w) => (
           <span key={w} className="leading-none">{w}</span>
         ))}
       </span>
