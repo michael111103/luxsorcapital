@@ -35,7 +35,7 @@ type StatItem = {
 };
 
 const statsData: StatItem[] = [
-  { id: "downloads", value: 50_000_000, suffix: "+", label: "Downloads", icon: <Download className="w-10 h-10 text-emerald-400" /> },
+  { id: "users", value: 50_000_000, suffix: "+", label: "Users", icon: <Download className="w-10 h-10 text-emerald-400" /> },
   { id: "tasks", value: 1_000_000_000, suffix: "+", label: "Solved Tasks", icon: <CheckCircle2 className="w-10 h-10 text-emerald-400" /> },
   { id: "countries", value: 236, label: "Countries Using QUARK", icon: <Globe2 className="w-10 h-10 text-emerald-400" /> },
   { id: "reviews", value: 650_000, suffix: "+", label: "Top Star Reviews", icon: <Sparkles className="w-10 h-10 text-emerald-400" /> },
@@ -106,7 +106,7 @@ export default function MobileHome() {
           <span className="text-gradient-blue">adapts to your world</span>
         </h1>
         <p className="text-white/80 text-base mb-8">
-          Chat, create, analyze, and automate—all from your phone. Built for productivity and creativity.
+          Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
         </p>
         <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
@@ -243,7 +243,7 @@ function StatCard({ item, runKey }: { item: StatItem; runKey: number }) {
             key={`${item.id}-${runKey}`}
             start={0}
             end={item.value}
-            duration={1.4}
+            duration={3.4}
             formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
           />
         </p>
