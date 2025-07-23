@@ -54,7 +54,7 @@ function shortNumber(n: number): string {
   return n.toString();
 }
 
-/* ---------- Word cycle (ganti tiap 3 detik) ---------- */
+/* ---------- Word cycle ---------- */
 const WORDS = ["adapts", "learns", "evolves", "understands", "accelerates"];
 function useWordCycle(words: string[], delay = 3000) {
   const [idx, setIdx] = useState(0);
@@ -63,26 +63,6 @@ function useWordCycle(words: string[], delay = 3000) {
     return () => clearTimeout(t);
   }, [idx, words, delay]);
   return words[idx];
-}
-
-/* ---------- hook: replay on each re-enter viewport ---------- */
-function useReplayOnView(threshold = 0.35, rootMargin = "0px 0px -20% 0px") {
-  const { ref, inView } = useInView({ threshold, rootMargin, triggerOnce: false });
-  const wasInView = useRef(false);
-  const [key, setKey] = useState(0);
-
-  useEffect(() => {
-    if (inView && !wasInView.current) {
-      // baru masuk -> mainkan
-      setKey((k) => k + 1);
-      wasInView.current = true;
-    } else if (!inView && wasInView.current) {
-      // keluar viewport -> siap2 replay lagi
-      wasInView.current = false;
-    }
-  }, [inView]);
-
-  return { ref, playKey: key };
 }
 
 /* ---------- MAIN ---------- */
@@ -132,13 +112,13 @@ export default function MobileHome() {
 
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
-        {/* big glow */}
+        {/* BIG BLUE GLOW (diperbesar & tetap muncul) */}
         <div
           className="pointer-events-none absolute -top-56 right-[-200px]
-                     w-[1000px] h-[1000px] rounded-full bg-sky-400/25 blur-[220px] -z-10" />
+                     w-[1100px] h-[1100px] rounded-full bg-sky-400/25 blur-[230px] z-0" />
         <div
           className="pointer-events-none absolute top-1/3 right-[-120px]
-                     w-[700px] h-[700px] rounded-full bg-sky-500/10 blur-[180px] -z-10" />
+                     w-[750px] h-[750px] rounded-full bg-sky-500/10 blur-[180px] z-0" />
 
         <div className="relative z-10 w-full">
           <h1 className="text-4xl leading-tight font-bold mb-4">
@@ -196,7 +176,7 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* Feature cards */}
+      {/* Features */}
       <section className="px-5 py-16 bg-zinc-900/20" id="capabilities">
         <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
@@ -252,32 +232,47 @@ export default function MobileHome() {
 
 /* ---------- Numbers Section ---------- */
 function NumbersSection() {
-  const { ref, playKey } = useReplayOnView(); // key untuk replay setiap masuk lagi
-
   return (
-    <section ref={ref} className="px-5 py-16" id="numbers">
+    <section className="px-5 py-16" id="numbers">
       <h2 className="text-3xl font-bold text-center mb-3">{"QUARK's Power in Numbers"}</h2>
       <p className="text-center text-white/60 mb-10 text-base">What we’ve achieved</p>
 
       <div className="flex flex-col gap-6 max-w-md mx-auto">
         {statsData.map((s) => (
-          <StatCard key={s.id} item={s} playKey={playKey} />
+          <StatCard key={s.id} item={s} />
         ))}
       </div>
     </section>
   );
 }
 
-function StatCard({ item, playKey }: { item: StatItem; playKey: number }) {
+/* Each card animates once per viewport entry */
+function StatCard({ item }: { item: StatItem }) {
+  const { ref, inView } = useInView({ threshold: 0.45, triggerOnce: false });
+  const wasInView = useRef(false);
+  const [playKey, setPlayKey] = useState(0);
+
+  // kontrol start/stop
+  useEffect(() => {
+    if (inView && !wasInView.current) {
+      setPlayKey((k) => k + 1); // start animasi
+      wasInView.current = true;
+    } else if (!inView && wasInView.current) {
+      wasInView.current = false; // reset flag supaya nanti bisa main lagi
+    }
+  }, [inView]);
+
   return (
-    <div className="rounded-3xl bg-zinc-900/80 border border-zinc-800 px-6 py-8 flex items-center justify-between shadow-sm">
+    <div ref={ref} className="rounded-3xl bg-zinc-900/80 border border-zinc-800 px-6 py-8 flex items-center justify-between shadow-sm">
       <div>
-        <p className="text-5xl font-extrabold leading-none countup">
+        <p className="text-5xl font-extrabold leading-none">
           <CountUp
-            key={`${item.id}-${playKey}`} // restart hanya saat playKey berubah
+            key={`${item.id}-${playKey}`} // hanya berubah saat re-enter
             start={0}
             end={item.value}
-            duration={8}
+            duration={3.5}
+            preserveValue
+            redraw={false}
             formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
           />
         </p>
