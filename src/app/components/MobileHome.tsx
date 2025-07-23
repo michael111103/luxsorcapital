@@ -2,10 +2,17 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import { useState, useEffect, useRef, ReactNode } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useId,
+  ReactNode,
+} from "react";
 import Image from "next/image";
 import Link from "next/link";
-import CountUp from "react-countup";
+import { useInView } from "react-intersection-observer";
+import { useCountUp } from "react-countup";
 import {
   Menu,
   X,
@@ -15,7 +22,6 @@ import {
   Globe2,
   Sparkles,
 } from "lucide-react";
-import { useInView } from "react-intersection-observer";
 
 import Pricing from "./pricing";
 import Footer from "./footer";
@@ -40,10 +46,10 @@ type StatItem = {
 const ICON_CLS = "w-10 h-10 text-[#0EA5E9]";
 
 const statsData: StatItem[] = [
-  { id: "users",     value: 50_000_000,    suffix: "+", label: "Users",               icon: <Download     className={ICON_CLS} /> },
-  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",        icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                   label: "Countries Using QUARK",    icon: <Globe2       className={ICON_CLS} /> },
-  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews",    icon: <Sparkles     className={ICON_CLS} /> },
+  { id: "users",     value: 50_000_000,    suffix: "+", label: "Users",            icon: <Download     className={ICON_CLS} /> },
+  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",     icon: <CheckCircle2 className={ICON_CLS} /> },
+  { id: "countries", value: 236,                  label: "Countries Using QUARK",  icon: <Globe2       className={ICON_CLS} /> },
+  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews", icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
 /* ---------- Helpers ---------- */
@@ -73,7 +79,13 @@ export default function MobileHome() {
   const headlineWord = useWordCycle(WORDS, 3000);
 
   return (
-    <div className="bg-black text-white font-inter">
+    <div className="bg-black text-white font-inter relative overflow-x-hidden">
+      {/* LAYER SINAR BIRU BESAR */}
+      <div
+        className="pointer-events-none absolute inset-x-0 -top-40 h-[1200px] -z-10
+                   bg-gradient-to-b from-sky-400/30 via-sky-400/10 to-transparent blur-[180px]"
+      />
+
       {/* Header */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
@@ -112,59 +124,49 @@ export default function MobileHome() {
 
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
-        {/* BIG BLUE GLOW (diperbesar & tetap muncul) */}
-        <div
-          className="pointer-events-none absolute -top-56 right-[-200px]
-                     w-[1100px] h-[1100px] rounded-full bg-sky-400/25 blur-[230px] z-0" />
-        <div
-          className="pointer-events-none absolute top-1/3 right-[-120px]
-                     w-[750px] h-[750px] rounded-full bg-sky-500/10 blur-[180px] z-0" />
+        <h1 className="text-4xl leading-tight font-bold mb-4">
+          <span className="block">The AI assistant that</span>
 
-        <div className="relative z-10 w-full">
-          <h1 className="text-4xl leading-tight font-bold mb-4">
-            <span className="block">The AI assistant that</span>
-
-            <span className="block min-h-[1.1em]">
-              <span
-                key={headlineWord}
-                className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
-              >
-                {headlineWord}
-              </span>
+          <span className="block min-h-[1.1em]">
+            <span
+              key={headlineWord}
+              className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
+            >
+              {headlineWord}
             </span>
+          </span>
 
-            <span className="block">to your world</span>
-          </h1>
+          <span className="block">to your world</span>
+        </h1>
 
-          <p className="text-white/80 text-base mb-8">
-            Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
-          </p>
+        <p className="text-white/80 text-base mb-8">
+          Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
+        </p>
 
-          <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
-            <Link
-              href="#pricing"
-              className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
-            >
-              Get Started
-            </Link>
-            <a
-              href="#features"
-              className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
-            >
-              Explore Features
-            </a>
-          </div>
+        <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
+          <Link
+            href="#pricing"
+            className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
+          >
+            Get Started
+          </Link>
+          <a
+            href="#features"
+            className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
+          >
+            Explore Features
+          </a>
+        </div>
 
-          <div className="relative mt-10 w-full max-w-sm mx-auto">
-            <Image
-              src="/hero-dashboard.png"
-              alt="App preview"
-              width={360}
-              height={240}
-              className="rounded-xl shadow-lg w-full h-auto"
-              priority
-            />
-          </div>
+        <div className="relative mt-10 w-full max-w-sm mx-auto">
+          <Image
+            src="/hero-dashboard.png"
+            alt="App preview"
+            width={360}
+            height={240}
+            className="rounded-xl shadow-lg w-full h-auto"
+            priority
+          />
         </div>
       </section>
 
@@ -224,7 +226,6 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
@@ -246,35 +247,42 @@ function NumbersSection() {
   );
 }
 
-/* Each card animates once per viewport entry */
+/* ---- StatCard: animasi hanya saat benar2 masuk viewport ---- */
 function StatCard({ item }: { item: StatItem }) {
-  const { ref, inView } = useInView({ threshold: 0.45, triggerOnce: false });
-  const wasInView = useRef(false);
-  const [playKey, setPlayKey] = useState(0);
+  const { ref, inView } = useInView({
+    threshold: 0.6,
+    rootMargin: "0px 0px -20% 0px",
+    triggerOnce: false,
+  });
 
-  // kontrol start/stop
+  const started = useRef(false);
+
+  // === Opsi #1 (disarankan): pakai string id dari useId ===
+  const id = useId();
+  const { start, reset } = useCountUp({
+    ref: id,
+    start: 0,
+    end: item.value,
+    duration: 3.2,
+    startOnMount: false,
+    formattingFn: (n) => shortNumber(n) + (item.suffix || ""),
+  });
+
   useEffect(() => {
-    if (inView && !wasInView.current) {
-      setPlayKey((k) => k + 1); // start animasi
-      wasInView.current = true;
-    } else if (!inView && wasInView.current) {
-      wasInView.current = false; // reset flag supaya nanti bisa main lagi
+    if (inView && !started.current) {
+      reset();
+      start();
+      started.current = true;
+    } else if (!inView && started.current) {
+      started.current = false;
     }
-  }, [inView]);
+  }, [inView, reset, start]);
 
   return (
     <div ref={ref} className="rounded-3xl bg-zinc-900/80 border border-zinc-800 px-6 py-8 flex items-center justify-between shadow-sm">
       <div>
         <p className="text-5xl font-extrabold leading-none">
-          <CountUp
-            key={`${item.id}-${playKey}`} // hanya berubah saat re-enter
-            start={0}
-            end={item.value}
-            duration={3.5}
-            preserveValue
-            redraw={false}
-            formattingFn={(n) => shortNumber(n) + (item.suffix || "")}
-          />
+          <span id={id} />
         </p>
         <p className="mt-3 text-lg text-white/70">{item.label}</p>
       </div>
