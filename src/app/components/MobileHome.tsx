@@ -355,6 +355,23 @@ function FAQItem({
   );
 }
 
+      {/* Contact Us */}
+      <section id="contact" className="px-5 py-16">
+        <div className="max-w-md mx-auto bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 text-center">
+          <h3 className="text-xl font-semibold mb-2">Need More Help?</h3>
+          <p className="text-white/70 mb-4">
+            Have questions or want to learn more? Our support team is here to help.
+            Click below to get in touch and we'll respond within one business day.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-block px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full"
+          >
+            Contact Us
+          </Link>
+        </div>
+      </section>
+
 /* ---------- Numbers Section ---------- */
 function NumbersSection() {
   return (
