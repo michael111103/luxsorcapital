@@ -31,8 +31,6 @@ export default function PrivacyPage() {
   return (
     <div className="bg-black text-white font-inter min-h-screen flex flex-col">
 
-      {/* spacer supaya konten tidak ketutup header */}
-      <div className="pt-14" />
 
       {/* HERO & TOC */}
       <section className="px-4 md:px-8 py-12 md:py-16">
