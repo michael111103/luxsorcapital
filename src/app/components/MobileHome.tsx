@@ -259,9 +259,6 @@ export default function MobileHome() {
       {/* Numbers */}
       <NumbersSection />
 
-      {/* Pricing */}
-      <Pricing />
-
       {/* Reviews */}
       <section id="reviews" className="px-5 py-16">
         <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
@@ -291,6 +288,9 @@ export default function MobileHome() {
           </div>
         </div>
       </section>
+
+      {/* Pricing */}
+      <Pricing />
 
       {/* FAQ */}
       <section id="faq" className="px-5 py-16">
