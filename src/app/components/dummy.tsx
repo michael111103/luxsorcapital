@@ -74,6 +74,15 @@ const statsData: StatItem[] = [
   { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews", icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
+/* ---------- TESTIMONIALS ---------- */
+const testimonials = [
+  { msg: "QUARK helped me draft entire reports in minutes—absolutely game‑changer!", user: "AliceW", rating: 5 },
+  { msg: "I love how it summarizes my spreadsheets. Super efficient and accurate.", user: "Bob_Smith", rating: 4.5 },
+  { msg: "Automating my routines saved me hours each day. Highly recommend!", user: "ClaraJ", rating: 5 },
+  { msg: "DocPilot feature is amazing—translating PDFs has never been this easy.", user: "DanielK", rating: 4 },
+  { msg: "Image Generation blew my mind—my presentations never looked better.", user: "Erin_T", rating: 4.5 },
+];
+
 /* ---------- Helpers ---------- */
 function shortNumber(n: number): string {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
@@ -226,14 +235,6 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* Logos */}
-      <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
-        <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
-        <div className="flex justify-center items-center">
-          <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
-        </div>
-      </section>
-
       {/* Features */}
       <section className="px-5 py-16 bg-zinc-900/20" id="features">
         <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
@@ -257,6 +258,41 @@ export default function MobileHome() {
 
       {/* Pricing */}
       <Pricing />
+
+      {/* REVIEWS */}
+      <section id="reviews" className="px-5 py-16">
+        <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
+        <p className="text-center text-white/60 mb-6">What our users are saying</p>
+        <div className="overflow-x-auto no-scrollbar px-2">
+          <div className="flex space-x-4">
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className="min-w-[260px] bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 flex-shrink-0"
+              >
+                <p className="text-sm text-white/70 mb-4">{t.msg}</p>
+                <div className="flex items-center mb-2">
+                  {Array(5)
+                    .fill(0)
+                    .map((_, idx) => {
+                      const filled = idx < Math.floor(t.rating);
+                      const half = !filled && idx < t.rating;
+                      return (
+                        <span
+                          key={idx}
+                          className={`text-yellow-400 ${half ? "opacity-75" : ""}`}
+                        >
+                          ★
+                        </span>
+                      );
+                    })}
+                </div>
+                <p className="text-xs text-white/50">— {t.user}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* FAQ */}
       <section id="faq" className="px-5 py-16">

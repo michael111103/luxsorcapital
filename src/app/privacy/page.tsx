@@ -209,7 +209,6 @@ export default function PrivacyPage() {
               <Link href="mailto:support@quark.ai" className="underline">
                 support@quark.ai
               </Link>{" "}
-              or mail us at:
             </p>
             <p className="mt-2">
               <strong>QUARK</strong><br />

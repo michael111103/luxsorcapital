@@ -163,7 +163,6 @@ export default function TermsPage() {
               <Link href="mailto:support@quark.ai" className="underline">
                 support@quark.ai
               </Link>{" "}
-              or mail to:
             </p>
             <p className="mt-2">
               <strong>QUARK</strong><br />
