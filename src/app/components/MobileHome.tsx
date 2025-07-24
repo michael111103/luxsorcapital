@@ -224,7 +224,7 @@ export default function MobileHome() {
         <div className="relative z-10 flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
             href="#pricing"
-            className="py-3 rounded-full bg-gray-500 hover:bg-gray-600 text-white font-semibold text-sm shadow text-center"
+            className="py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm shadow text-center"
           >
             Get Started
           </Link>
