@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import {
@@ -208,7 +209,7 @@ export default function MobileHome() {
         </h1>
 
         <p className="relative z-10 text-white/80 text-base mb-8">
-          Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
+          Chat, create, analyze, and automate all from your device. Built for productivity and creativity.
         </p>
 
         <div className="relative z-10 flex flex-col gap-3 w-full max-w-xs mx-auto">
