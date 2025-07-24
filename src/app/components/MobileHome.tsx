@@ -226,14 +226,6 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* Logos */}
-      <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
-        <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
-        <div className="flex justify-center items-center">
-          <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
-        </div>
-      </section>
-
       {/* Features */}
       <section className="px-5 py-16 bg-zinc-900/20" id="features">
         <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
