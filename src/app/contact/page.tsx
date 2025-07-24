@@ -1,11 +1,8 @@
-// app/contact/page.tsx
-export const dynamic = 'force-dynamic';
+"use client";  // ini penting biar kita bisa pakai hook client
 
-import ClientContactForm from './ClientContactForm';
+import ClientContactForm from "./ClientContactForm";
 
-export default function ContactPage({ searchParams }: { searchParams: { issueType?: string } }) {
-  const defaultType = searchParams.issueType || '';
-
+export default function ContactPage() {
   return (
     <main className="min-h-screen bg-black text-white px-4 py-16">
       <div className="max-w-lg mx-auto">
@@ -13,8 +10,7 @@ export default function ContactPage({ searchParams }: { searchParams: { issueTyp
         <p className="text-white/70 mb-6">
           Have questions or feedback? Fill out the form below and we’ll get back to you within 24 business hours.
         </p>
-
-        <ClientContactForm defaultIssueType={defaultType} />
+        <ClientContactForm />
       </div>
     </main>
   );

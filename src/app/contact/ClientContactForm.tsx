@@ -1,18 +1,21 @@
-// app/contact/ClientContactForm.tsx
 "use client";
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
-interface Props {
-  defaultIssueType: string;
-}
-
-export default function ClientContactForm({ defaultIssueType }: Props) {
+export default function ClientContactForm() {
+  const searchParams = useSearchParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [issueType, setIssueType] = useState(defaultIssueType);
+  const [issueType, setIssueType] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle"|"sending"|"success"|"error">("idle");
+
+  // saat mount, baca ?issueType= dari URL
+  useEffect(() => {
+    const def = searchParams.get("issueType");
+    if (def) setIssueType(def);
+  }, [searchParams]);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -33,28 +36,25 @@ export default function ClientContactForm({ defaultIssueType }: Props) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6">
+      {/* Name */}
       <div>
-        <label className="block text-sm mb-1">Your Name</label>
+        <label className="block text-sm mb-1">Name</label>
         <input
-          type="text"
-          required
-          value={name}
+          type="text" required value={name}
           onChange={e => setName(e.target.value)}
           className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md"
         />
       </div>
-
+      {/* Email */}
       <div>
         <label className="block text-sm mb-1">Email</label>
         <input
-          type="email"
-          required
-          value={email}
+          type="email" required value={email}
           onChange={e => setEmail(e.target.value)}
           className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md"
         />
       </div>
-
+      {/* Issue Type */}
       <div>
         <label className="block text-sm mb-1">Issue Type</label>
         <select
@@ -62,39 +62,31 @@ export default function ClientContactForm({ defaultIssueType }: Props) {
           onChange={e => setIssueType(e.target.value)}
           className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md"
         >
-          <option value="">— select issue type —</option>
+          <option value="">— select an issue —</option>
           <option value="Account Issues">Account Issues</option>
           <option value="Billing">Billing</option>
-          <option value="Technical Support">Technical Support</option>
+          <option value="Tech Support">Technical Support</option>
           <option value="Feature Request">Feature Request</option>
         </select>
       </div>
-
+      {/* Message */}
       <div>
         <label className="block text-sm mb-1">Message</label>
         <textarea
-          required
-          rows={5}
-          value={message}
+          rows={5} required value={message}
           onChange={e => setMessage(e.target.value)}
           className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md resize-none"
         />
       </div>
-
+      {/* Submit */}
       <button
-        type="submit"
-        disabled={status === "sending"}
+        type="submit" disabled={status === "sending"}
         className="w-full py-3 bg-blue-500 hover:bg-blue-600 rounded-full font-semibold disabled:opacity-50"
       >
         {status === "sending" ? "Sending…" : "Send Message"}
       </button>
-
-      {status === "success" && (
-        <p className="text-green-400 text-center mt-2">Message sent! 🙌</p>
-      )}
-      {status === "error" && (
-        <p className="text-red-400 text-center mt-2">Something went wrong. Please try again.</p>
-      )}
+      {status === "success" && <p className="text-green-400 text-center">Message sent! 🙌</p>}
+      {status === "error"   && <p className="text-red-400 text-center">Oops, something went wrong.</p>}
     </form>
   );
 }
