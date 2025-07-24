@@ -77,7 +77,7 @@ const BlueGlow = () => (
     aria-hidden="true"
     className="
       pointer-events-none absolute left-1/2 -translate-x-1/2
-      top-[-180px] w-[200%] h-[860px]  /* tambah tinggi -> sejajar garis hijau */
+      top-[-180px] w-[200%] h-[860px]
       blur-[170px] z-0
     "
     style={{
@@ -114,26 +114,44 @@ export default function MobileHome() {
 
       {/* MENU OVERLAY */}
       {menuOpen && (
-        <nav className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md p-6 pt-20 flex flex-col gap-6 animate-fade-in">
-          {[
-            { name: "Features", href: "#features" },
-            { name: "Pricing",  href: "#pricing"  },
-            { name: "FAQ",      href: "#faq"      },
-            { name: "Blog",     href: "/blog"     },
-          ].map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-xl font-semibold"
+        <nav className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md animate-fade-in flex flex-col">
+          {/* top bar */}
+          <div className="flex items-center justify-between px-4 h-14 border-b border-white/10">
+            <Link href="/" className="text-lg font-bold tracking-wide" onClick={() => setMenuOpen(false)}>
+              QUARK
+            </Link>
+            <button
+              aria-label="Close menu"
               onClick={() => setMenuOpen(false)}
+              className="p-2 text-white"
             >
-              {item.name}
-            </a>
-          ))}
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* centered links */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-8 text-center">
+            {[
+              { name: "Features", href: "#features" },
+              { name: "Pricing",  href: "#pricing"  },
+              { name: "FAQ",      href: "#faq"      },
+            ].map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className="text-2xl font-semibold"
+              >
+                {item.name}
+              </a>
+            ))}
+          </div>
+
+          {/* bottom CTA */}
           <Link
             href="https://app.mrktedge.ai/auth"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-800 to-blue-400 font-semibold"
+            className="m-6 mb-10 w-full max-w-xs self-center text-center py-3 rounded-lg bg-gradient-to-r from-blue-800 to-blue-400 font-semibold"
           >
             Get Started
           </Link>
