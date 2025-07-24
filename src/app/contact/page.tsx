@@ -1,4 +1,3 @@
-// app/contact/page.tsx
 "use client";
 
 import { useState, FormEvent } from "react";
