@@ -8,14 +8,10 @@ type FooterLink = { label: string; href: string; external?: boolean };
 const platform: FooterLink[] = [
   { label: "Features", href: "#features" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Demo", href: "/demo" },
-  { label: "Docs", href: "/docs" },
 ];
 
 const company: FooterLink[] = [
   { label: "About", href: "/about" },
-  { label: "Careers", href: "/careers" },
-  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 

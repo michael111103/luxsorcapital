@@ -1,5 +1,3 @@
-/* src/app/components/MobileHome.tsx */
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import {
