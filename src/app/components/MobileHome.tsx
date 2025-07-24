@@ -30,8 +30,8 @@ import Footer from "./footer";
 const faqs = [
   {
     q: "What is QUARK?",
-    a: `QUARK is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your phone or laptop.
-It combines state‑of‑the‑art language models with handy tools (PDF/CSV readers, web search, workflow builder, etc.) so you don’t just chat—you actually get work done end to end.`
+    a: `QUARK is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
+It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`
   },
   {
     q: "Is there a free plan?",
@@ -41,15 +41,22 @@ When you need higher limits, faster models, or pro features, you can upgrade any
   {
     q: "Which models do you support?",
     a: `We provide access to the latest OpenAI models such as GPT‑4.1 mini, GPT‑4.5, and others—depending on your plan.
-QUARK can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in the settings.`
+QUARK can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in Settings.`
   },
   {
-    q: "Can I cancel anytime?",
+    q: "Can I cancel my subscription anytime?",
     a: `Absolutely. There’s no lock‑in. You can change or cancel your plan at any moment from the Billing page.
 Your subscription stays active until the current period ends and won’t auto‑renew after cancellation. No penalties.`
   },
+  {
+    q: "Do you provide refunds or exchanges?",
+    a: `All sales are final and we do not offer refunds. Please try the free plan and review our docs before purchasing—this helps us keep pricing competitive and continue improving the platform.`
+  },
+  {
+    q: "How do I contact your support team?",
+    a: `Head to our website footer and tap “Contact Us”. Fill out the form and submit your request—our team usually replies within 24 hours on business days.`
+  },
 ];
-
 
 /* ---------- STATS ---------- */
 type StatItem = {
@@ -65,7 +72,7 @@ const ICON_CLS = "w-10 h-10 text-[#0EA5E9]";
 const statsData: StatItem[] = [
   { id: "users",     value: 50_000_000,    suffix: "+", label: "Users",            icon: <Download     className={ICON_CLS} /> },
   { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",     icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                  label: "Countries Using QUARK",  icon: <Globe2       className={ICON_CLS} /> },
+  { id: "countries", value: 236,                   label: "Countries Using QUARK",  icon: <Globe2       className={ICON_CLS} /> },
   { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews", icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
@@ -88,7 +95,7 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- BLUE GLOW ---------- */
+/* ---------- BLUE GLOW (hero only) ---------- */
 const BlueGlow = () => (
   <div
     aria-hidden="true"
@@ -117,7 +124,7 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER - jangan diubah */}
+      {/* HEADER (keep) */}
       <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button
@@ -132,21 +139,15 @@ export default function MobileHome() {
       {/* MENU OVERLAY */}
       {menuOpen && (
         <nav className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md animate-fade-in flex flex-col">
-          {/* top bar */}
           <div className="flex items-center justify-between px-4 h-14 border-b border-white/10">
             <Link href="/" className="text-lg font-bold tracking-wide" onClick={() => setMenuOpen(false)}>
               QUARK
             </Link>
-            <button
-              aria-label="Close menu"
-              onClick={() => setMenuOpen(false)}
-              className="p-2 text-white"
-            >
+            <button aria-label="Close menu" onClick={() => setMenuOpen(false)} className="p-2 text-white">
               <X className="w-6 h-6" />
             </button>
           </div>
 
-          {/* centered links */}
           <div className="flex-1 flex flex-col items-center justify-center gap-8 text-center">
             {[
               { name: "Features", href: "#features" },
@@ -164,7 +165,6 @@ export default function MobileHome() {
             ))}
           </div>
 
-          {/* bottom CTA */}
           <Link
             href="https://app.mrktedge.ai/auth"
             onClick={() => setMenuOpen(false)}
@@ -178,7 +178,7 @@ export default function MobileHome() {
       {/* spacer header */}
       <div className="pt-14" />
 
-      {/* HERO SECTION (glow hanya di sini) */}
+      {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
         <BlueGlow />
 
@@ -228,7 +228,7 @@ export default function MobileHome() {
         </div>
       </section>
 
-      {/* Logos (di luar glow) */}
+      {/* Logos */}
       <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
         <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
         <div className="flex justify-center items-center">
@@ -263,28 +263,62 @@ export default function MobileHome() {
       {/* FAQ */}
       <section id="faq" className="px-5 py-16">
         <h2 className="text-2xl font-bold text-center mb-8">FAQ</h2>
-        <div className="max-w-md mx-auto divide-y divide-zinc-800">
-          {faqs.map((item, idx) => {
-            const opened = faqOpen === idx;
-            return (
-              <div key={idx} className="py-4">
-                <button
-                  className="w-full flex items-center justify-between text-left text-sm"
-                  onClick={() => setFaqOpen(opened ? null : idx)}
-                >
-                  {item.q}
-                  <ChevronDown className={`w-4 h-4 transition-transform ${opened ? "rotate-180" : "rotate-0"}`} />
-                </button>
-                {opened && (
-                  <p className="mt-2 text-white/70 text-sm leading-relaxed">{item.a}</p>
-                )}
-              </div>
-            );
-          })}
+        <div className="max-w-md mx-auto">
+          {faqs.map((item, idx) => (
+            <FAQItem
+              key={idx}
+              item={item}
+              open={faqOpen === idx}
+              onToggle={() => setFaqOpen(faqOpen === idx ? null : idx)}
+            />
+          ))}
         </div>
       </section>
 
       <Footer />
+    </div>
+  );
+}
+
+/* ---------- FAQ Item Component ---------- */
+function FAQItem({
+  item,
+  open,
+  onToggle,
+}: {
+  item: { q: string; a: string };
+  open: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="border-b border-white/10">
+      <button
+        className="w-full flex items-center justify-between py-5 text-left group"
+        onClick={onToggle}
+      >
+        <span
+          className={`text-[22px] leading-snug font-semibold tracking-tight ${
+            open ? "underline decoration-white/70" : "group-hover:underline"
+          }`}
+        >
+          {item.q}
+        </span>
+        <ChevronDown
+          className={`w-5 h-5 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      <div
+        className={`overflow-hidden transition-[max-height,opacity] duration-300 ${
+          open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <p className="pb-5 text-base text-white/70 leading-relaxed whitespace-pre-line">
+          {item.a}
+        </p>
+      </div>
     </div>
   );
 }
@@ -305,7 +339,7 @@ function NumbersSection() {
   );
 }
 
-/* ---- StatCard ---- */
+/* ---------- StatCard (CountUp logic tetap) ---------- */
 function StatCard({ item }: { item: StatItem }) {
   const { ref, inView } = useInView({
     threshold: 0.6,
@@ -336,7 +370,10 @@ function StatCard({ item }: { item: StatItem }) {
   }, [inView, reset, start]);
 
   return (
-    <div ref={ref} className="rounded-3xl bg-zinc-900/80 border border-zinc-800 px-6 py-8 flex items-center justify-between shadow-sm">
+    <div
+      ref={ref}
+      className="rounded-3xl bg-zinc-900/80 border border-zinc-800 px-6 py-8 flex items-center justify-between shadow-sm"
+    >
       <div>
         <p className="text-5xl font-extrabold leading-none">
           <span id={id} />
