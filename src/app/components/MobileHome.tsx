@@ -71,21 +71,35 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- BLUE GLOW (fixed & fade) ---------- */
-function BlueGlow() {
+/* ---------- Hero Glow (hanya di section pertama) ---------- */
+function HeroGlow() {
   return (
-    <div className="pointer-events-none fixed top-0 left-0 w-screen h-[1200px] z-30 mix-blend-screen">
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-visible">
+      {/* Radial utama dari kanan atas */}
       <div
-        className="absolute inset-0"
+        className="absolute -top-40 right-[-220px] w-[1100px] h-[1100px] rounded-full"
         style={{
           background:
-            "radial-gradient(ellipse at 100% 0%, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0.25) 35%, rgba(56,189,248,0.10) 60%, rgba(56,189,248,0) 85%)",
+            "radial-gradient(ellipse at center, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0.25) 35%, rgba(56,189,248,0.08) 65%, rgba(56,189,248,0) 100%)",
+          filter: "blur(160px)",
+        }}
+      />
+      {/* Layer tambahan untuk depth */}
+      <div
+        className="absolute top-1/3 right-[-100px] w-[700px] h-[700px] rounded-full"
+        style={{
+          background: "rgba(56,189,248,0.12)",
+          filter: "blur(200px)",
+        }}
+      />
+      {/* Mask supaya makin pudar ke bawah (akhir section) */}
+      <div
+        className="absolute inset-0 bg-black"
+        style={{
           WebkitMaskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 30%, rgba(0,0,0,.45) 65%, rgba(0,0,0,0) 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.4) 70%, rgba(0,0,0,0) 100%)",
           maskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 30%, rgba(0,0,0,.45) 65%, rgba(0,0,0,0) 100%)",
-          filter: "blur(120px)",
-          transform: "translateZ(0)",
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.4) 70%, rgba(0,0,0,0) 100%)",
         }}
       />
     </div>
@@ -101,10 +115,7 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* Glow layer */}
-      <BlueGlow />
-
-      {/* HEADER (fixed, di atas overlay) */}
+      {/* HEADER - sudah berfungsi, jangan diubah */}
       <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button
@@ -116,7 +127,7 @@ export default function MobileHome() {
         </button>
       </header>
 
-      {/* MENU OVERLAY (z-90 supaya header di atasnya) */}
+      {/* MENU OVERLAY */}
       {menuOpen && (
         <nav className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md p-6 pt-20 flex flex-col gap-6 animate-fade-in">
           {[
@@ -147,9 +158,11 @@ export default function MobileHome() {
       {/* spacer header */}
       <div className="pt-14" />
 
-      {/* HERO + POWERED BY berada di bawah glow */}
-      <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible z-40">
-        <h1 className="text-4xl leading-tight font-bold mb-4">
+      {/* HERO SECTION (glow di sini aja) */}
+      <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
+        <HeroGlow />
+
+        <h1 className="relative z-10 text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
 
           <span className="block min-h-[1.1em]">
@@ -164,11 +177,11 @@ export default function MobileHome() {
           <span className="block">to your world</span>
         </h1>
 
-        <p className="text-white/80 text-base mb-8">
+        <p className="relative z-10 text-white/80 text-base mb-8">
           Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
         </p>
 
-        <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
+        <div className="relative z-10 flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
             href="#pricing"
             className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
@@ -183,7 +196,7 @@ export default function MobileHome() {
           </a>
         </div>
 
-        <div className="relative mt-10 w-full max-w-sm mx-auto">
+        <div className="relative z-10 mt-10 w-full max-w-sm mx-auto">
           <Image
             src="/hero-dashboard.png"
             alt="App preview"
@@ -195,7 +208,8 @@ export default function MobileHome() {
         </div>
       </section>
 
-      <section className="relative z-40 w-full bg-black py-20 px-6 flex flex-col items-center">
+      {/* Logos (di luar glow) */}
+      <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
         <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
         <div className="flex justify-center items-center">
           <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
