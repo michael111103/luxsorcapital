@@ -1,3 +1,5 @@
+/* src/app/components/MobileHome.tsx */
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import {
@@ -11,6 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import { useCountUp } from "react-countup";
+import useEmblaCarousel from "embla-carousel-react";
 import {
   Menu,
   X,
@@ -26,34 +29,16 @@ import Footer from "./footer";
 
 /* ---------- FAQ ---------- */
 const faqs = [
-  {
-    q: "What is QUARK?",
-    a: `QUARK is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
-It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`
-  },
-  {
-    q: "Is there a free plan?",
-    a: `Yes. You can start for free with daily message and upload limits—no credit card required.
-When you need higher limits, faster models, or pro features, you can upgrade anytime with a single click.`
-  },
-  {
-    q: "Which models do you support?",
-    a: `We provide access to the latest OpenAI models such as GPT‑4.1 mini, GPT‑4.5, and others—depending on your plan.
-QUARK can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in Settings.`
-  },
-  {
-    q: "Can I cancel my subscription anytime?",
-    a: `Absolutely. There’s no lock‑in. You can change or cancel your plan at any moment from the Billing page.
-Your subscription stays active until the current period ends and won’t auto‑renew after cancellation. No penalties.`
-  },
-  {
-    q: "Do you provide refunds or exchanges?",
-    a: `All sales are final and we do not offer refunds. Please try the free plan and review our docs before purchasing—this helps us keep pricing competitive and continue improving the platform.`
-  },
-  {
-    q: "How do I contact your support team?",
-    a: `Head to our website footer and tap “Contact Us”. Fill out the form and submit your request—our team usually replies within 24 hours on business days.`
-  },
+  { q: "What is QUARK?", a: `QUARK is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
+It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.` },
+  { q: "Is there a free plan?", a: `Yes. You can start for free with daily message and upload limits—no credit card required.
+When you need higher limits, faster models, or pro features, you can upgrade anytime with a single click.` },
+  { q: "Which models do you support?", a: `We provide access to the latest OpenAI models such as GPT‑4.1 mini, GPT‑4.5, and others—depending on your plan.
+QUARK can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in Settings.` },
+  { q: "Can I cancel my subscription anytime?", a: `Absolutely. There’s no lock‑in. You can change or cancel your plan at any moment from the Billing page.
+Your subscription stays active until the current period ends and won’t auto‑renew after cancellation. No penalties.` },
+  { q: "Do you provide refunds or exchanges?", a: `All sales are final and we do not offer refunds. Please try the free plan and review our docs before purchasing—this helps us keep pricing competitive and continue improving the platform.` },
+  { q: "How do I contact your support team?", a: `Head to our website footer and tap “Contact Us”. Fill out the form and submit your request—our team usually replies within 24 hours on business days.` },
 ];
 
 /* ---------- STATS ---------- */
@@ -96,21 +81,17 @@ const WORDS = ["adapts", "learns", "evolves", "understands", "accelerates"];
 function useWordCycle(words: string[], delay = 3000) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const t = setTimeout(() => setIdx((i) => (i + 1) % words.length), delay);
+    const t = setTimeout(() => setIdx(i => (i + 1) % words.length), delay);
     return () => clearTimeout(t);
   }, [idx, words, delay]);
   return words[idx];
 }
 
-/* ---------- BLUE GLOW (hero only) ---------- */
+/* ---------- BLUE GLOW ---------- */
 const BlueGlow = () => (
   <div
     aria-hidden="true"
-    className="
-      pointer-events-none absolute left-1/2 -translate-x-1/2
-      top-[-180px] w-[200%] h-[860px]
-      blur-[170px] z-0
-    "
+    className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-[-180px] w-[200%] h-[860px] blur-[170px] z-0"
     style={{
       background:
         "linear-gradient(to bottom, rgba(3,105,161,.52) 0%, rgba(14,165,233,.38) 30%, rgba(14,165,233,.16) 60%, rgba(14,165,233,.05) 78%, rgba(14,165,233,0) 95%)",
@@ -126,17 +107,19 @@ const BlueGlow = () => (
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
-
   const headlineWord = useWordCycle(WORDS, 3000);
+
+  // Embla carousel for looping reviews
+  const [emblaRef] = useEmblaCarousel({ loop: true });
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER (keep) */}
+      {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button
           aria-label="Toggle menu"
-          onClick={() => setMenuOpen((o) => !o)}
+          onClick={() => setMenuOpen(o => !o)}
           className="p-2 text-white"
         >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -147,31 +130,23 @@ export default function MobileHome() {
       {menuOpen && (
         <nav className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md animate-fade-in flex flex-col">
           <div className="flex items-center justify-between px-4 h-14 border-b border-white/10">
-            <Link href="/" className="text-lg font-bold tracking-wide" onClick={() => setMenuOpen(false)}>
-              QUARK
-            </Link>
+            <Link href="/" onClick={() => setMenuOpen(false)} className="text-lg font-bold tracking-wide">QUARK</Link>
             <button aria-label="Close menu" onClick={() => setMenuOpen(false)} className="p-2 text-white">
               <X className="w-6 h-6" />
             </button>
           </div>
-
           <div className="flex-1 flex flex-col items-center justify-center gap-8 text-center">
-            {[
-              { name: "Features", href: "#features" },
-              { name: "Pricing",  href: "#pricing"  },
-              { name: "FAQ",      href: "#faq"      },
-            ].map((item) => (
+            {["Features","Pricing","FAQ"].map(name => (
               <a
-                key={item.name}
-                href={item.href}
+                key={name}
+                href={`#${name.toLowerCase()}`}
                 onClick={() => setMenuOpen(false)}
                 className="text-2xl font-semibold"
               >
-                {item.name}
+                {name}
               </a>
             ))}
           </div>
-
           <Link
             href="https://app.mrktedge.ai/auth"
             onClick={() => setMenuOpen(false)}
@@ -182,32 +157,27 @@ export default function MobileHome() {
         </nav>
       )}
 
-      {/* spacer header */}
+      {/* spacer */}
       <div className="pt-14" />
 
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
         <BlueGlow />
-
         <h1 className="relative z-10 text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
-
           <span className="block min-h-[1.1em]">
             <span
               key={headlineWord}
-              className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
+              className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent duration-300 transition-opacity"
             >
               {headlineWord}
             </span>
           </span>
-
           <span className="block">to your world</span>
         </h1>
-
         <p className="relative z-10 text-white/80 text-base mb-8">
           Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
         </p>
-
         <div className="relative z-10 flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
             href="#pricing"
@@ -222,7 +192,6 @@ export default function MobileHome() {
             Explore Features
           </a>
         </div>
-
         <div className="relative z-10 mt-10 w-full max-w-sm mx-auto">
           <Image
             src="/hero-dashboard.png"
@@ -236,7 +205,7 @@ export default function MobileHome() {
       </section>
 
       {/* Features */}
-      <section className="px-5 py-16 bg-zinc-900/20" id="features">
+      <section id="features" className="px-5 py-16 bg-zinc-900/20">
         <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
@@ -259,35 +228,30 @@ export default function MobileHome() {
       {/* Pricing */}
       <Pricing />
 
-      {/* REVIEWS */}
+      {/* Reviews */}
       <section id="reviews" className="px-5 py-16">
         <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
         <p className="text-center text-white/60 mb-6">What our users are saying</p>
-        <div className="overflow-x-auto no-scrollbar px-2">
-          <div className="flex space-x-4">
+
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex space-x-4 px-5">
             {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="min-w-[260px] bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 flex-shrink-0"
-              >
-                <p className="text-sm text-white/70 mb-4">{t.msg}</p>
-                <div className="flex items-center mb-2">
-                  {Array(5)
-                    .fill(0)
-                    .map((_, idx) => {
+              <div key={i} className="flex-shrink-0 w-full max-w-sm">
+                <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 h-full flex flex-col justify-between">
+                  <p className="text-sm text-white/70 mb-4">{t.msg}</p>
+                  <div className="flex items-center mb-2">
+                    {Array(5).fill(0).map((_, idx) => {
                       const filled = idx < Math.floor(t.rating);
                       const half = !filled && idx < t.rating;
                       return (
-                        <span
-                          key={idx}
-                          className={`text-yellow-400 ${half ? "opacity-75" : ""}`}
-                        >
+                        <span key={idx} className={`text-yellow-400 ${half ? "opacity-75" : ""}`}>
                           ★
                         </span>
                       );
                     })}
+                  </div>
+                  <p className="text-xs text-white/50">— {t.user}</p>
                 </div>
-                <p className="text-xs text-white/50">— {t.user}</p>
               </div>
             ))}
           </div>
@@ -327,20 +291,14 @@ function FAQItem({
   return (
     <div className="border-b border-white/10">
       <button
-        className="w-full flex items-center justify-between py-5 text-left group"
+        className="w-full flex items-center justify-between py-5 text-left"
         onClick={onToggle}
       >
-        <span
-          className={`text-[22px] leading-snug font-semibold tracking-tight ${
-            open ? "underline decoration-white/70" : "group-hover:underline"
-          }`}
-        >
+        <span className={`text-[22px] font-semibold ${open ? "underline" : ""}`}>
           {item.q}
         </span>
         <ChevronDown
-          className={`w-5 h-5 transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
+          className={`w-5 h-5 transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -349,7 +307,7 @@ function FAQItem({
           open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <p className="pb-5 text-base text-white/70 leading-relaxed whitespace-pre-line">
+        <p className="pb-5 text-base text-white/70 whitespace-pre-line">
           {item.a}
         </p>
       </div>
@@ -360,7 +318,7 @@ function FAQItem({
 /* ---------- Numbers Section ---------- */
 function NumbersSection() {
   return (
-    <section className="px-5 py-16" id="numbers">
+    <section id="numbers" className="px-5 py-16">
       <h2 className="text-3xl font-bold text-center mb-3">{"QUARK's Power in Numbers"}</h2>
       <p className="text-center text-white/60 mb-10 text-base">What we’ve achieved</p>
 
@@ -373,7 +331,7 @@ function NumbersSection() {
   );
 }
 
-/* ---------- StatCard (CountUp logic tetap) ---------- */
+/* ---------- StatCard ---------- */
 function StatCard({ item }: { item: StatItem }) {
   const { ref, inView } = useInView({
     threshold: 0.6,
@@ -382,7 +340,6 @@ function StatCard({ item }: { item: StatItem }) {
   });
 
   const started = useRef(false);
-
   const id = useId();
   const { start, reset } = useCountUp({
     ref: id,

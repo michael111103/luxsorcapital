@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import { useCountUp } from "react-countup";
+import useEmblaCarousel from "embla-carousel-react";
 import {
   Menu,
   X,
@@ -126,8 +127,10 @@ const BlueGlow = () => (
 export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
-
   const headlineWord = useWordCycle(WORDS, 3000);
+
+  // Embla carousel for looping reviews
+  const [emblaRef] = useEmblaCarousel({ loop: true });
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
@@ -259,16 +262,15 @@ export default function MobileHome() {
       {/* Pricing */}
       <Pricing />
 
-      {/* REVIEWS */}
+      {/* Reviews */}
       <section id="reviews" className="px-5 py-16">
         <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
         <p className="text-center text-white/60 mb-6">What our users are saying</p>
 
-        {/* scroll-snap container */}
-        <div className="-mx-5 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+        <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex space-x-4 px-5">
             {testimonials.map((t, i) => (
-              <div key={i} className="snap-center flex-shrink-0 w-full max-w-sm">
+              <div key={i} className="flex-shrink-0 w-full max-w-sm">
                 <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 h-full flex flex-col justify-between">
                   <p className="text-sm text-white/70 mb-4">{t.msg}</p>
                   <div className="flex items-center mb-2">
