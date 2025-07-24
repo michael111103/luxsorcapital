@@ -4,7 +4,7 @@ import ClientForm from "./clientform";
 export const metadata = {
   title: "Contact Us – QUARK",
   description:
-    "Ada pertanyaan, kendala, atau usul fitur? Isi form di bawah, kami akan membalas dalam 24 jam kerja.",
+    "Have questions, issues, or feature requests? Fill out the form and we'll get back to you within one business day.",
 };
 
 export default function ContactPage() {
