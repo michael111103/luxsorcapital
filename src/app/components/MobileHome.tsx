@@ -239,9 +239,9 @@ export default function MobileHome() {
         <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
-            { title: "Write & create", desc: "Blogs, emails, ads, scripts—get quality content in seconds.", img: "/feature-write.png" },
-            { title: "Analyze files",  desc: "Drop PDFs, spreadsheets, slides—get instant insights.",       img: "/feature-analyze.png" },
-            { title: "Automate tasks", desc: "Turn routines into one-click workflows and save hours.",      img: "/feature-automate.png" },
+            { title: "Web Search", desc: "Scan the web in real time for the latest news, data, and insights—ask anything and get instant, up to the minute answers pulled straight from the internet.", img: "/feature-write.png" },
+            { title: "DocPilot",  desc: "Summarize, translate, and explore PDFs, DOCX, TXT, and EPUB files—get instant rewrites, accurate translations, and on‑demand answers to any document question.",       img: "/feature-analyze.png" },
+            { title: "Image Generation", desc: "Generate high‑quality images, illustrations, and concept art from simple text prompts—watch your ideas take shape with AI‑powered creativity at lightning speed.",      img: "/feature-automate.png" },
           ].map((f) => (
             <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
               <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
