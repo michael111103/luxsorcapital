@@ -104,8 +104,8 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- BLUE GLOW (hero only) ---------- */
-const BlueGlow = () => (
+/* ---------- DARK GLOW (hero only) ---------- */
+const DarkGlow = () => (
   <div
     aria-hidden="true"
     className="
@@ -115,7 +115,14 @@ const BlueGlow = () => (
     "
     style={{
       background:
-        "linear-gradient(to bottom, rgba(3,105,161,.52) 0%, rgba(14,165,233,.38) 30%, rgba(14,165,233,.16) 60%, rgba(14,165,233,.05) 78%, rgba(14,165,233,0) 95%)",
+        "linear-gradient(" +
+          "to bottom, " +
+          "rgba(0,0,0,0.8) 0%, " +    // hitam pekat di atas
+          "rgba(50,50,50,0.5) 30%, " +// abu‑abu gelap
+          "rgba(100,100,100,0.3) 60%, " +// abu‑abu sedang
+          "rgba(150,150,150,0.1) 78%, " +// abu‑abu terang
+          "rgba(200,200,200,0) 95%" +   // transparan di bawah
+        ")",
       WebkitMaskImage:
         "linear-gradient(to bottom, #fff 0%, #fff 62%, rgba(255,255,255,0) 96%)",
       maskImage:
@@ -123,6 +130,8 @@ const BlueGlow = () => (
     }}
   />
 );
+
+
 
 /* ---------- MAIN ---------- */
 export default function MobileHome() {
@@ -191,7 +200,7 @@ export default function MobileHome() {
 
       {/* HERO */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
-        <BlueGlow />
+        <DarkGlow />
 
         <h1 className="relative z-10 text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
