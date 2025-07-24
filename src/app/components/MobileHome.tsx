@@ -28,11 +28,28 @@ import Footer from "./footer";
 
 /* ---------- FAQ ---------- */
 const faqs = [
-  { q: "What is QUARK?", a: "QUARK is your AI assistant that helps you write, research, analyze documents, and more—right from your phone." },
-  { q: "Is there a free plan?", a: "Yes. You can start free with limited daily chats and upgrade anytime." },
-  { q: "Which models do you support?", a: "We provide access to leading OpenAI models like GPT‑4.1 mini, GPT‑4.5, and more—depending on your plan." },
-  { q: "Can I cancel anytime?", a: "Absolutely. There’s no lock-in—cancel or change plans whenever you like." },
+  {
+    q: "What is QUARK?",
+    a: `QUARK is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your phone or laptop.
+It combines state‑of‑the‑art language models with handy tools (PDF/CSV readers, web search, workflow builder, etc.) so you don’t just chat—you actually get work done end to end.`
+  },
+  {
+    q: "Is there a free plan?",
+    a: `Yes. You can start for free with daily message and upload limits—no credit card required.
+When you need higher limits, faster models, or pro features, you can upgrade anytime with a single click.`
+  },
+  {
+    q: "Which models do you support?",
+    a: `We provide access to the latest OpenAI models such as GPT‑4.1 mini, GPT‑4.5, and others—depending on your plan.
+QUARK can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in the settings.`
+  },
+  {
+    q: "Can I cancel anytime?",
+    a: `Absolutely. There’s no lock‑in. You can change or cancel your plan at any moment from the Billing page.
+Your subscription stays active until the current period ends and won’t auto‑renew after cancellation. No penalties.`
+  },
 ];
+
 
 /* ---------- STATS ---------- */
 type StatItem = {
@@ -252,7 +269,7 @@ export default function MobileHome() {
             return (
               <div key={idx} className="py-4">
                 <button
-                  className="w-full flex items-center justify-between text-left text-sm font-medium"
+                  className="w-full flex items-center justify-between text-left text-sm"
                   onClick={() => setFaqOpen(opened ? null : idx)}
                 >
                   {item.q}
