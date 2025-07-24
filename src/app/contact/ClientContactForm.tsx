@@ -91,7 +91,7 @@ export default function ClientContactForm() {
         {status === "sending" ? "Sending…" : "Send Message"}
       </button>
 
-      {status === "success" && <p className="text-green-400 text-center mt-2">Message sent! 🙌</p>}
+      {status === "success" && <p className="text-green-400 text-center mt-2">Message sent!</p>}
       {status === "error"   && <p className="text-red-400 text-center mt-2">Oops, something went wrong.</p>}
     </form>
   );

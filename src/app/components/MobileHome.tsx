@@ -179,7 +179,7 @@ export default function MobileHome() {
           <Link
             href="https://app.mrktedge.ai/auth"
             onClick={() => setMenuOpen(false)}
-            className="m-6 mb-10 w-full max-w-xs self-center text-center py-3 rounded-lg bg-gradient-to-r from-blue-800 to-blue-400 font-semibold"
+            className="m-6 mb-10 w-full max-w-xs self-center text-center py-3 rounded-lg bg-gradient-to-r from-gray-800 to-gray-400 font-semibold"
           >
             Get Started
           </Link>
@@ -215,7 +215,7 @@ export default function MobileHome() {
         <div className="relative z-10 flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
             href="#pricing"
-            className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
+            className="py-3 rounded-full bg-gray-500 hover:bg-gray-600 text-white font-semibold text-sm shadow text-center"
           >
             Get Started
           </Link>
@@ -318,7 +318,7 @@ export default function MobileHome() {
           </p>
           <Link
             href="/contact"
-            className="inline-block px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full"
+            className="inline-block px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-full"
           >
             Contact Us
           </Link>

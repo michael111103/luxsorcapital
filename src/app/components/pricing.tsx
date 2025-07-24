@@ -94,7 +94,7 @@ export default function Pricing({ plans = defaultPlans, sectionId = "pricing" }:
 
               <a
                 href="#"
-                className="mt-8 block bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-md font-medium"
+                className="mt-8 block bg-gray-600 hover:bg-gray-700 text-white text-center py-3 rounded-md font-medium"
               >
                 Get Started
               </a>
