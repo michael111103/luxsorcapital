@@ -208,7 +208,7 @@ export default function MobileHome() {
           <span className="block min-h-[1.1em]">
             <span
               key={headlineWord}
-              className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
+              className="inline-block bg-gradient-to-r from-gray-300 to-gray-500 bg-clip-text text-transparent transition-opacity duration-300"
             >
               {headlineWord}
             </span>
