@@ -78,7 +78,7 @@ const statsData: StatItem[] = [
 /* ---------- TESTIMONIALS ---------- */
 const testimonials = [
   { msg: "Wow, very impressive indeed. Give it all the ideas and it puts it together so perfectly", user: "AliceW", rating: 5 },
-  { msg: "I love how it summarizes my spreadsheets. Super efficient and accurate.", user: "Bob_Smith", rating: 4.5 },
+  { msg: "I love how it summarizes my spreadsheets. Super efficient and accurate.", user: "BobSmith", rating: 4.5 },
   { msg: "Its amazing how it can turn anything you need from a text to an email to a report into an amazing world of art that makes you sound educated, eloquent, and smart. Love it", user: "ClaraJ", rating: 5 },
   { msg: "I have asked dozens of questions and have learned a lot by doing so. It's like having a very wise, educated friend give you the straight answer everytime.", user: "DanielParker ", rating: 4 },
   { msg: "This is amazing and helpful.", user: "BagasPrakoso", rating: 4.5 },
