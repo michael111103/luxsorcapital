@@ -64,23 +64,6 @@ export default function HomePage() {
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black z-0" />
       </section>
 
-      {/* Logos Section */}
-      <section className="w-full bg-black py-20 px-6 flex flex-col items-center">
-        <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">
-          POWERED BY
-        </p>
-        <div className="flex justify-center items-center">
-          <Image
-            src="/OpenAI-white.png"
-            alt="OpenAI logo"
-            width={130}
-            height={80}
-            className="w-auto h-auto"
-            priority
-          />
-        </div>
-      </section>
-
       {/* Pricing (section ketiga) */}
       <Pricing />
 

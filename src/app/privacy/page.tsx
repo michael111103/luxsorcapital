@@ -30,7 +30,6 @@ export default function PrivacyPage() {
 
   return (
     <div className="bg-black text-white font-inter min-h-screen flex flex-col">
-      <SiteHeader />
 
       {/* spacer supaya konten tidak ketutup header */}
       <div className="pt-14" />
@@ -216,7 +215,7 @@ export default function PrivacyPage() {
             </p>
             <p className="mt-2">
               <strong>QUARK</strong><br />
-              Jl. Contoh No. 123, Surabaya, Jawa Timur 60231, Indonesia
+              Surabaya, East Java, Indonesia
             </p>
           </Section>
         </article>

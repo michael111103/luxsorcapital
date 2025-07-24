@@ -70,7 +70,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-6">QUARK</h3>
             <p className="text-gray-400">
-              Your all-in-one AI assistant for writing, chatting, summarizing, and learning.
+              Your all-in-one AI assistant for writing, coding, chatting, summarizing, and learning.
               Powered by OpenAI.
             </p>
           </div>
