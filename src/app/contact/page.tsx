@@ -1,4 +1,5 @@
-"use client";  // ini penting biar kita bisa pakai hook client
+// app/contact/page.tsx
+export const dynamic = "force-dynamic"; // kalau memang butuh dynamic
 
 import ClientContactForm from "./ClientContactForm";
 
@@ -10,6 +11,8 @@ export default function ContactPage() {
         <p className="text-white/70 mb-6">
           Have questions or feedback? Fill out the form below and we’ll get back to you within 24 business hours.
         </p>
+
+        {/* ClientContactForm adalah file client yang akan memanggil useSearchParams */}
         <ClientContactForm />
       </div>
     </main>

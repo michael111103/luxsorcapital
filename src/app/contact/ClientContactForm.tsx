@@ -1,4 +1,4 @@
-"use client";
+"use client";           // WAJIB! Supaya hook client bisa dipakai
 
 import { useState, FormEvent, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -26,7 +26,7 @@ export default function ClientContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, issueType, message }),
       });
-      if (!res.ok) throw new Error("Failed");
+      if (!res.ok) throw new Error("Failed to send");
       setStatus("success");
       setName(""); setEmail(""); setMessage("");
     } catch {
@@ -45,6 +45,7 @@ export default function ClientContactForm() {
           className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md"
         />
       </div>
+
       {/* Email */}
       <div>
         <label className="block text-sm mb-1">Email</label>
@@ -54,6 +55,7 @@ export default function ClientContactForm() {
           className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md"
         />
       </div>
+
       {/* Issue Type */}
       <div>
         <label className="block text-sm mb-1">Issue Type</label>
@@ -62,31 +64,35 @@ export default function ClientContactForm() {
           onChange={e => setIssueType(e.target.value)}
           className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md"
         >
-          <option value="">— select an issue —</option>
+          <option value="">— select issue type —</option>
           <option value="Account Issues">Account Issues</option>
           <option value="Billing">Billing</option>
-          <option value="Tech Support">Technical Support</option>
+          <option value="Technical Support">Technical Support</option>
           <option value="Feature Request">Feature Request</option>
         </select>
       </div>
+
       {/* Message */}
       <div>
         <label className="block text-sm mb-1">Message</label>
         <textarea
-          rows={5} required value={message}
+          required rows={5} value={message}
           onChange={e => setMessage(e.target.value)}
           className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md resize-none"
         />
       </div>
+
       {/* Submit */}
       <button
-        type="submit" disabled={status === "sending"}
+        type="submit"
+        disabled={status === "sending"}
         className="w-full py-3 bg-blue-500 hover:bg-blue-600 rounded-full font-semibold disabled:opacity-50"
       >
         {status === "sending" ? "Sending…" : "Send Message"}
       </button>
-      {status === "success" && <p className="text-green-400 text-center">Message sent! 🙌</p>}
-      {status === "error"   && <p className="text-red-400 text-center">Oops, something went wrong.</p>}
+
+      {status === "success" && <p className="text-green-400 text-center mt-2">Message sent! 🙌</p>}
+      {status === "error"   && <p className="text-red-400 text-center mt-2">Oops, something went wrong.</p>}
     </form>
   );
 }
