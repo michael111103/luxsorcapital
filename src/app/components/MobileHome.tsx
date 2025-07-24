@@ -240,7 +240,7 @@ export default function MobileHome() {
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
             { title: "Web Search", desc: "Scan the web in real time for the latest news, data, and insights—ask anything and get instant, up to the minute answers pulled straight from the internet.", img: "/feature-write.png" },
-            { title: "DocPilot",  desc: "Summarize, translate, and explore PDFs, DOCX, TXT, and EPUB files—get instant rewrites, accurate translations, and on‑demand answers to any document question.",       img: "/feature-analyze.png" },
+            { title: "DocPilot",  desc: "Summarize, translate, and explore PDFs, DOCX, TXT, and EPUB files—get instant rewrites, accurate translations, and on‑demand answers to any document question.",       img: "/feature-docpilot.png" },
             { title: "Image Generation", desc: "Generate high‑quality images, illustrations, and concept art from simple text prompts—watch your ideas take shape with AI‑powered creativity at lightning speed.",      img: "/feature-automate.png" },
           ].map((f) => (
             <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
