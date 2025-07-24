@@ -263,31 +263,27 @@ export default function MobileHome() {
       <section id="reviews" className="px-5 py-16">
         <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
         <p className="text-center text-white/60 mb-6">What our users are saying</p>
-        <div className="overflow-x-auto no-scrollbar px-2">
-          <div className="flex space-x-4">
+
+        {/* scroll-snap container */}
+        <div className="-mx-5 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+          <div className="flex space-x-4 px-5">
             {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="min-w-[260px] bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 flex-shrink-0"
-              >
-                <p className="text-sm text-white/70 mb-4">{t.msg}</p>
-                <div className="flex items-center mb-2">
-                  {Array(5)
-                    .fill(0)
-                    .map((_, idx) => {
+              <div key={i} className="snap-center flex-shrink-0 w-full max-w-sm">
+                <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 h-full flex flex-col justify-between">
+                  <p className="text-sm text-white/70 mb-4">{t.msg}</p>
+                  <div className="flex items-center mb-2">
+                    {Array(5).fill(0).map((_, idx) => {
                       const filled = idx < Math.floor(t.rating);
                       const half = !filled && idx < t.rating;
                       return (
-                        <span
-                          key={idx}
-                          className={`text-yellow-400 ${half ? "opacity-75" : ""}`}
-                        >
+                        <span key={idx} className={`text-yellow-400 ${half ? "opacity-75" : ""}`}>
                           ★
                         </span>
                       );
                     })}
+                  </div>
+                  <p className="text-xs text-white/50">— {t.user}</p>
                 </div>
-                <p className="text-xs text-white/50">— {t.user}</p>
               </div>
             ))}
           </div>
