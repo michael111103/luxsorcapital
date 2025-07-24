@@ -71,28 +71,25 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- Hero Glow (hanya di section pertama) ---------- */
+/* ---------- Hero Glow (static di hero saja) ---------- */
 function HeroGlow() {
   return (
     <div className="pointer-events-none absolute inset-0 -z-10 overflow-visible">
-      {/* Radial utama dari kanan atas */}
+      {/* Radial utama */}
       <div
         className="absolute -top-40 right-[-220px] w-[1100px] h-[1100px] rounded-full"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0.25) 35%, rgba(56,189,248,0.08) 65%, rgba(56,189,248,0) 100%)",
-          filter: "blur(160px)",
+            "radial-gradient(ellipse at center, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0.22) 40%, rgba(56,189,248,0) 80%)",
+          filter: "blur(140px)",
         }}
       />
-      {/* Layer tambahan untuk depth */}
+      {/* Layer tambahan */}
       <div
         className="absolute top-1/3 right-[-100px] w-[700px] h-[700px] rounded-full"
-        style={{
-          background: "rgba(56,189,248,0.12)",
-          filter: "blur(200px)",
-        }}
+        style={{ background: "rgba(56,189,248,0.12)", filter: "blur(200px)" }}
       />
-      {/* Mask supaya makin pudar ke bawah (akhir section) */}
+      {/* Fade out ke bawah (pudar mendekati akhir hero) */}
       <div
         className="absolute inset-0 bg-black"
         style={{
@@ -115,8 +112,8 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER - sudah berfungsi, jangan diubah */}
-      <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
+      {/* HEADER (jangan diubah) */}
+      <header className="sticky top-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button
           aria-label="Toggle menu"
@@ -155,10 +152,7 @@ export default function MobileHome() {
         </nav>
       )}
 
-      {/* spacer header */}
-      <div className="pt-14" />
-
-      {/* HERO SECTION (glow di sini aja) */}
+      {/* HERO SECTION (dengan glow) */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
         <HeroGlow />
 
