@@ -9,14 +9,14 @@ export default function ClientForm() {
   const [email, setEmail] = useState("");
   const [issueType, setIssueType] = useState("");
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<
-    "idle" | "sending" | "success" | "error"
-  >("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  // Ambil ?issueType= di URL
+  // ambil ?issueType= di URL
   const params = useSearchParams();
   const defaultType = params.get("issueType") || "";
-  if (!issueType && defaultType) setIssueType(defaultType);
+  if (!issueType && defaultType) {
+    setIssueType(defaultType);
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -42,8 +42,7 @@ export default function ClientForm() {
       <div className="max-w-lg mx-auto bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6">
         <h1 className="text-2xl font-bold mb-4">Contact Us</h1>
         <p className="text-white/70 mb-6">
-          Have questions, issues, or feature requests? Fill out the form below
-          and we’ll reply within one business day.
+          Have questions, issues, or feature requests? Fill out the form below and we’ll reply within one business day.
         </p>
 
         <form onSubmit={onSubmit} className="space-y-4">
@@ -104,9 +103,7 @@ export default function ClientForm() {
           </button>
 
           {status === "success" && (
-            <p className="text-green-400 text-center mt-2">
-              Your message has been sent! 🙌
-            </p>
+            <p className="text-green-400 text-center mt-2">Your message has been sent! 🙌</p>
           )}
           {status === "error" && (
             <p className="text-red-400 text-center mt-2">
