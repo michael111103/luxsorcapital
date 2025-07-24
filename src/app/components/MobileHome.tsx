@@ -71,22 +71,23 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- BLUE GLOW (aman di iOS) ---------- */
-function HeroGlow() {
+/* ---------- BLUE GLOW (fixed & fade) ---------- */
+function BlueGlow() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 h-[1200px] -z-10">
-      {/* radial gradient pakai inline style supaya Safari oke */}
+    <div className="pointer-events-none fixed top-0 left-0 w-screen h-[1200px] z-30 mix-blend-screen">
       <div
-        className="absolute top-0 right-0 w-full h-full"
+        className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at right top, rgba(56,189,248,0.40) 0%, rgba(56,189,248,0.20) 35%, rgba(56,189,248,0.08) 60%, rgba(56,189,248,0.00) 85%)",
+            "radial-gradient(ellipse at 100% 0%, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0.25) 35%, rgba(56,189,248,0.10) 60%, rgba(56,189,248,0) 85%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 30%, rgba(0,0,0,.45) 65%, rgba(0,0,0,0) 100%)",
+          maskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 30%, rgba(0,0,0,.45) 65%, rgba(0,0,0,0) 100%)",
           filter: "blur(120px)",
-          transform: "translate3d(0,0,0)",
+          transform: "translateZ(0)",
         }}
       />
-      {/* fade hitam ke bawah biar pudar di POWERED BY */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black" />
     </div>
   );
 }
@@ -100,17 +101,24 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER FIXED */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
+      {/* Glow layer */}
+      <BlueGlow />
+
+      {/* HEADER (fixed, di atas overlay) */}
+      <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
-        <button aria-label="Toggle menu" onClick={() => setMenuOpen((p) => !p)} className="p-2 text-white">
+        <button
+          aria-label="Toggle menu"
+          onClick={() => setMenuOpen((o) => !o)}
+          className="p-2 text-white"
+        >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </header>
 
-      {/* MENU OVERLAY */}
+      {/* MENU OVERLAY (z-90 supaya header di atasnya) */}
       {menuOpen && (
-        <nav className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-md p-6 flex flex-col gap-6 animate-fade-in">
+        <nav className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md p-6 pt-20 flex flex-col gap-6 animate-fade-in">
           {[
             { name: "Features", href: "#features" },
             { name: "Pricing",  href: "#pricing"  },
@@ -136,69 +144,63 @@ export default function MobileHome() {
         </nav>
       )}
 
-      {/* OFFSET untuk header fixed */}
+      {/* spacer header */}
       <div className="pt-14" />
 
-      {/* WRAPPER HERO + POWERED BY + GLOW */}
-      <div className="relative">
-        <HeroGlow />
+      {/* HERO + POWERED BY berada di bawah glow */}
+      <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible z-40">
+        <h1 className="text-4xl leading-tight font-bold mb-4">
+          <span className="block">The AI assistant that</span>
 
-        {/* HERO */}
-        <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible z-10">
-          <h1 className="text-4xl leading-tight font-bold mb-4">
-            <span className="block">The AI assistant that</span>
-
-            <span className="block min-h-[1.1em]">
-              <span
-                key={headlineWord}
-                className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
-              >
-                {headlineWord}
-              </span>
+          <span className="block min-h-[1.1em]">
+            <span
+              key={headlineWord}
+              className="inline-block bg-gradient-to-r from-sky-300 to-sky-500 bg-clip-text text-transparent transition-opacity duration-300"
+            >
+              {headlineWord}
             </span>
+          </span>
 
-            <span className="block">to your world</span>
-          </h1>
+          <span className="block">to your world</span>
+        </h1>
 
-          <p className="text-white/80 text-base mb-8">
-            Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
-          </p>
+        <p className="text-white/80 text-base mb-8">
+          Chat, create, analyze, and automate—all from your device. Built for productivity and creativity.
+        </p>
 
-          <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
-            <Link
-              href="#pricing"
-              className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
-            >
-              Get Started
-            </Link>
-            <a
-              href="#features"
-              className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
-            >
-              Explore Features
-            </a>
-          </div>
+        <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
+          <Link
+            href="#pricing"
+            className="py-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm shadow text-center"
+          >
+            Get Started
+          </Link>
+          <a
+            href="#features"
+            className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
+          >
+            Explore Features
+          </a>
+        </div>
 
-          <div className="relative mt-10 w-full max-w-sm mx-auto">
-            <Image
-              src="/hero-dashboard.png"
-              alt="App preview"
-              width={360}
-              height={240}
-              className="rounded-xl shadow-lg w-full h-auto"
-              priority
-            />
-          </div>
-        </section>
+        <div className="relative mt-10 w-full max-w-sm mx-auto">
+          <Image
+            src="/hero-dashboard.png"
+            alt="App preview"
+            width={360}
+            height={240}
+            className="rounded-xl shadow-lg w-full h-auto"
+            priority
+          />
+        </div>
+      </section>
 
-        {/* POWERED BY */}
-        <section className="relative z-10 w-full bg-black py-20 px-6 flex flex-col items-center">
-          <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
-          <div className="flex justify-center items-center">
-            <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
-          </div>
-        </section>
-      </div>
+      <section className="relative z-40 w-full bg-black py-20 px-6 flex flex-col items-center">
+        <p className="text-sm text-[#b3b3b3] font-bold mb-8 tracking-wider uppercase">POWERED BY</p>
+        <div className="flex justify-center items-center">
+          <Image src="/OpenAI-white.png" alt="OpenAI logo" width={130} height={80} className="w-auto h-auto" priority />
+        </div>
+      </section>
 
       {/* Features */}
       <section className="px-5 py-16 bg-zinc-900/20" id="features">
