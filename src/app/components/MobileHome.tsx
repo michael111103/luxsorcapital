@@ -77,12 +77,14 @@ const BlueGlow = () => (
     aria-hidden="true"
     className="
       pointer-events-none absolute left-1/2 -translate-x-1/2
-      top-[-160px] w-[170%] h-[620px]
-      bg-sky-500/70 blur-[140px] opacity-80 z-0
+      top-[-180px] w-[190%] h-[950px]
+      bg-sky-500/70 blur-[170px] opacity-80 z-0
     "
     style={{
-      WebkitMaskImage: "linear-gradient(to bottom, white 0%, white 20%, rgba(255,255,255,0) 90%)",
-      maskImage: "linear-gradient(to bottom, white 0%, white 20%, rgba(255,255,255,0) 90%)",
+      WebkitMaskImage:
+        "linear-gradient(to bottom, white 0%, white 60%, rgba(255,255,255,0) 100%)",
+      maskImage:
+        "linear-gradient(to bottom, white 0%, white 60%, rgba(255,255,255,0) 100%)",
     }}
   />
 );
