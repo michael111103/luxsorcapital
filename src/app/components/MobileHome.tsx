@@ -71,40 +71,21 @@ function useWordCycle(words: string[], delay = 3000) {
   return words[idx];
 }
 
-/* ---------- Hero Glow (hanya di section pertama) ---------- */
-function HeroGlow() {
-  return (
-    <div className="pointer-events-none absolute inset-0 -z-10 overflow-visible">
-      {/* Radial utama dari kanan atas */}
-      <div
-        className="absolute -top-40 right-[-220px] w-[1100px] h-[1100px] rounded-full"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0.25) 35%, rgba(56,189,248,0.08) 65%, rgba(56,189,248,0) 100%)",
-          filter: "blur(160px)",
-        }}
-      />
-      {/* Layer tambahan untuk depth */}
-      <div
-        className="absolute top-1/3 right-[-100px] w-[700px] h-[700px] rounded-full"
-        style={{
-          background: "rgba(56,189,248,0.12)",
-          filter: "blur(200px)",
-        }}
-      />
-      {/* Mask supaya makin pudar ke bawah (akhir section) */}
-      <div
-        className="absolute inset-0 bg-black"
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.4) 70%, rgba(0,0,0,0) 100%)",
-          maskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 25%, rgba(0,0,0,.4) 70%, rgba(0,0,0,0) 100%)",
-        }}
-      />
-    </div>
-  );
-}
+/* ---------- BLUE GLOW ---------- */
+const BlueGlow = () => (
+  <div
+    aria-hidden="true"
+    className="
+      pointer-events-none absolute left-1/2 -translate-x-1/2
+      top-[-160px] w-[170%] h-[620px]
+      bg-sky-500/70 blur-[140px] opacity-80 z-0
+    "
+    style={{
+      WebkitMaskImage: "linear-gradient(to bottom, white 0%, white 20%, rgba(255,255,255,0) 90%)",
+      maskImage: "linear-gradient(to bottom, white 0%, white 20%, rgba(255,255,255,0) 90%)",
+    }}
+  />
+);
 
 /* ---------- MAIN ---------- */
 export default function MobileHome() {
@@ -115,7 +96,7 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER - sudah berfungsi, jangan diubah */}
+      {/* HEADER - jangan diubah */}
       <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
         <button
@@ -158,9 +139,9 @@ export default function MobileHome() {
       {/* spacer header */}
       <div className="pt-14" />
 
-      {/* HERO SECTION (glow di sini aja) */}
+      {/* HERO SECTION (glow hanya di sini) */}
       <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
-        <HeroGlow />
+        <BlueGlow />
 
         <h1 className="relative z-10 text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
@@ -285,7 +266,7 @@ function NumbersSection() {
   );
 }
 
-/* ---- StatCard (CountUp tetap) ---- */
+/* ---- StatCard ---- */
 function StatCard({ item }: { item: StatItem }) {
   const { ref, inView } = useInView({
     threshold: 0.6,
