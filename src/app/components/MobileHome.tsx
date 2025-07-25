@@ -188,7 +188,7 @@ export default function MobileHome() {
           <Link
             href="https://app.mrktedge.ai/auth"
             onClick={() => setMenuOpen(false)}
-            className="m-6 mb-10 w-full max-w-xs self-center text-center py-3 rounded-lg bg-gradient-to-r from-gray-800 to-gray-400 font-semibold"
+            className="m-6 mb-10 w-full max-w-xs self-center text-center py-3 rounded-lg bg-gradient-to-r from-gray-800 to-gray-600 font-semibold"
           >
             Get Started
           </Link>
