@@ -1,7 +1,7 @@
 // src/app/components/DesktopHome.tsx
 "use client";
 
-import { useState, useEffect, useId, ReactNode } from "react";
+import { useState, useEffect, useRef, useId, ReactNode } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
@@ -12,18 +12,17 @@ import Pricing from "./pricing";
 import Footer from "./footer";
 import { Download, CheckCircle2, Globe2, Sparkles } from "lucide-react";
 
-// Hero word‑cycler
+// data dan helper sama seperti sebelumnya…
 const WORDS = ["adapts", "learns", "evolves", "understands", "accelerates"];
-function useWordCycle(words: string[], delay = 2000) {
-  const [i, setI] = useState(0);
+function useWordCycle(words: string[], delay = 3000) {
+  const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const t = setTimeout(() => setI((x) => (x + 1) % words.length), delay);
+    const t = setTimeout(() => setIdx((i) => (i + 1) % words.length), delay);
     return () => clearTimeout(t);
-  }, [i]);
-  return words[i];
+  }, [idx, words, delay]);
+  return words[idx];
 }
 
-// Stats data & formatting
 type StatItem = {
   id: string;
   value: number;
@@ -39,17 +38,15 @@ const statsData: StatItem[] = [
   { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews", icon: <Sparkles     className={ICON_CLS} /> },
 ];
 function shortNumber(n: number): string {
-  if (n >= 1e9) return (n / 1e9).toFixed(0) + "B";
-  if (n >= 1e6) return (n / 1e6).toFixed(0) + "M";
-  if (n >= 1e3) return (n / 1e3).toFixed(0) + "K";
+  if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
+  if (n >= 1_000_000)     return (n / 1_000_000).toFixed(0) + "M";
+  if (n >= 1_000)         return (n / 1_000).toFixed(0) + "K";
   return n.toString();
 }
 
-// One card
+// StatCard dengan header‐box yang melebar & ikon slide‐up on hover
 function StatCard({ item }: { item: StatItem }) {
-  // in‑view detection
   const { ref, inView } = useInView({ threshold: 0.6, triggerOnce: false });
-  // CountUp setup
   const id = useId();
   const { start, reset } = useCountUp({
     ref: id,
@@ -60,17 +57,16 @@ function StatCard({ item }: { item: StatItem }) {
     startOnMount: false,
   });
 
-  // whenever we scroll into view, reset & start
   useEffect(() => {
     if (inView) {
       reset();
       start();
     }
-  }, [inView]);
+  }, [inView, reset, start]);
 
   return (
     <div ref={ref} className="group relative flex flex-col items-center">
-      {/* top half‑box, grows down on hover */}
+      {/* half‐box header, height tinggi saat hover */}
       <div className="absolute inset-x-0 top-0 overflow-hidden">
         <div
           className="
@@ -87,7 +83,7 @@ function StatCard({ item }: { item: StatItem }) {
         />
       </div>
 
-      {/* logo slides up on hover */}
+      {/* ikon—slide up on hover */}
       <div
         className="
           relative z-10 mt-6 mb-2
@@ -99,11 +95,8 @@ function StatCard({ item }: { item: StatItem }) {
         {item.icon}
       </div>
 
-      {/* only render the number after inView (so no “0” shows) */}
-      {inView && (
-        <p id={id} className="text-3xl font-bold leading-none mt-2 text-white" />
-      )}
-      {/* label sits below */}
+      {/* angka & label di bawah box */}
+      <p id={id} className="text-3xl font-bold leading-none mt-2" />
       <p className="mt-1 text-base text-white/80">{item.label}</p>
     </div>
   );
@@ -115,7 +108,9 @@ function NumbersSection() {
       <h2 className="text-3xl font-bold text-center mb-3 text-white">
         QUARK’s Power in Numbers
       </h2>
-      <p className="text-center text-white/60 mb-10">What we’ve achieved</p>
+      <p className="text-center text-white/60 mb-10">
+        What we’ve achieved
+      </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 max-w-6xl mx-auto">
         {statsData.map((s) => (
           <StatCard key={s.id} item={s} />
@@ -132,10 +127,7 @@ export default function DesktopHome() {
     <main className="bg-black text-white min-h-screen font-inter">
       <Head>
         <title>QUARK – Your AI Assistant</title>
-        <meta
-          name="description"
-          content="QUARK is an AI assistant built for work and creativity."
-        />
+        <meta name="description" content="QUARK is an AI assistant built for work and creativity." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -152,8 +144,7 @@ export default function DesktopHome() {
             to your world
           </h1>
           <p className="text-lg text-white/80 mb-8">
-            Chat, generate content, analyze documents, and boost productivity
-            with QUARK.
+            Chat, generate content, analyze documents, and boost productivity with QUARK.
           </p>
           <div className="flex gap-4">
             <a
@@ -172,7 +163,6 @@ export default function DesktopHome() {
         </div>
 
         <div className="relative mt-10 md:mt-0 md:ml-12 w-full md:w-[650px]">
-          {/* spotlight glow */}
           <div className="absolute -top-[200px] -right-[200px] w-[800px] h-[800px] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.3),transparent_70%)] pointer-events-none blur-[120px] z-10" />
           <div className="relative z-20">
             <Image
@@ -190,6 +180,7 @@ export default function DesktopHome() {
       </section>
 
       <NumbersSection />
+
       <Pricing />
       <Footer />
     </main>

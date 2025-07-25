@@ -95,7 +95,7 @@ function shortNumber(n: number): string {
 
 /* ---------- Word cycle ---------- */
 const WORDS = ["adapts", "learns", "evolves", "understands", "accelerates"];
-function useWordCycle(words: string[], delay = 3000) {
+function useWordCycle(words: string[], delay = 2000) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     const t = setTimeout(() => setIdx((i) => (i + 1) % words.length), delay);
