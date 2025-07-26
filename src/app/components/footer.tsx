@@ -17,7 +17,7 @@ const company: FooterLink[] = [
 
 const follow: FooterLink[] = [
   { label: "Twitter", href: "https://x.com/MRKT_AI", external: true },
-  { label: "Instagram", href: "https://instagram.com/mrkt_ai", external: true },
+  { label: "Instagram", href: "https://instagram.com/replyst.ai", external: true },
   // { label: "LinkedIn", href: "https://linkedin.com/..." , external:true},
 ];
 
@@ -68,7 +68,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-bold mb-6">QUARK</h3>
+            <h3 className="text-xl font-bold mb-6">REPLYST</h3>
             <p className="text-gray-400">
               Your all-in-one AI assistant for writing, coding, chatting, summarizing, and learning.
               Powered by OpenAI.
@@ -119,7 +119,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">© {year} QUARK. All rights reserved.</p>
+          <p className="text-gray-400 text-sm">© {year} REPLYST. All rights reserved.</p>
           <div className="flex space-x-6 mt-6 md:mt-0">
             <SmartLink href="/privacy">Privacy Policy</SmartLink>
             <SmartLink href="/terms">Terms of Service</SmartLink>

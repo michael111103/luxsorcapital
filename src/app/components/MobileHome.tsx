@@ -29,8 +29,8 @@ import Footer from "./footer";
 /* ---------- FAQ ---------- */
 const faqs = [
   {
-    q: "What is QUARK?",
-    a: `QUARK is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
+    q: "What is REPLYST?",
+    a: `REPLYST is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
 It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`,
   },
   {
@@ -78,7 +78,7 @@ const statsData: StatItem[] = [
 
 /* ---------- TESTIMONIALS ---------- */
 const testimonials = [
-  { msg: "Wow, very impressive indeed. Give it all the ideas and it puts it together so perfectly", user: "AliceW", rating: 5 },
+  { msg: "Wow, very impressive indeed. Give it all the ideas and it puts it together so perfectly", user: "Farah", rating: 5 },
   { msg: "I love how it summarizes my spreadsheets. Super efficient and accurate.", user: "BobSmith", rating: 4.5 },
   { msg: "Its amazing how it can turn anything you need from a text to an email to a report into an amazing world of art that makes you sound educated, eloquent, and smart. Love it", user: "ClaraJ", rating: 5 },
   { msg: "I have asked dozens of questions and have learned a lot by doing so. It's like having a very wise, educated friend give you the straight answer everytime.", user: "DanielParker", rating: 4 },
@@ -145,7 +145,7 @@ export default function MobileHome() {
       {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">
-          QUARK
+          REPLYST
         </Link>
         <div className="flex items-center space-x-2">
           <Link
@@ -153,7 +153,7 @@ export default function MobileHome() {
             onClick={() => setMenuOpen(false)}
             className="py-2 px-4 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm"
           >
-            Get Started
+            Sign In
           </Link>
           <button
             aria-label="Toggle menu"
@@ -174,7 +174,7 @@ export default function MobileHome() {
               className="text-lg font-bold tracking-wide"
               onClick={() => setMenuOpen(false)}
             >
-              QUARK
+              REPLYST
             </Link>
             <button
               aria-label="Close menu"
@@ -257,7 +257,7 @@ export default function MobileHome() {
 
       {/* Features */}
       <section className="px-5 py-16 bg-zinc-900/20" id="features">
-        <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
+        <h2 className="text-2xl font-bold text-center mb-10">Explore Replyst Features</h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
             { title: "Web Search", desc: "Scan the web in real time for the latest news, data, and insights—ask anything and get instant, up to the minute answers pulled straight from the internet.", img: "/feature-websearch.png" },
