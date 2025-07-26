@@ -24,7 +24,7 @@ export function SiteHeader({ onNavigate }: { onNavigate?: (href: string) => void
               <a
                 key={item.name}
                 href={item.href}
-                className="text-sm text-white hover:text-blue-300 transition-colors"
+                className="text-sm text-white hover:text-gray-500 transition-colors"
                 onClick={(e) => {
                   e.preventDefault();
                   if (onNavigate) onNavigate(item.href);

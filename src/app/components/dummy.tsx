@@ -1,64 +1,40 @@
-/* eslint-disable react/no-unescaped-entities */
+// src/app/components/DesktopHome.tsx
 "use client";
 
-import {
-  useState,
-  useEffect,
-  useRef,
-  useId,
-  ReactNode,
-} from "react";
+import { useState, useEffect, useId, ReactNode } from "react";
+import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import { useCountUp } from "react-countup";
 import useEmblaCarousel from "embla-carousel-react";
 import {
-  Menu,
-  X,
-  ChevronDown,
   Download,
   CheckCircle2,
   Globe2,
   Sparkles,
+  ChevronDown,
 } from "lucide-react";
 
+import { SiteHeader } from "./header";
 import Pricing from "./pricing";
 import Footer from "./footer";
 
-/* ---------- FAQ ---------- */
-const faqs = [
-  {
-    q: "What is QUARK?",
-    a: `QUARK is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
-It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`
-  },
-  {
-    q: "Is there a free plan?",
-    a: `Yes. You can start for free with daily message and upload limits—no credit card required.
-When you need higher limits, faster models, or pro features, you can upgrade anytime with a single click.`
-  },
-  {
-    q: "Which models do you support?",
-    a: `We provide access to the latest OpenAI models such as GPT‑4.1 mini, GPT‑4.5, and others—depending on your plan.
-QUARK can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in Settings.`
-  },
-  {
-    q: "Can I cancel my subscription anytime?",
-    a: `Absolutely. There’s no lock‑in. You can change or cancel your plan at any moment from the Billing page.
-Your subscription stays active until the current period ends and won’t auto‑renew after cancellation. No penalties.`
-  },
-  {
-    q: "Do you provide refunds or exchanges?",
-    a: `All sales are final and we do not offer refunds. Please try the free plan and review our docs before purchasing—this helps us keep pricing competitive and continue improving the platform.`
-  },
-  {
-    q: "How do I contact your support team?",
-    a: `Head to our website footer and tap “Contact Us”. Fill out the form and submit your request—our team usually replies within 24 hours on business days.`
-  },
-];
+//
+// Hero word‐cycler
+//
+const WORDS = ["adapts", "learns", "evolves", "understands", "accelerates"];
+function useWordCycle(words: string[], delay = 2000) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setTimeout(() => setIdx(i => (i + 1) % words.length), delay);
+    return () => clearTimeout(t);
+  }, [idx, words, delay]);
+  return words[idx];
+}
 
-/* ---------- STATS ---------- */
+//
+// Stats data & helper
+//
 type StatItem = {
   id: string;
   value: number;
@@ -66,289 +42,141 @@ type StatItem = {
   label: string;
   icon: ReactNode;
 };
-
 const ICON_CLS = "w-10 h-10 text-[#0EA5E9]";
-
 const statsData: StatItem[] = [
-  { id: "users",     value: 50_000_000,    suffix: "+", label: "Users",            icon: <Download     className={ICON_CLS} /> },
-  { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",     icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                   label: "Countries Using QUARK",  icon: <Globe2       className={ICON_CLS} /> },
-  { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews", icon: <Sparkles     className={ICON_CLS} /> },
+  { id: "users", value: 50_000_000, suffix: "+", label: "Users", icon: <Download className={ICON_CLS} /> },
+  { id: "tasks", value: 1_000_000_000, suffix: "+", label: "Solved Tasks", icon: <CheckCircle2 className={ICON_CLS} /> },
+  { id: "countries", value: 236, label: "Countries Using QUARK", icon: <Globe2 className={ICON_CLS} /> },
+  { id: "reviews", value: 650_000, suffix: "+", label: "Top Star Reviews", icon: <Sparkles className={ICON_CLS} /> },
 ];
-
-/* ---------- TESTIMONIALS ---------- */
-const testimonials = [
-  { msg: "Wow, very impressive indeed. Give it all the ideas and it puts it together so perfectly", user: "AliceW", rating: 5 },
-  { msg: "I love how it summarizes my spreadsheets. Super efficient and accurate.", user: "BobSmith", rating: 4.5 },
-  { msg: "Its amazing how it can turn anything you need from a text to an email to a report into an amazing world of art that makes you sound educated, eloquent, and smart. Love it", user: "ClaraJ", rating: 5 },
-  { msg: "I have asked dozens of questions and have learned a lot by doing so. It's like having a very wise, educated friend give you the straight answer everytime.", user: "DanielParker ", rating: 4 },
-  { msg: "This is amazing and helpful.", user: "BagasPrakoso", rating: 4.5 },
-];
-
-/* ---------- Helpers ---------- */
 function shortNumber(n: number): string {
-  if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(0) + "B";
-  if (n >= 1_000_000)     return (n / 1_000_000).toFixed(0) + "M";
-  if (n >= 1_000)         return (n / 1_000).toFixed(0) + "K";
+  if (n >= 1e9) return (n / 1e9).toFixed(0) + "B";
+  if (n >= 1e6) return (n / 1e6).toFixed(0) + "M";
+  if (n >= 1e3) return (n / 1e3).toFixed(0) + "K";
   return n.toString();
 }
 
-/* ---------- Word cycle ---------- */
-const WORDS = ["adapts", "learns", "evolves", "understands", "accelerates"];
-function useWordCycle(words: string[], delay = 2000) {
-  const [idx, setIdx] = useState(0);
+//
+// Single Stat Card
+//
+function StatCard({ item }: { item: StatItem }) {
+  const { ref, inView } = useInView({ threshold: 0.6, triggerOnce: false });
+  const id = useId();
+  const { start, reset } = useCountUp({
+    ref: id,
+    start: 0,
+    end: item.value,
+    duration: 2.5,
+    formattingFn: n => shortNumber(n) + (item.suffix || ""),
+    startOnMount: false,
+  });
   useEffect(() => {
-    const t = setTimeout(() => setIdx((i) => (i + 1) % words.length), delay);
-    return () => clearTimeout(t);
-  }, [idx, words, delay]);
-  return words[idx];
-}
-
-/* ---------- DARK GLOW (hero only) ---------- */
-const DarkGlow = () => (
-  <div
-    aria-hidden="true"
-    className="
-      pointer-events-none absolute left-1/2 -translate-x-1/2
-      top-[-180px] w-[200%] h-[860px]
-      blur-[170px] z-0
-    "
-    style={{
-      background:
-        "linear-gradient(" +
-          "to bottom, " +
-          "rgba(0,0,0,0.8) 0%, " +    // hitam pekat di atas
-          "rgba(50,50,50,0.5) 30%, " +// abu‑abu gelap
-          "rgba(100,100,100,0.3) 60%, " +// abu‑abu sedang
-          "rgba(150,150,150,0.1) 78%, " +// abu‑abu terang
-          "rgba(200,200,200,0) 95%" +   // transparan di bawah
-        ")",
-      WebkitMaskImage:
-        "linear-gradient(to bottom, #fff 0%, #fff 62%, rgba(255,255,255,0) 96%)",
-      maskImage:
-        "linear-gradient(to bottom, #fff 0%, #fff 62%, rgba(255,255,255,0) 96%)",
-    }}
-  />
-);
-
-
-
-/* ---------- MAIN ---------- */
-export default function MobileHome() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [faqOpen, setFaqOpen] = useState<number | null>(null);
-  const headlineWord = useWordCycle(WORDS, 3000);
-
-  // Embla carousel for looping reviews
-  const [emblaRef] = useEmblaCarousel({ loop: true });
-
+    if (inView) {
+      reset();
+      start();
+    }
+  }, [inView, reset, start]);
   return (
-    <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-start px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10 space-x-4">
-        <Link href="/" className="text-lg font-bold tracking-wide">
-          QUARK
-        </Link>
-        <Link
-          href="https://app.mrktedge.ai/auth"
-          onClick={() => setMenuOpen(false)}
-          className="py-2 px-4 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm"
-        >
-          Get Started
-        </Link>
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setMenuOpen((o) => !o)}
-          className="p-2 text-white ml-auto"
-        >
-          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </header>
-
-      {/* MENU OVERLAY */}
-      {menuOpen && (
-        <nav className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md animate-fade-in flex flex-col">
-          <div className="flex items-center justify-between px-4 h-14 border-b border-white/10">
-            <Link
-              href="/"
-              className="text-lg font-bold tracking-wide"
-              onClick={() => setMenuOpen(false)}
-            >
-              QUARK
-            </Link>
-            <button
-              aria-label="Close menu"
-              onClick={() => setMenuOpen(false)}
-              className="p-2 text-white"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-
-          <div className="flex-1 flex flex-col items-center justify-center gap-8 text-center">
-            {[
-              { name: "Features", href: "#features" },
-              { name: "Pricing", href: "#pricing" },
-              { name: "FAQ", href: "#faq" },
-            ].map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-2xl font-semibold"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-        </nav>
-      )}
-
-      {/* spacer header */}
-      <div className="pt-14" />
-
-      {/* HERO */}
-      <section className="relative px-5 pt-10 pb-16 flex flex-col items-center text-center overflow-visible">
-        <DarkGlow />
-
-        <h1 className="relative z-10 text-4xl leading-tight font-bold mb-4">
-          <span className="block">The AI assistant that</span>
-
-          <span className="block min-h-[1.1em]">
-            <span
-              key={headlineWord}
-              className="inline-block bg-gradient-to-r from-gray-300 to-gray-500 bg-clip-text text-transparent transition-opacity duration-300"
-            >
-              {headlineWord}
-            </span>
-          </span>
-
-          <span className="block">to your world</span>
-        </h1>
-
-        <p className="relative z-10 text-white/80 text-base mb-8">
-          Chat, create, analyze, and automate all from your device. Built for productivity and creativity.
-        </p>
-
-        <div className="relative z-10 flex flex-col gap-3 w-full max-w-xs mx-auto">
-          <Link
-            href="#pricing"
-            className="py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm shadow text-center"
-          >
-            Get Started
-          </Link>
-          <a
-            href="#features"
-            className="py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm text-center"
-          >
-            Explore Features
-          </a>
-        </div>
-
-        <div className="relative z-10 mt-10 w-full max-w-sm mx-auto">
-          <Image
-            src="/hero-dashboard.png"
-            alt="App preview"
-            width={360}
-            height={240}
-            className="rounded-xl shadow-lg w-full h-auto"
-            priority
-          />
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="px-5 py-16 bg-zinc-900/20" id="features">
-        <h2 className="text-2xl font-bold text-center mb-10">Explore Quark&apos;s Features</h2>
-        <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
-          {[
-            { title: "Web Search", desc: "Scan the web in real time for the latest news, data, and insights—ask anything and get instant, up to the minute answers pulled straight from the internet.", img: "/feature-websearch.png" },
-            { title: "DocPilot",  desc: "Summarize, translate, and explore PDFs, DOCX, TXT, and EPUB files—get instant rewrites, accurate translations, and on‑demand answers to any document question.",       img: "/feature-docpilot.png" },
-            { title: "Image Generation", desc: "Generate high‑quality images, illustrations, and concept art from simple text prompts—watch your ideas take shape with AI‑powered creativity at lightning speed.",      img: "/feature-image.png" },
-          ].map((f) => (
-            <div key={f.title} className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
-              <Image src={f.img} alt={f.title} width={500} height={300} className="rounded-lg w-full h-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-              <p className="text-sm text-white/70">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Numbers */}
-      <NumbersSection />
-
-      {/* Reviews */}
-      <section id="reviews" className="px-5 py-16">
-        <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
-        <p className="text-center text-white/60 mb-6">What our users are saying</p>
-
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex space-x-4 px-5">
-            {testimonials.map((t, i) => (
-              <div key={i} className="flex-shrink-0 w-full max-w-sm">
-                <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 h-full flex flex-col justify-between">
-                  <p className="text-sm text-white/70 mb-4">{t.msg}</p>
-                  <div className="flex items-center mb-2">
-                    {Array(5).fill(0).map((_, idx) => {
-                      const filled = idx < Math.floor(t.rating);
-                      const half = !filled && idx < t.rating;
-                      return (
-                        <span key={idx} className={`text-yellow-400 ${half ? "opacity-75" : ""}`}>
-                          ★
-                        </span>
-                      );
-                    })}
-                  </div>
-                  <p className="text-xs text-white/50">— {t.user}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <Pricing />
-
-      {/* FAQ */}
-      <section id="faq" className="px-5 py-16">
-        <h2 className="text-2xl font-bold text-center mb-8">FAQ</h2>
-        <div className="max-w-md mx-auto">
-          {faqs.map((item, idx) => (
-            <FAQItem
-              key={idx}
-              item={item}
-              open={faqOpen === idx}
-              onToggle={() => setFaqOpen(faqOpen === idx ? null : idx)}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Contact Us */}
-      <section id="contact" className="px-5 py-16">
-        <div className="max-w-md mx-auto bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 text-center">
-          <h3 className="text-xl font-semibold mb-2">Need More Help?</h3>
-          <p className="text-white/70 mb-4">
-            Have questions or want to learn more? Our support team is here to help.
-            Click below to get in touch and we'll respond within one business day.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-full"
-          >
-            Contact Us
-          </Link>
-        </div>
-      </section>
-
-      <Footer />
+    <div ref={ref} className="group relative flex flex-col items-center">
+      <div className="absolute inset-x-0 top-0 overflow-hidden">
+        <div
+          className="h-20 group-hover:h-44 transition-[height] duration-300 w-full border border-white/20 bg-white/10 rounded-t-lg"
+          style={{
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
+          }}
+        />
+      </div>
+      <div className="relative z-10 mt-6 mb-2 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+        {item.icon}
+      </div>
+      {inView && <p id={id} className="text-3xl font-bold leading-none mt-2 text-white" />}
+      <p className="mt-1 text-base text-white/80">{item.label}</p>
     </div>
   );
 }
 
-/* ---------- FAQ Item Component ---------- */
+//
+// Numbers grid
+//
+function NumbersSection() {
+  return (
+    <section className="px-6 md:px-16 py-16 bg-black" id="numbers">
+      <h2 className="text-3xl font-bold text-center mb-3 text-white">REPLYST Power in Numbers</h2>
+      <p className="text-center text-white/60 mb-10">What we’ve achieved</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 max-w-6xl mx-auto">
+        {statsData.map(s => <StatCard key={s.id} item={s} />)}
+      </div>
+    </section>
+  );
+}
+
+//
+// Features data
+//
+const features = [
+  {
+    title: "Web Search",
+    desc: "Scan the web in real time for the latest news, data, and insights—ask anything and get instant, up-to-the-minute answers pulled straight from the internet.",
+    img: "/feature-websearch.png",
+  },
+  {
+    title: "DocPilot",
+    desc: "Summarize, translate, and explore PDFs, DOCX, TXT, and EPUB files—get instant rewrites, accurate translations, and on‑demand answers to any document question.",
+    img: "/feature-docpilot.png",
+  },
+  {
+    title: "Image Generation",
+    desc: "Generate high‑quality images, illustrations, and concept art from simple text prompts—watch your ideas take shape with AI‑powered creativity at lightning speed.",
+    img: "/feature-image.png",
+  },
+];
+
+//
+// Testimonials for carousel
+//
+const testimonials = [
+  { msg: "Wow, very impressive indeed. Give it all the ideas and it puts it together so perfectly", user: "FarahAM", rating: 5 },
+  { msg: "I love how it summarizes my spreadsheets. Super efficient and accurate.", user: "BobSmith", rating: 4.5 },
+  { msg: "Its amazing how it can turn anything you need from a text to an email to a report into an amazing world of art that makes you sound educated, eloquent, and smart. Love it", user: "ClaraJ", rating: 5 },
+  { msg: "I have asked dozens of questions and have learned a lot by doing so. It's like having a very wise, educated friend give you the straight answer everytime.", user: "DanielParker", rating: 4 },
+  { msg: "This is amazing and helpful.", user: "BagasPrakoso", rating: 4.5 },
+];
+
+//
+// FAQ data + component
+//
+const faqs = [
+  {
+    q: "What is REPLYST?",
+    a: `REPLYST is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
+It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`,
+  },
+  {
+    q: "Is there a free plan?",
+    a: `Yes. You can start for free with daily message and upload limits—no credit card required.
+When you need higher limits, faster models, or pro features, you can upgrade anytime with a single click.`,
+  },
+  {
+    q: "Which models do you support?",
+    a: `We provide access to the latest OpenAI models such as GPT‑4.1 mini, GPT‑4.5, and others—depending on your plan.
+REPLYST can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in Settings.`,
+  },
+  {
+    q: "Can I cancel my subscription anytime?",
+    a: `Absolutely. There’s no lock‑in. You can change or cancel your plan at any moment from the Billing page.
+Your subscription stays active until the current period ends and won’t auto‑renew after cancellation. No penalties.`,
+  },
+  {
+    q: "Do you provide refunds or exchanges?",
+    a: `All sales are final and we do not offer refunds. Please try the free plan and review our docs before purchasing—this helps us keep pricing competitive and continue improving the platform.`,
+  },
+  {
+    q: "How do I contact your support team?",
+    a: `Head to our website footer and tap “Contact Us”. Fill out the form and submit your request—our team usually replies within 24 hours on business days.`,
+  },
+];
+
 function FAQItem({
   item,
   open,
@@ -364,25 +192,18 @@ function FAQItem({
         className="w-full flex items-center justify-between py-5 text-left group"
         onClick={onToggle}
       >
-        <span
-          className={`text-[22px] leading-snug font-semibold tracking-tight ${
-            open ? "underline decoration-white/70" : "group-hover:underline"
-          }`}
-        >
+        <span className={`text-[22px] leading-snug font-semibold tracking-tight ${
+          open ? "underline decoration-white/70" : "group-hover:underline"
+        }`}>
           {item.q}
         </span>
-        <ChevronDown
-          className={`w-5 h-5 transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
+        <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${
+          open ? "rotate-180" : ""
+        }`} />
       </button>
-
-      <div
-        className={`overflow-hidden transition-[max-height,opacity] duration-300 ${
-          open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
+      <div className={`overflow-hidden transition-[max-height,opacity] duration-300 ${
+        open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+      }`}>
         <p className="pb-5 text-base text-white/70 leading-relaxed whitespace-pre-line">
           {item.a}
         </p>
@@ -391,65 +212,153 @@ function FAQItem({
   );
 }
 
+//
+// Main DesktopHome export
+//
+export default function DesktopHome() {
+  const headlineWord = useWordCycle(WORDS, 3000);
+  const [faqOpen, setFaqOpen] = useState<number | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, dragFree: true });
 
-/* ---------- Numbers Section ---------- */
-function NumbersSection() {
-  return (
-    <section className="px-5 py-16" id="numbers">
-      <h2 className="text-3xl font-bold text-center mb-3">{"QUARK's Power in Numbers"}</h2>
-      <p className="text-center text-white/60 mb-10 text-base">What we’ve achieved</p>
-
-      <div className="flex flex-col gap-6 max-w-md mx-auto">
-        {statsData.map((s) => (
-          <StatCard key={s.id} item={s} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ---------- StatCard (CountUp logic tetap) ---------- */
-function StatCard({ item }: { item: StatItem }) {
-  const { ref, inView } = useInView({
-    threshold: 0.6,
-    rootMargin: "0px 0px -20% 0px",
-    triggerOnce: false,
-  });
-
-  const started = useRef(false);
-
-  const id = useId();
-  const { start, reset } = useCountUp({
-    ref: id,
-    start: 0,
-    end: item.value,
-    duration: 3.2,
-    startOnMount: false,
-    formattingFn: (n) => shortNumber(n) + (item.suffix || ""),
-  });
-
+  // continuous scroll
   useEffect(() => {
-    if (inView && !started.current) {
-      reset();
-      start();
-      started.current = true;
-    } else if (!inView && started.current) {
-      started.current = false;
-    }
-  }, [inView, reset, start]);
+    if (!emblaApi) return;
+    const timer = setInterval(() => emblaApi.scrollNext(), 50);
+    return () => clearInterval(timer);
+  }, [emblaApi]);
 
   return (
-    <div
-      ref={ref}
-      className="rounded-3xl bg-zinc-900/80 border border-zinc-800 px-6 py-8 flex items-center justify-between shadow-sm"
-    >
-      <div>
-        <p className="text-5xl font-extrabold leading-none">
-          <span id={id} />
-        </p>
-        <p className="mt-3 text-lg text-white/70">{item.label}</p>
-      </div>
-      {item.icon}
-    </div>
+    <main className="bg-black text-white min-h-screen font-inter">
+      <Head>
+        <title>REPLYST – Your AI Assistant</title>
+        <meta name="description" content="REPLYST is an AI assistant built for work and creativity." />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <SiteHeader />
+
+      {/* HERO */}
+      <section className="relative w-full h-screen px-6 md:px-16 flex flex-col md:flex-row items-center justify-between overflow-hidden">
+        <div className="relative z-20 max-w-xl">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            The AI assistant that<br/>
+            <span className="bg-gradient-to-r from-zinc-500 to-zinc-400 bg-clip-text text-transparent">
+              {headlineWord}
+            </span>{" "}
+            to your world
+          </h1>
+          <p className="text-lg text-white/80 mb-8">
+            Chat, generate content, analyze documents, and boost productivity with REPLYST.
+          </p>
+          <div className="flex gap-4">
+            <a
+              href="#numbers"
+              className="px-6 py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm shadow transition-transform hover:scale-105"
+            >
+              Get Started
+            </a>
+            <a
+              href="#features"
+              className="px-6 py-3 rounded-full border border-white/30 hover:border-white text-white font-semibold text-sm transition-transform hover:scale-105"
+            >
+              Explore Features
+            </a>
+          </div>
+        </div>
+        <div className="relative mt-10 md:mt-0 md:ml-12 w-full md:w-[650px]">
+          <div className="absolute -top-[200px] -right-[200px] w-[800px] h-[800px] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.3),transparent_70%)] pointer-events-none blur-[120px] z-10"/>
+          <div className="relative z-20">
+            <Image
+              src="/hero-dashboard.png"
+              alt="App preview"
+              width={650}
+              height={400}
+              className="rounded-xl shadow-lg"
+              priority
+            />
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black z-0"/>
+      </section>
+
+      {/* FEATURES */}
+      <section className="px-6 md:px-16 py-16 bg-black" id="features">
+        <h2 className="text-2xl font-bold text-center mb-10 text-white">
+          Explore REPLYST Features
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {features.map(f => (
+            <div key={f.title} className="bg-zinc-900/60 rounded-xl p-6 border border-zinc-800 hover:ring-1 hover:ring-white/20 transition flex flex-col">
+              <div className="w-full h-[240px] mb-4 overflow-hidden rounded-lg">
+                <Image src={f.img} alt={f.title} width={400} height={240} className="w-full h-full object-cover" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2 text-white">{f.title}</h3>
+              <p className="text-sm text-white/70">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* NUMBERS */}
+      <NumbersSection />
+
+      {/* PRICING */}
+      <Pricing />
+
+      {/* REVIEWS */}
+      <section id="reviews" className="px-6 md:px-16 py-16 bg-black">
+        <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
+        <p className="text-center text-white/60 mb-6">What our users are saying</p>
+        <div ref={emblaRef} className="mx-auto max-w-6xl overflow-hidden">
+          <div className="flex flex-nowrap gap-6 px-6">
+            {testimonials.map((t, i) => (
+              <div key={i} className="flex-shrink-0 w-[320px]">
+                <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 flex flex-col justify-between h-full">
+                  <p className="text-sm text-white/70 mb-4">{t.msg}</p>
+                  <div className="flex items-center mb-2">
+                    {Array(5).fill(0).map((_, idx) => {
+                      const filled = idx < Math.floor(t.rating);
+                      const half   = !filled && idx < t.rating;
+                      return (
+                        <span
+                          key={idx}
+                          className={
+                            filled
+                              ? "text-yellow-400"
+                              : half
+                                ? "text-yellow-400 opacity-75"
+                                : "text-white/30"
+                          }
+                        >
+                          ★
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <p className="text-xs text-white/50">— {t.user}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="px-6 md:px-16 py-16 bg-black">
+        <h2 className="text-2xl font-bold text-center mb-8 text-white">FAQ</h2>
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((item, idx) => (
+            <FAQItem
+              key={idx}
+              item={item}
+              open={faqOpen === idx}
+              onToggle={() => setFaqOpen(faqOpen === idx ? null : idx)}
+            />
+          ))}
+        </div>
+      </section>
+
+      <Footer />
+    </main>
   );
 }

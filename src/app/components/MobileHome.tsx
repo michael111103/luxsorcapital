@@ -391,7 +391,7 @@ function FAQItem({
 function NumbersSection() {
   return (
     <section className="px-5 py-16" id="numbers">
-      <h2 className="text-3xl font-bold text-center mb-3">{"QUARK's Power in Numbers"}</h2>
+      <h2 className="text-3xl font-bold text-center mb-3">{"REPLYST Power in Numbers"}</h2>
       <p className="text-center text-white/60 mb-10 text-base">What we’ve achieved</p>
       <div className="flex flex-col gap-6 max-w-md mx-auto">
         {statsData.map((s) => (
