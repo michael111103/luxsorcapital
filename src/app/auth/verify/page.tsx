@@ -1,5 +1,6 @@
 // src/app/auth/verify/page.tsx
 "use client";
+// *** WAJIB di baris pertama sebelum import apapun ***
 export const dynamic = "force-dynamic";
 
 import React, { useState } from "react";
@@ -39,7 +40,9 @@ export default function VerifyPage() {
 
   return (
     <div className="max-w-md mx-auto py-12">
-      <h1 className="text-2xl font-bold mb-4 text-white">Verify Your Email</h1>
+      <h1 className="text-2xl font-bold mb-4 text-white">
+        Verify Your Email
+      </h1>
       <p className="mb-6 text-white/70">
         A code was sent to <strong>{email}</strong>
       </p>
