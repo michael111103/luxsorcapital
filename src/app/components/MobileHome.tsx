@@ -29,8 +29,8 @@ import Footer from "./footer";
 /* ---------- FAQ ---------- */
 const faqs = [
   {
-    q: "What is REPLYST?",
-    a: `REPLYST is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
+    q: "What is REPYST?",
+    a: `REPYST is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
 It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`,
   },
   {
@@ -145,7 +145,7 @@ export default function MobileHome() {
       {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">
-          REPLYST
+          REPYST
         </Link>
         <div className="flex items-center space-x-2">
           <Link
@@ -174,7 +174,7 @@ export default function MobileHome() {
               className="text-lg font-bold tracking-wide"
               onClick={() => setMenuOpen(false)}
             >
-              REPLYST
+              REPYST
             </Link>
             <button
               aria-label="Close menu"
@@ -257,7 +257,7 @@ export default function MobileHome() {
 
       {/* Features */}
       <section className="px-5 py-16 bg-zinc-900/20" id="features">
-        <h2 className="text-2xl font-bold text-center mb-10">Explore Replyst Features</h2>
+        <h2 className="text-2xl font-bold text-center mb-10">Explore Repyst Features</h2>
         <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto">
           {[
             { title: "Web Search", desc: "Scan the web in real time for the latest news, data, and insights—ask anything and get instant, up to the minute answers pulled straight from the internet.", img: "/feature-websearch.png" },
@@ -391,7 +391,7 @@ function FAQItem({
 function NumbersSection() {
   return (
     <section className="px-5 py-16" id="numbers">
-      <h2 className="text-3xl font-bold text-center mb-3">{"REPLYST Power in Numbers"}</h2>
+      <h2 className="text-3xl font-bold text-center mb-3">{"REPYST Power in Numbers"}</h2>
       <p className="text-center text-white/60 mb-10 text-base">What we’ve achieved</p>
       <div className="flex flex-col gap-6 max-w-md mx-auto">
         {statsData.map((s) => (

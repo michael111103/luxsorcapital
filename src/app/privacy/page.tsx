@@ -2,7 +2,6 @@
 "use client";
 
 import Link from "next/link";
-import { SiteHeader } from "../components/header";
 import Footer from "../components/footer";
 import { ChevronRight } from "lucide-react";
 
@@ -63,7 +62,7 @@ export default function PrivacyPage() {
           {/* Intro */}
           <Section id="intro" title="Introduction">
             <p>
-              Welcome to QUARK (“we”, “us”, “our”), operated from Surabaya, Indonesia. This Privacy
+              Welcome to REPYST (“we”, “us”, “our”), operated from Surabaya, Indonesia. This Privacy
               Policy explains how we collect, use, disclose, and protect your personal data when you
               use our website, mobile web experience, and AI assistant products (collectively, the
               “Services”). By accessing or using the Services, you agree to this Policy. If you do
@@ -205,13 +204,13 @@ export default function PrivacyPage() {
           {/* Contact Us */}
           <Section id="contact" title="Contact Us">
             <p>
-              Questions or requests? Email us at{" "}
-              <Link href="mailto:support@quark.ai" className="underline">
-                support@quark.ai
+              Questions or requests?{" "}
+              <Link href="/contact" className="underline">
+                Contact Us
               </Link>{" "}
             </p>
             <p className="mt-2">
-              <strong>QUARK</strong><br />
+              <strong>REPYST</strong><br />
               Surabaya, East Java, Indonesia
             </p>
           </Section>

@@ -61,7 +61,7 @@ export default function TermsPage() {
         <article className="prose prose-invert prose-headings:font-semibold prose-p:text-white/80 prose-li:text-white/80 max-w-2xl mx-auto">
           <Section id="intro" title="Introduction">
             <p>
-              Welcome to QUARK (“we”, “us”, “our”). These Terms of Service (“Terms”) govern your
+              Welcome to REPYST (“we”, “us”, “our”). These Terms of Service (“Terms”) govern your
               access to and use of our website, mobile web experience, and AI assistant products
               (collectively, the “Services”). By using the Services, you agree to these Terms.
               If you do not agree, please do not use the Services.
@@ -159,13 +159,13 @@ export default function TermsPage() {
 
           <Section id="contact" title="Contact Us">
             <p>
-              Questions? Email us at{" "}
-              <Link href="mailto:support@quark.ai" className="underline">
-                support@quark.ai
+              Questions or requests?{" "}
+              <Link href="/contact" className="underline">
+                Contact Us
               </Link>{" "}
             </p>
             <p className="mt-2">
-              <strong>QUARK</strong><br />
+              <strong>REPYST</strong><br />
               Surabaya, East Java, Indonesia
             </p>
           </Section>

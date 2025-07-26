@@ -14,7 +14,7 @@ export function SiteHeader({ onNavigate }: { onNavigate?: (href: string) => void
       <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between h-16">
         {/* LOGO */}
         <Link href="/" className="text-2xl font-bold text-white">
-          REPLYST
+          REPYST
         </Link>
 
         {/* NAVIGATION */}

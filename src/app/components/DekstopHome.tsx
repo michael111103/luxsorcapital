@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import { useCountUp } from "react-countup";
 import useEmblaCarousel from "embla-carousel-react";
+import AutoScroll from "embla-carousel-auto-scroll";
 import {
   Download,
   CheckCircle2,
@@ -103,7 +104,7 @@ function StatCard({ item }: { item: StatItem }) {
 function NumbersSection() {
   return (
     <section className="px-6 md:px-16 py-16 bg-black" id="numbers">
-      <h2 className="text-3xl font-bold text-center mb-3 text-white">REPLYST Power in Numbers</h2>
+      <h2 className="text-3xl font-bold text-center mb-3 text-white">REPYST Power in Numbers</h2>
       <p className="text-center text-white/60 mb-10">What we’ve achieved</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 max-w-6xl mx-auto">
         {statsData.map(s => <StatCard key={s.id} item={s} />)}
@@ -149,8 +150,8 @@ const testimonials = [
 //
 const faqs = [
   {
-    q: "What is REPLYST?",
-    a: `REPLYST is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
+    q: "What is REPYST?",
+    a: `REPYST is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
 It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`,
   },
   {
@@ -219,19 +220,22 @@ function FAQItem({
 export default function DesktopHome() {
   const headlineWord = useWordCycle(WORDS, 3000);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, dragFree: true });
 
-  // continuous scroll
-  useEffect(() => {
-    if (!emblaApi) return;
-    const timer = setInterval(() => emblaApi.scrollNext(), 50);
-    return () => clearInterval(timer);
-  }, [emblaApi]);
+  // AutoScroll plugin tanpa opsi loop
+  const autoScroll = AutoScroll({
+    speed           : 0.5,   // 0.5px per frame
+    stopOnInteraction: false,
+  });
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start", containScroll: "trimSnaps" },
+    [autoScroll]
+  );
 
   return (
     <main className="bg-black text-white min-h-screen font-inter">
       <Head>
-        <title>REPLYST – Your AI Assistant</title>
+        <title>REPYST – Your AI Assistant</title>
         <meta name="description" content="REPLYST is an AI assistant built for work and creativity." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -249,7 +253,7 @@ export default function DesktopHome() {
             to your world
           </h1>
           <p className="text-lg text-white/80 mb-8">
-            Chat, generate content, analyze documents, and boost productivity with REPLYST.
+            Chat, generate content, analyze documents, and boost productivity with REPYST.
           </p>
           <div className="flex gap-4">
             <a
@@ -285,7 +289,7 @@ export default function DesktopHome() {
       {/* FEATURES */}
       <section className="px-6 md:px-16 py-16 bg-black" id="features">
         <h2 className="text-2xl font-bold text-center mb-10 text-white">
-          Explore REPLYST Features
+          Explore REPYST Features
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {features.map(f => (
