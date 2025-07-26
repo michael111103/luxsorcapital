@@ -1,5 +1,5 @@
 // src/app/api/auth/[...nextauth]/route.ts
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getUserByEmail, verifyPassword } from "../../../../lib/utils";
@@ -17,26 +17,45 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) return null;
-        const user = await getUserByEmail(credentials.email);
-        if (!user) return null;
+        // Pastikan ada email & password
+        if (!credentials?.email || !credentials.password) {
+          return null;
+        }
+
+        // Ambil user dari DB
+        const userFromDb = await getUserByEmail(credentials.email);
+        if (!userFromDb) {
+          return null;
+        }
+
+        // Cek password
         const isValid = await verifyPassword(
           credentials.password,
-          user.password
+          userFromDb.password
         );
-        if (!isValid) return null;
+        if (!isValid) {
+          return null;
+        }
+
+        // Mapping ke shape NextAuth.User
+        const user: User = {
+          id: String(userFromDb.id),           // harus string
+          email: userFromDb.email || null,
+          name: userFromDb.name || null,
+        };
+
         return user;
       },
     }),
   ],
 
   session: {
-    strategy: "jwt", // literal union yang diizinkan oleh NextAuthOptions
+    strategy: "jwt",  // hanya "jwt" atau "database"
   },
 
-  secret: process.env.NEXTAUTH_SECRET!, // non-null assertion
+  secret: process.env.NEXTAUTH_SECRET!,  // pastikan ada di .env
 };
 
+// Handler NextAuth
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };
