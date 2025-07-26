@@ -1,3 +1,4 @@
+// src/app/auth/verify/page.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -38,12 +39,14 @@ export default function VerifyPage() {
   return (
     <div className="max-w-md mx-auto py-12">
       <h1 className="text-2xl font-bold mb-4 text-white">Verify Your Email</h1>
-      <p className="mb-6 text-white/70">A code was sent to <strong>{email}</strong></p>
+      <p className="mb-6 text-white/70">
+        A code was sent to <strong>{email}</strong>
+      </p>
       <form onSubmit={handleVerify} className="space-y-4">
         <Input
           placeholder="Enter verification code"
           value={code}
-          onChange={e => setCode(e.target.value)}
+          onChange={(e) => setCode(e.target.value)}
           required
         />
         <Button type="submit" disabled={isVerifying}>
