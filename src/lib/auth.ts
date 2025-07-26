@@ -1,20 +1,19 @@
 // src/lib/auth.ts
 
-export interface AuthResponse {
+export interface AuthResponse<T = unknown> {
   ok: boolean;
   message?: string;
-  data?: any;
+  data?: T;
 }
 
 /**
  * Register a new user with email & password.
- * @param email
- * @param password
+ * @returns { id: number; email: string }
  */
 export async function register(
   email: string,
   password: string
-): Promise<AuthResponse> {
+): Promise<AuthResponse<{ id: number; email: string }>> {
   const res = await fetch("/api/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -32,13 +31,12 @@ export async function register(
 
 /**
  * Log in a user with email & password.
- * @param email
- * @param password
+ * @returns { token: string }
  */
 export async function login(
   email: string,
   password: string
-): Promise<AuthResponse> {
+): Promise<AuthResponse<{ token: string }>> {
   const res = await fetch("/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -67,12 +65,9 @@ export async function logout(): Promise<AuthResponse> {
 
 /**
  * Fetch the currently authenticated user's profile.
+ * @returns { email: string }
  */
-export async function getProfile(): Promise<{
-  ok: boolean;
-  data?: { email: string };
-  message?: string;
-}> {
+export async function getProfile(): Promise<AuthResponse<{ email: string }>> {
   const res = await fetch("/api/auth/me");
   if (!res.ok) {
     return { ok: false, message: "Not authenticated" };
