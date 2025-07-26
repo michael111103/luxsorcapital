@@ -365,7 +365,7 @@ export default function DesktopHome() {
           <h3 className="text-xl font-semibold mb-2">Need More Help?</h3>
           <p className="text-white/70 mb-4">
             Have questions or want to learn more? Our support team is here to help.
-            Click below to get in touch and we'll respond within one business day.
+            Click below to get in touch and we&apos;ll respond within one business day.
           </p>
           <Link
             href="/contact"
