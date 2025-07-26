@@ -93,7 +93,7 @@ export default function Pricing({ plans = defaultPlans, sectionId = "pricing" }:
               </div>
 
               <a
-                href="#"
+                href="/auth/register"
                 className="mt-8 block bg-zinc-600 hover:bg-zinc-700 text-white text-center py-3 rounded-md font-medium"
               >
                 Get Started

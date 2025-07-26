@@ -149,7 +149,7 @@ export default function MobileHome() {
         </Link>
         <div className="flex items-center space-x-2">
           <Link
-            href="https://app.mrktedge.ai/auth"
+            href="/auth/register"
             onClick={() => setMenuOpen(false)}
             className="py-2 px-4 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm"
           >

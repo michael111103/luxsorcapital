@@ -1,7 +1,6 @@
 // src/app/auth/verify/page.tsx
 "use client";
-
-export const dynamic = "force-dynamic"; // disable prerendering
+export const dynamic = "force-dynamic";
 
 import React, { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -19,11 +18,13 @@ export default function VerifyPage() {
   async function handleVerify(e: React.FormEvent) {
     e.preventDefault();
     setIsVerifying(true);
+
     const res = await fetch("/api/auth/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, code }),
     });
+
     const data = await res.json();
     setIsVerifying(false);
 
@@ -31,6 +32,7 @@ export default function VerifyPage() {
       toast.error(data.error || "Invalid code");
       return;
     }
+
     toast.success("Your account has been verified. You can now log in.");
     router.push("/auth/login");
   }
