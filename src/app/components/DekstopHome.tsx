@@ -287,32 +287,36 @@ export default function DesktopHome() {
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black z-0" />
       </section>
 
-      {/* FEATURES */}
-      <section className="px-6 md:px-16 py-16 bg-black" id="features">
-        <h2 className="text-2xl font-bold text-center mb-10 text-white">
-          Explore Quark&apos;s Features
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {features.map((f) => (
-            <div
-              key={f.title}
-              className="bg-zinc-900/60 rounded-xl p-6 border border-zinc-800 hover:ring-1 hover:ring-white/20 transition"
-            >
-              <Image
-                src={f.img}
-                alt={f.title}
-                width={400}
-                height={240}
-                className="rounded-lg w-full h-auto mb-4"
-              />
-              <h3 className="text-xl font-semibold mb-2 text-white">
-                {f.title}
-              </h3>
-              <p className="text-sm text-white/70">{f.desc}</p>
-            </div>
-          ))}
+{/* FEATURES */}
+<section className="px-6 md:px-16 py-16 bg-black" id="features">
+  <h2 className="text-2xl font-bold text-center mb-10 text-white">
+    Explore Quark&apos;s Features
+  </h2>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    {features.map((f) => (
+      <div
+        key={f.title}
+        className="bg-zinc-900/60 rounded-xl p-6 border border-zinc-800 hover:ring-1 hover:ring-white/20 transition flex flex-col"
+      >
+        {/* CONTOH: area gambar dengan tinggi tetap */}
+        <div className="w-full h-[240px] mb-4 overflow-hidden rounded-lg">
+          <Image
+            src={f.img}
+            alt={f.title}
+            width={400}
+            height={240}
+            className="w-full h-full object-cover"
+          />
         </div>
-      </section>
+
+        <h3 className="text-xl font-semibold mb-2 text-white">
+          {f.title}
+        </h3>
+        <p className="text-sm text-white/70">{f.desc}</p>
+      </div>
+    ))}
+  </div>
+</section>
 
       {/* NUMBERS */}
       <NumbersSection />

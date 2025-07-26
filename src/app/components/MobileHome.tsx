@@ -144,9 +144,21 @@ export default function MobileHome() {
 
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
-      {/* HEADER (keep) */}
+      {/* HEADER (dengan Get Started di dalam) */}
       <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
-        <Link href="/" className="text-lg font-bold tracking-wide">QUARK</Link>
+        <Link href="/" className="text-lg font-bold tracking-wide">
+          QUARK
+        </Link>
+
+        {/* Tombol Get Started baru, di sebelah kiri tombol menu */}
+        <Link
+          href="#pricing"
+          className="hidden sm:inline-block ml-4 px-4 py-1 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm rounded-full transition"
+          onClick={() => setMenuOpen(false)}
+        >
+          Get Started
+        </Link>
+
         <button
           aria-label="Toggle menu"
           onClick={() => setMenuOpen((o) => !o)}
@@ -160,10 +172,18 @@ export default function MobileHome() {
       {menuOpen && (
         <nav className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md animate-fade-in flex flex-col">
           <div className="flex items-center justify-between px-4 h-14 border-b border-white/10">
-            <Link href="/" className="text-lg font-bold tracking-wide" onClick={() => setMenuOpen(false)}>
+            <Link
+              href="/"
+              className="text-lg font-bold tracking-wide"
+              onClick={() => setMenuOpen(false)}
+            >
               QUARK
             </Link>
-            <button aria-label="Close menu" onClick={() => setMenuOpen(false)} className="p-2 text-white">
+            <button
+              aria-label="Close menu"
+              onClick={() => setMenuOpen(false)}
+              className="p-2 text-white"
+            >
               <X className="w-6 h-6" />
             </button>
           </div>
@@ -171,8 +191,8 @@ export default function MobileHome() {
           <div className="flex-1 flex flex-col items-center justify-center gap-8 text-center">
             {[
               { name: "Features", href: "#features" },
-              { name: "Pricing",  href: "#pricing"  },
-              { name: "FAQ",      href: "#faq"      },
+              { name: "Pricing", href: "#pricing" },
+              { name: "FAQ", href: "#faq" },
             ].map((item) => (
               <a
                 key={item.name}
@@ -186,7 +206,7 @@ export default function MobileHome() {
           </div>
 
           <Link
-            href="https://app.mrktedge.ai/auth"
+            href="#pricing"
             onClick={() => setMenuOpen(false)}
             className="m-6 mb-10 w-full max-w-xs self-center text-center py-3 rounded-lg bg-gradient-to-r from-gray-800 to-gray-600 font-semibold"
           >
