@@ -31,30 +31,30 @@ const faqs = [
   {
     q: "What is QUARK?",
     a: `QUARK is an all‑in‑one AI assistant that helps you write, research, analyze documents, and automate repetitive tasks—directly from your device.
-It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`
+It combines state‑of‑the‑art language models with practical tools (PDF/CSV readers, web search, a workflow builder, and more), so you don’t just chat—you actually get work done end to end.`,
   },
   {
     q: "Is there a free plan?",
     a: `Yes. You can start for free with daily message and upload limits—no credit card required.
-When you need higher limits, faster models, or pro features, you can upgrade anytime with a single click.`
+When you need higher limits, faster models, or pro features, you can upgrade anytime with a single click.`,
   },
   {
     q: "Which models do you support?",
     a: `We provide access to the latest OpenAI models such as GPT‑4.1 mini, GPT‑4.5, and others—depending on your plan.
-QUARK can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in Settings.`
+QUARK can auto‑select the most efficient model for each task (e.g., quick summaries vs. long‑form writing), or you can choose manually in Settings.`,
   },
   {
     q: "Can I cancel my subscription anytime?",
     a: `Absolutely. There’s no lock‑in. You can change or cancel your plan at any moment from the Billing page.
-Your subscription stays active until the current period ends and won’t auto‑renew after cancellation. No penalties.`
+Your subscription stays active until the current period ends and won’t auto‑renew after cancellation. No penalties.`,
   },
   {
     q: "Do you provide refunds or exchanges?",
-    a: `All sales are final and we do not offer refunds. Please try the free plan and review our docs before purchasing—this helps us keep pricing competitive and continue improving the platform.`
+    a: `All sales are final and we do not offer refunds. Please try the free plan and review our docs before purchasing—this helps us keep pricing competitive and continue improving the platform.`,
   },
   {
     q: "How do I contact your support team?",
-    a: `Head to our website footer and tap “Contact Us”. Fill out the form and submit your request—our team usually replies within 24 hours on business days.`
+    a: `Head to our website footer and tap “Contact Us”. Fill out the form and submit your request—our team usually replies within 24 hours on business days.`,
   },
 ];
 
@@ -72,7 +72,7 @@ const ICON_CLS = "w-10 h-10 text-[#0EA5E9]";
 const statsData: StatItem[] = [
   { id: "users",     value: 50_000_000,    suffix: "+", label: "Users",            icon: <Download     className={ICON_CLS} /> },
   { id: "tasks",     value: 1_000_000_000, suffix: "+", label: "Solved Tasks",     icon: <CheckCircle2 className={ICON_CLS} /> },
-  { id: "countries", value: 236,                   label: "Countries Using QUARK",  icon: <Globe2       className={ICON_CLS} /> },
+  { id: "countries", value: 236,                           label: "Countries Using QUARK",  icon: <Globe2       className={ICON_CLS} /> },
   { id: "reviews",   value: 650_000,       suffix: "+", label: "Top Star Reviews", icon: <Sparkles     className={ICON_CLS} /> },
 ];
 
@@ -81,7 +81,7 @@ const testimonials = [
   { msg: "Wow, very impressive indeed. Give it all the ideas and it puts it together so perfectly", user: "AliceW", rating: 5 },
   { msg: "I love how it summarizes my spreadsheets. Super efficient and accurate.", user: "BobSmith", rating: 4.5 },
   { msg: "Its amazing how it can turn anything you need from a text to an email to a report into an amazing world of art that makes you sound educated, eloquent, and smart. Love it", user: "ClaraJ", rating: 5 },
-  { msg: "I have asked dozens of questions and have learned a lot by doing so. It's like having a very wise, educated friend give you the straight answer everytime.", user: "DanielParker ", rating: 4 },
+  { msg: "I have asked dozens of questions and have learned a lot by doing so. It's like having a very wise, educated friend give you the straight answer everytime.", user: "DanielParker", rating: 4 },
   { msg: "This is amazing and helpful.", user: "BagasPrakoso", rating: 4.5 },
 ];
 
@@ -117,11 +117,11 @@ const DarkGlow = () => (
       background:
         "linear-gradient(" +
           "to bottom, " +
-          "rgba(0,0,0,0.8) 0%, " +    // hitam pekat di atas
-          "rgba(50,50,50,0.5) 30%, " +// abu‑abu gelap
-          "rgba(100,100,100,0.3) 60%, " +// abu‑abu sedang
-          "rgba(150,150,150,0.1) 78%, " +// abu‑abu terang
-          "rgba(200,200,200,0) 95%" +   // transparan di bawah
+          "rgba(0,0,0,0.8) 0%, " +
+          "rgba(50,50,50,0.5) 30%, " +
+          "rgba(100,100,100,0.3) 60%, " +
+          "rgba(150,150,150,0.1) 78%, " +
+          "rgba(200,200,200,0) 95%" +
         ")",
       WebkitMaskImage:
         "linear-gradient(to bottom, #fff 0%, #fff 62%, rgba(255,255,255,0) 96%)",
@@ -130,8 +130,6 @@ const DarkGlow = () => (
     }}
   />
 );
-
-
 
 /* ---------- MAIN ---------- */
 export default function MobileHome() {
@@ -145,24 +143,26 @@ export default function MobileHome() {
   return (
     <div className="bg-black text-white font-inter relative overflow-x-hidden">
       {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-start px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10 space-x-4">
+      <header className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 h-14 bg-black/60 backdrop-blur-md border-b border-white/10">
         <Link href="/" className="text-lg font-bold tracking-wide">
           QUARK
         </Link>
-        <Link
-          href="https://app.mrktedge.ai/auth"
-          onClick={() => setMenuOpen(false)}
-          className="py-2 px-4 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm"
-        >
-          Get Started
-        </Link>
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setMenuOpen((o) => !o)}
-          className="p-2 text-white ml-auto"
-        >
-          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center space-x-2">
+          <Link
+            href="https://app.mrktedge.ai/auth"
+            onClick={() => setMenuOpen(false)}
+            className="py-2 px-4 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm"
+          >
+            Get Started
+          </Link>
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setMenuOpen((o) => !o)}
+            className="p-2 text-white"
+          >
+            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </header>
 
       {/* MENU OVERLAY */}
@@ -213,7 +213,6 @@ export default function MobileHome() {
 
         <h1 className="relative z-10 text-4xl leading-tight font-bold mb-4">
           <span className="block">The AI assistant that</span>
-
           <span className="block min-h-[1.1em]">
             <span
               key={headlineWord}
@@ -222,7 +221,6 @@ export default function MobileHome() {
               {headlineWord}
             </span>
           </span>
-
           <span className="block">to your world</span>
         </h1>
 
@@ -282,7 +280,6 @@ export default function MobileHome() {
       <section id="reviews" className="px-5 py-16">
         <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
         <p className="text-center text-white/60 mb-6">What our users are saying</p>
-
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex space-x-4 px-5">
             {testimonials.map((t, i) => (
@@ -377,7 +374,6 @@ function FAQItem({
           }`}
         />
       </button>
-
       <div
         className={`overflow-hidden transition-[max-height,opacity] duration-300 ${
           open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
@@ -391,14 +387,12 @@ function FAQItem({
   );
 }
 
-
 /* ---------- Numbers Section ---------- */
 function NumbersSection() {
   return (
     <section className="px-5 py-16" id="numbers">
       <h2 className="text-3xl font-bold text-center mb-3">{"QUARK's Power in Numbers"}</h2>
       <p className="text-center text-white/60 mb-10 text-base">What we’ve achieved</p>
-
       <div className="flex flex-col gap-6 max-w-md mx-auto">
         {statsData.map((s) => (
           <StatCard key={s.id} item={s} />
@@ -415,9 +409,7 @@ function StatCard({ item }: { item: StatItem }) {
     rootMargin: "0px 0px -20% 0px",
     triggerOnce: false,
   });
-
   const started = useRef(false);
-
   const id = useId();
   const { start, reset } = useCountUp({
     ref: id,
