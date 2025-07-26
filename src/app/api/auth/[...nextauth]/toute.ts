@@ -1,0 +1,42 @@
+// src/app/api/auth/[...nextauth]/route.ts
+import NextAuth, { NextAuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { getUserByEmail, verifyPassword } from "../../../../lib/utils";
+
+export const authOptions: NextAuthOptions = {
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
+    }),
+    CredentialsProvider({
+      name: "Email",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials.password) return null;
+        const user = await getUserByEmail(credentials.email);
+        if (!user) return null;
+        const isValid = await verifyPassword(
+          credentials.password,
+          user.password
+        );
+        if (!isValid) return null;
+        return user;
+      },
+    }),
+  ],
+
+  session: {
+    strategy: "jwt", // literal union yang diizinkan oleh NextAuthOptions
+  },
+
+  secret: process.env.NEXTAUTH_SECRET!, // non-null assertion
+};
+
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };

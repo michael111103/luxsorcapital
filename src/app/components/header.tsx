@@ -48,13 +48,13 @@ export function SiteHeader({ onNavigate }: { onNavigate?: (href: string) => void
         {/* ICONS + CTA */}
         <div className="flex items-center gap-4">
           <Link
-            href="https://app.mrktedge.ai/auth"
+            href="/auth/login"
             className="px-5 py-2 rounded-md font-semibold text-white bg-gradient-to-r from-zinc-900 to-gray-900 hover:brightness-110 shadow-md transition-all"
           >
             Log In
           </Link>
           <Link
-            href="https://app.mrktedge.ai/auth"
+            href="/auth/register"
             className="px-5 py-2 rounded-md font-semibold text-white bg-gradient-to-r from-zinc-900 to-zinc-900 hover:brightness-110 shadow-md transition-all"
           >
             Sign Up

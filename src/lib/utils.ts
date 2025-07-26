@@ -1,7 +1,16 @@
 // src/lib/utils.ts
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import prisma from "./prisma";
+import bcrypt from "bcryptjs";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+// Cari user berdasarkan email
+export async function getUserByEmail(email: string) {
+  return prisma.user.findUnique({ where: { email } });
+}
+
+// Verifikasi password plain vs hash
+export async function verifyPassword(
+  plain: string,
+  hashed: string
+): Promise<boolean> {
+  return bcrypt.compare(plain, hashed);
 }

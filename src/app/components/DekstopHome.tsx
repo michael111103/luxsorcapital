@@ -311,42 +311,47 @@ export default function DesktopHome() {
       <Pricing />
 
       {/* REVIEWS */}
-      <section id="reviews" className="px-6 md:px-16 py-16 bg-black">
-        <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
-        <p className="text-center text-white/60 mb-6">What our users are saying</p>
-        <div ref={emblaRef} className="mx-auto max-w-6xl overflow-hidden">
-          <div className="flex flex-nowrap gap-6 px-6">
-            {testimonials.map((t, i) => (
-              <div key={i} className="flex-shrink-0 w-[320px]">
-                <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 flex flex-col justify-between h-full">
-                  <p className="text-sm text-white/70 mb-4">{t.msg}</p>
-                  <div className="flex items-center mb-2">
-                    {Array(5).fill(0).map((_, idx) => {
-                      const filled = idx < Math.floor(t.rating);
-                      const half   = !filled && idx < t.rating;
-                      return (
-                        <span
-                          key={idx}
-                          className={
-                            filled
-                              ? "text-yellow-400"
-                              : half
-                                ? "text-yellow-400 opacity-75"
-                                : "text-white/30"
-                          }
-                        >
-                          ★
-                        </span>
-                      );
-                    })}
-                  </div>
-                  <p className="text-xs text-white/50">— {t.user}</p>
-                </div>
+{/* … kode lain tetap … */}
+<section id="reviews" className="px-6 md:px-16 py-16 bg-black">
+  <h2 className="text-2xl font-bold text-center mb-2">Reviews</h2>
+  <p className="text-center text-white/60 mb-6">What our users are saying</p>
+  <div ref={emblaRef} className="mx-auto max-w-6xl overflow-hidden">
+    <div className="flex flex-nowrap gap-6 px-6">
+      {testimonials.map((t, i) => (
+        <div key={i} className="flex-shrink-0 w-[320px]">
+          <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-5 flex flex-col h-full">
+            {/* review text */}
+            <p className="text-sm text-white/70 mb-4">{t.msg}</p>
+            {/* wrapper mt-auto untuk bintang + user */}
+            <div className="mt-auto">
+              <div className="flex items-center mb-2">
+                {Array.from({ length: 5 }).map((_, idx) => {
+                  const filled = idx < Math.floor(t.rating);
+                  const half = !filled && idx < t.rating;
+                  return (
+                    <span
+                      key={idx}
+                      className={
+                        filled
+                          ? "text-yellow-400"
+                          : half
+                          ? "text-yellow-400 opacity-75"
+                          : "text-white/30"
+                      }
+                    >
+                      ★
+                    </span>
+                  );
+                })}
               </div>
-            ))}
+              <p className="text-xs text-white/50">— {t.user}</p>
+            </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* FAQ */}
       <section id="faq" className="px-6 md:px-16 py-16 bg-black">
