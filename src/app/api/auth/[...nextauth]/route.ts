@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { getUserByEmail, verifyPassword } from "../../../../lib/utils";
 
 export const authOptions: NextAuthOptions = {
+  // 1) Daftarkan provider: Google + Email/Password
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
@@ -17,31 +18,25 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // Pastikan ada email & password
-        if (!credentials?.email || !credentials.password) {
-          return null;
-        }
+        // 2) Validasi input
+        if (!credentials?.email || !credentials.password) return null;
 
-        // Ambil user dari DB
+        // 3) Ambil user dari DB
         const userFromDb = await getUserByEmail(credentials.email);
-        if (!userFromDb) {
-          return null;
-        }
+        if (!userFromDb) return null;
 
-        // Cek password
+        // 4) Verifikasi password
         const isValid = await verifyPassword(
           credentials.password,
           userFromDb.password
         );
-        if (!isValid) {
-          return null;
-        }
+        if (!isValid) return null;
 
-        // Mapping ke shape NextAuth.User
+        // 5) Kembalikan objek User sesuai shape NextAuth
         const user: User = {
-          id: String(userFromDb.id),           // harus string
-          email: userFromDb.email || null,
-          name: userFromDb.name || null,
+          id: String(userFromDb.id),
+          email: userFromDb.email,
+          name: userFromDb.name,
         };
 
         return user;
@@ -49,13 +44,29 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
+  // 6) Pakai JWT untuk session
   session: {
-    strategy: "jwt",  // hanya "jwt" atau "database"
+    strategy: "jwt",
   },
 
-  secret: process.env.NEXTAUTH_SECRET!,  // pastikan ada di .env
+  // 7) Secret untuk enkripsi JWT
+  secret: process.env.NEXTAUTH_SECRET!,
+
+  // (Opsional) callback kalau mau inject properti ke token/session
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) token.user = user;
+      return token;
+    },
+    session({ session, token }) {
+      if (token.user) {
+        session.user = token.user as User;
+      }
+      return session;
+    },
+  },
 };
 
-// Handler NextAuth
+// 8) Buat handler dan export untuk GET & POST
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
