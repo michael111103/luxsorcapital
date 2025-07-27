@@ -1,22 +1,27 @@
 // prisma/schema.prisma
 
-// 1) Generator: bikin client TypeScript
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")        // Ambil dari .env atau Vercel ENV
+}
+
 generator client {
   provider = "prisma-client-js"
-  output   = "../node_modules/.prisma/client"
 }
 
-// 2) Datasource: URL koneksi database
-datasource db {
-  provider = "postgresql"           // atau "mysql", "sqlite", dsb
-  url      = env("DATABASE_URL")
-}
-
-// 3) Definisi model (contoh `User`)
 model User {
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  password      String
+  createdAt     DateTime        @default(now())
+  verifications Verification[]  // Relasi ke tabel Verification
+}
+
+model Verification {
   id        Int      @id @default(autoincrement())
-  name      String?
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  code      String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }

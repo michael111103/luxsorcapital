@@ -11,17 +11,21 @@ export default function DashboardPage() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch the authenticated user’s profile
   useEffect(() => {
     async function fetchProfile() {
       try {
         const res = await fetch("/api/auth/me");
-        if (!res.ok) throw new Error("Not authenticated");
+        if (res.status === 401) {
+          throw new Error("Not authenticated");
+        }
+        if (!res.ok) {
+          throw new Error("Failed to fetch profile");
+        }
         const data = await res.json();
         setUserEmail(data.email);
-      } catch {
+      } catch (err) {
         toast.error("Please sign in first");
-        router.push("/login");
+        router.push("/auth/login");
       } finally {
         setIsLoading(false);
       }
@@ -29,16 +33,15 @@ export default function DashboardPage() {
     fetchProfile();
   }, [router]);
 
-  // Handle logout
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    router.push("/auth/login");
   };
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
-        <p className="text-white">Loading...</p>
+        <p className="text-white">Loading dashboard…</p>
       </div>
     );
   }
@@ -55,10 +58,11 @@ export default function DashboardPage() {
       <section className="max-w-3xl mx-auto bg-zinc-900/80 rounded-2xl p-6">
         <h2 className="text-xl font-semibold mb-4">Welcome back!</h2>
         <p className="mb-2">
-          You are signed in as: <span className="font-medium">{userEmail}</span>
+          You are signed in as{" "}
+          <span className="font-medium">{userEmail}</span>
         </p>
         <p>
-          This is your dashboard. Feel free to add any components or data here.
+          This is your dashboard. Feel free to add your own components and data here.
         </p>
       </section>
     </div>
