@@ -1,77 +1,50 @@
-// src/lib/auth.ts
+// src/lib/nextAuthOptions.ts
+import { NextAuthOptions, User } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { getUserByEmail, verifyPassword } from "./utils";
 
-export interface AuthResponse<T = unknown> {
-  ok: boolean;
-  message?: string;
-  data?: T;
-}
-
-/**
- * Register a new user with email & password.
- * @returns { id: number; email: string }
- */
-export async function register(
-  email: string,
-  password: string
-): Promise<AuthResponse<{ id: number; email: string }>> {
-  const res = await fetch("/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    return { ok: false, message: err.message || "Registration failed" };
-  }
-
-  const { message, data } = await res.json();
-  return { ok: true, message, data };
-}
-
-/**
- * Log in a user with email & password.
- * @returns { token: string }
- */
-export async function login(
-  email: string,
-  password: string
-): Promise<AuthResponse<{ token: string }>> {
-  const res = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    return { ok: false, message: err.message || "Login failed" };
-  }
-
-  const { message, data } = await res.json();
-  return { ok: true, message, data };
-}
-
-/**
- * Log out the current user.
- */
-export async function logout(): Promise<AuthResponse> {
-  const res = await fetch("/api/auth/logout", { method: "POST" });
-  if (!res.ok) {
-    return { ok: false, message: "Logout failed" };
-  }
-  return { ok: true };
-}
-
-/**
- * Fetch the currently authenticated user's profile.
- * @returns { email: string }
- */
-export async function getProfile(): Promise<AuthResponse<{ email: string }>> {
-  const res = await fetch("/api/auth/me");
-  if (!res.ok) {
-    return { ok: false, message: "Not authenticated" };
-  }
-  const data = await res.json();
-  return { ok: true, data };
-}
+export const nextAuthOptions: NextAuthOptions = {
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!
+    }),
+    CredentialsProvider({
+      name: "Email",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials.password) return null;
+        const userFromDb = await getUserByEmail(credentials.email);
+        if (!userFromDb) return null;
+        const isValid = await verifyPassword(
+          credentials.password,
+          userFromDb.password
+        );
+        if (!isValid) return null;
+        // NextAuth.User hanya butuh id/email/name
+        const user: User = {
+          id: String(userFromDb.id),
+          email: userFromDb.email,
+          name: userFromDb.name,
+        };
+        return user;
+      },
+    }),
+  ],
+  session: { strategy: "jwt" },
+  secret: process.env.NEXTAUTH_SECRET!,
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) token.user = user;
+      return token;
+    },
+    session({ session, token }) {
+      if (token.user) session.user = token.user as User;
+      return session;
+    },
+  },
+};

@@ -10,11 +10,11 @@ import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Login dengan credentials (email/password)
+  // Sign in dengan email/password
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -28,25 +28,27 @@ export default function LoginPage() {
     setIsLoading(false);
 
     if (res?.error) {
-      toast.error("Login failed", { description: res.error });
+      toast.error("Login failed: " + res.error);
     } else {
       toast.success("Logged in successfully!");
       router.push("/dashboard");
     }
   };
 
-  // Login dengan Google
-  const handleGoogleSignIn = async () => {
+  // Sign in dengan Google
+  const handleGoogleSignIn = () => {
     setIsLoading(true);
-    await signIn("google", { callbackUrl: "/dashboard" });
+    signIn("google", { callbackUrl: "/dashboard" });
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black px-4">
       <div className="w-full max-w-md bg-zinc-900/80 border border-zinc-800 rounded-2xl p-8">
-        <h1 className="text-2xl font-bold text-white text-center mb-6">Login</h1>
+        <h1 className="text-2xl font-bold text-white text-center mb-6">
+          Login
+        </h1>
 
-        {/* Form email/password */}
+        {/* Form Email/Password */}
         <form onSubmit={handleEmailSignIn} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-white mb-1">
