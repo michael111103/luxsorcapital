@@ -34,15 +34,15 @@ export default function RegisterPage() {
 
     if (res.status === 409) {
       // Conflict: email sudah terdaftar
-      setEmailError("Email ini sudah terdaftar");
+      setEmailError("This email is already registered");
       return;
     }
     if (!res.ok) {
-      toast.error(data.error || "Registrasi gagal");
+      toast.error(data.error || "Registration failed");
       return;
     }
 
-    toast.success("Kode verifikasi terkirim! Cek email Anda.");
+    toast.success("Verification code sent! Please check your email");
     router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
   }
 
@@ -98,7 +98,7 @@ export default function RegisterPage() {
             />
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Loading..." : "Sign up"}
+              {isLoading ? "Loading" : "Sign up"}
             </Button>
           </form>
 
@@ -126,7 +126,7 @@ export default function RegisterPage() {
               height={20}
               className="mr-2"
             />
-            {isLoading ? "Loading..." : "Sign up with Google"}
+            {isLoading ? "Loading" : "Sign up with Google"}
           </Button>
         </div>
       </main>

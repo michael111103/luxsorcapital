@@ -38,7 +38,7 @@ export default function DashboardPage() {
         const data = await res.json();
         setUserEmail(data.email);
       } catch {
-        toast.error("Silakan login terlebih dahulu");
+        toast.error("Please log in first");
         router.push("/auth/login");
       } finally {
         setIsLoading(false);
@@ -75,7 +75,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
-        <p className="text-white">Loading dashboard…</p>
+        <p className="text-white">Loading dashboard</p>
       </div>
     );
   }
@@ -120,7 +120,7 @@ export default function DashboardPage() {
         <main className="flex-1 overflow-y-auto p-4 space-y-4 bg-zinc-800/50">
           {messages.length === 0 ? (
             <div className="h-full flex items-center justify-center text-zinc-400">
-              Mulai percakapan dengan mengirim pesan…
+              Start the conversation by sending a message
             </div>
           ) : (
             messages.map((msg) => (
@@ -142,7 +142,7 @@ export default function DashboardPage() {
         <footer className="p-4 border-t border-zinc-700">
           <div className="flex gap-2">
             <Input
-              placeholder="Type your message…"
+              placeholder="Type your message"
               value={input}
               onChange={(e) => setInput(e.currentTarget.value)}
               onKeyDown={(e) => {

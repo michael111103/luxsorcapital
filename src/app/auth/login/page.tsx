@@ -26,7 +26,7 @@ export default function LoginPage() {
     setIsLoading(false);
 
     if (res?.error) {
-      toast.error("Email atau password salah");
+      toast.error("Incorrect email or password");
     } else {
       toast.success("Logged in successfully!");
       router.push("/dashboard");
