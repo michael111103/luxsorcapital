@@ -81,7 +81,7 @@ export default function RegisterPage() {
             disabled={isLoading}
           >
             <Image
-              src="/google-logo.svg"
+              src="/google.png"
               alt="Google"
               width={20}
               height={20}
