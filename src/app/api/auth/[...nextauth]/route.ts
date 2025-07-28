@@ -1,5 +1,6 @@
 // src/app/api/auth/[...nextauth]/route.ts
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth/next";
+import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getUserByEmail, verifyPassword } from "../../../../lib/utils";
@@ -20,23 +21,20 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials.password) return null;
         const user = await getUserByEmail(credentials.email);
         if (!user) return null;
-        const valid = await verifyPassword(credentials.password, user.password);
-        if (!valid) return null;
-        return {
-          id: String(user.id),
-          email: user.email,
-          name: user.name,
-        };
+        const isValid = await verifyPassword(
+          credentials.password,
+          user.password
+        );
+        if (!isValid) return null;
+        // NextAuth mengharapkan id sebagai string
+        return { id: String(user.id), email: user.email, name: user.name };
       },
     }),
   ],
-
-  // pakai JWT
   session: {
-    strategy: "jwt",
+    // cast as const agar TS tahu ini 'jwt' saja
+    strategy: "jwt" as const,
   },
-
-  // rahasia untuk enkripsi token
   secret: process.env.NEXTAUTH_SECRET!,
 };
 
