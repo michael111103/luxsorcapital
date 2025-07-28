@@ -1,6 +1,9 @@
+// src/app/auth/register/RegisterForm.tsx
 "use client";
 import React, { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
 import { toast } from "sonner";
 
 export default function RegisterForm() {
@@ -13,7 +16,6 @@ export default function RegisterForm() {
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
-
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -21,40 +23,20 @@ export default function RegisterForm() {
     });
     const j = await res.json();
     setBusy(false);
-
     if (!res.ok) {
-      toast.error(j.error || j.message || "Registration failed");
+      toast.error(j.error || "Registration failed");
       return;
     }
+    toast.success("Registered! Check email.");
     router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.currentTarget.value)}
-        required
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.currentTarget.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={pwd}
-        onChange={(e) => setPwd(e.currentTarget.value)}
-        required
-      />
-      <button type="submit" disabled={busy}>
-        {busy ? "Loading…" : "Sign Up"}
-      </button>
+    <form onSubmit={onSubmit} className="space-y-4">
+      <Input placeholder="Name" value={name} onChange={e => setName(e.target.value)} required />
+      <Input placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+      <Input placeholder="Password" type="password" value={pwd} onChange={e => setPwd(e.target.value)} required />
+      <Button type="submit" disabled={busy}>{busy ? "Loading..." : "Sign Up"}</Button>
     </form>
   );
 }

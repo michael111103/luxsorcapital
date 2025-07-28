@@ -2,7 +2,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")        // Ambil dari .env atau Vercel ENV
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -15,7 +15,7 @@ model User {
   name         String
   email        String          @unique
   password     String
-  isVerified   Boolean         @default(false)   // ← ADD THIS
+  isVerified   Boolean         @default(false)
   createdAt    DateTime        @default(now())
   verifications Verification[]
 }
@@ -24,9 +24,7 @@ model Verification {
   id         Int      @id @default(autoincrement())
   code       String
   expiresAt  DateTime
+  createdAt  DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id])
   userId     Int
-  // (optional) createdAt jika mau pakai orderBy createdAt
-  // createdAt DateTime @default(now())
 }
-

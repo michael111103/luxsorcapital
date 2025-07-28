@@ -5,5 +5,6 @@ import React from "react";
 import VerifyClient from "./VerifyClient";
 
 export default function VerifyPage() {
+  // Komponen server‐side yang hanya bail‐out ke client
   return <VerifyClient />;
 }

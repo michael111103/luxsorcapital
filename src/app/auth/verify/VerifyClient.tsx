@@ -1,7 +1,7 @@
 // src/app/auth/verify/VerifyClient.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -14,7 +14,8 @@ export default function VerifyClient() {
   const [code, setCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
 
-  async function handleVerify(e: React.FormEvent) {
+  // e sekarang punya type yang jelas sehingga TS tidak error
+  async function handleVerify(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsVerifying(true);
 
@@ -27,7 +28,7 @@ export default function VerifyClient() {
     setIsVerifying(false);
 
     if (!res.ok) {
-      toast.error(data.error || "Invalid code");
+      toast.error(data.error || "Invalid or expired code");
       return;
     }
 
@@ -42,7 +43,12 @@ export default function VerifyClient() {
         A code was sent to <strong>{email}</strong>
       </p>
       <form onSubmit={handleVerify} className="space-y-4">
-        <Input placeholder="Enter verification code" value={code} onChange={e => setCode(e.target.value)} required />
+        <Input
+          placeholder="Enter verification code"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          required
+        />
         <Button type="submit" disabled={isVerifying}>
           {isVerifying ? "Verifying…" : "Verify"}
         </Button>
