@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getUserByEmail, verifyPassword } from "../../../../lib/utils";
 
-export const authOptions: NextAuthOptions = {
+const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
@@ -19,24 +19,22 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) return null;
+
         const user = await getUserByEmail(credentials.email);
         if (!user) return null;
-        const isValid = await verifyPassword(
-          credentials.password,
-          user.password
-        );
-        if (!isValid) return null;
-        // NextAuth mengharapkan id sebagai string
+
+        const valid = await verifyPassword(credentials.password, user.password);
+        if (!valid) return null;
+
+        // NextAuth mengharapkan id: string
         return { id: String(user.id), email: user.email, name: user.name };
       },
     }),
   ],
-  session: {
-    // cast as const agar TS tahu ini 'jwt' saja
-    strategy: "jwt" as const,
-  },
+  // Pakai JWT, literal 'jwt' harus dikenali sebagai const
+  session: { strategy: "jwt" as const },
   secret: process.env.NEXTAUTH_SECRET!,
 };
 
-const handler = NextAuth(authOptions);
+const handler = NextAuth(options);
 export { handler as GET, handler as POST };
