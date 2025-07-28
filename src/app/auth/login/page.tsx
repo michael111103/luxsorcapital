@@ -1,3 +1,4 @@
+// src/app/auth/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -10,7 +11,7 @@ import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,8 +24,9 @@ export default function LoginPage() {
       password,
     });
     setIsLoading(false);
+
     if (res?.error) {
-      toast.error("Login failed", { description: res.error });
+      toast.error("Email atau password salah");
     } else {
       toast.success("Logged in successfully!");
       router.push("/dashboard");
@@ -43,7 +45,8 @@ export default function LoginPage() {
       </header>
       <main className="flex-1 flex items-center justify-center px-4">
         <div className="w-full max-w-sm space-y-6">
-          <h2 className="text-2xl text-center">Welcome back</h2>
+          <h2 className="text-2xl text-center">Welcome Back</h2>
+
           <form onSubmit={handleEmailSignIn} className="space-y-4">
             <Input
               placeholder="Email address"
@@ -65,15 +68,18 @@ export default function LoginPage() {
               {isLoading ? "Loading…" : "Login"}
             </Button>
           </form>
+
           <p className="text-center text-sm">
             Don&apos;t have an account?{" "}
             <a href="/auth/register" className="underline text-blue-400">
               Sign up
             </a>
           </p>
+
           <div className="border-t border-gray-700 pt-4 text-center text-sm">
             OR
           </div>
+
           <Button
             variant="outline"
             className="w-full flex items-center justify-center"

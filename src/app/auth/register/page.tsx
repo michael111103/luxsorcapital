@@ -1,3 +1,4 @@
+// src/app/auth/register/page.tsx
 "use client";
 
 import React, { useState, FormEvent } from "react";
@@ -9,12 +10,11 @@ import { Input } from "../../components/ui/input";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [name, setName]         = useState("");
-  const [email, setEmail]       = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
-  // state untuk menampung pesan error dari server
+  const [name, setName]             = useState("");
+  const [email, setEmail]           = useState("");
+  const [password, setPassword]     = useState("");
+  const [isLoading, setIsLoading]   = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
 
   async function onSubmit(e: FormEvent) {
@@ -31,13 +31,14 @@ export default function RegisterPage() {
     const data = await res.json();
     setIsLoading(false);
 
+    if (res.status === 409) {
+      // conflict: email already registered
+      setEmailError("Email ini sudah terdaftar");
+      return;
+    }
+
     if (!res.ok) {
-      // jika server mengembalikan error spesifik tentang email
-      if (data.error === "Email ini sudah terdaftar") {
-        setEmailError(data.error);
-      } else {
-        toast.error(data.error || "Registrasi gagal");
-      }
+      toast.error(data.error || "Registrasi gagal");
       return;
     }
 
@@ -64,17 +65,22 @@ export default function RegisterPage() {
               required
             />
 
-            <Input
-              placeholder="Email address"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              disabled={isLoading}
-              required
-            />
-            {emailError && (
-              <p className="text-red-500 text-sm">{emailError}</p>
-            )}
+            <div>
+              <Input
+                placeholder="Email address"
+                type="email"
+                value={email}
+                onChange={e => {
+                  setEmail(e.target.value);
+                  setEmailError(null);
+                }}
+                disabled={isLoading}
+                required
+              />
+              {emailError && (
+                <p className="mt-1 text-red-500 text-sm">{emailError}</p>
+              )}
+            </div>
 
             <Input
               placeholder="Password"
@@ -105,7 +111,7 @@ export default function RegisterPage() {
             variant="outline"
             className="w-full flex items-center justify-center"
             onClick={() => {
-              /* handle Google signup */
+              // TODO: implement Google signup
             }}
             disabled={isLoading}
           >
