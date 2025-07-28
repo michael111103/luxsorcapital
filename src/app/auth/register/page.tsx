@@ -5,16 +5,17 @@ import React, { useState, FormEvent } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { signIn } from "next-auth/react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 
 export default function RegisterPage() {
   const router = useRouter();
 
-  const [name, setName]             = useState("");
-  const [email, setEmail]           = useState("");
-  const [password, setPassword]     = useState("");
-  const [isLoading, setIsLoading]   = useState(false);
+  const [name, setName]           = useState("");
+  const [email, setEmail]         = useState("");
+  const [password, setPassword]   = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
 
   async function onSubmit(e: FormEvent) {
@@ -32,11 +33,10 @@ export default function RegisterPage() {
     setIsLoading(false);
 
     if (res.status === 409) {
-      // conflict: email already registered
+      // Conflict: email sudah terdaftar
       setEmailError("Email ini sudah terdaftar");
       return;
     }
-
     if (!res.ok) {
       toast.error(data.error || "Registrasi gagal");
       return;
@@ -44,6 +44,12 @@ export default function RegisterPage() {
 
     toast.success("Kode verifikasi terkirim! Cek email Anda.");
     router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
+  }
+
+  function handleGoogleSignup() {
+    setIsLoading(true);
+    // Panggil NextAuth Google provider, redirect ke dashboard
+    signIn("google", { callbackUrl: "/dashboard" });
   }
 
   return (
@@ -110,9 +116,7 @@ export default function RegisterPage() {
           <Button
             variant="outline"
             className="w-full flex items-center justify-center"
-            onClick={() => {
-              // TODO: implement Google signup
-            }}
+            onClick={handleGoogleSignup}
             disabled={isLoading}
           >
             <Image
