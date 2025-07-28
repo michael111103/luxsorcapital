@@ -1,4 +1,3 @@
-// src/app/auth/verify/VerifyClient.tsx
 "use client";
 
 import React, { useState, FormEvent } from "react";
@@ -9,16 +8,14 @@ import { toast } from "sonner";
 
 export default function VerifyClient() {
   const params = useSearchParams();
-  const email = params.get("email") ?? "";
+  const email = params.get("email") || "";
   const router = useRouter();
   const [code, setCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
 
-  // e sekarang punya type yang jelas sehingga TS tidak error
   async function handleVerify(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsVerifying(true);
-
     const res = await fetch("/api/auth/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -29,30 +26,37 @@ export default function VerifyClient() {
 
     if (!res.ok) {
       toast.error(data.error || "Invalid or expired code");
-      return;
+    } else {
+      toast.success("Verified! You can now log in.");
+      router.push("/auth/login");
     }
-
-    toast.success("Verified! You can now log in.");
-    router.push("/auth/login");
   }
 
   return (
-    <div className="max-w-md mx-auto py-12">
-      <h1 className="text-2xl font-bold mb-4 text-white">Verify Your Email</h1>
-      <p className="mb-6 text-white/70">
-        A code was sent to <strong>{email}</strong>
-      </p>
-      <form onSubmit={handleVerify} className="space-y-4">
-        <Input
-          placeholder="Enter verification code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          required
-        />
-        <Button type="submit" disabled={isVerifying}>
-          {isVerifying ? "Verifying…" : "Verify"}
-        </Button>
-      </form>
+    <div className="min-h-screen bg-black text-white flex flex-col">
+      <header className="p-4">
+        <h1 className="text-xl font-bold">REPYST</h1>
+      </header>
+      <main className="flex-1 flex items-center justify-center px-4">
+        <div className="w-full max-w-sm space-y-6">
+          <h2 className="text-2xl text-center">Verify Your Email</h2>
+          <p className="text-center text-sm">
+            A code was sent to <strong>{email}</strong>
+          </p>
+          <form onSubmit={handleVerify} className="space-y-4">
+            <Input
+              placeholder="Enter verification code"
+              value={code}
+              onChange={e => setCode(e.target.value)}
+              disabled={isVerifying}
+              required
+            />
+            <Button type="submit" className="w-full" disabled={isVerifying}>
+              {isVerifying ? "Verifying…" : "Verify"}
+            </Button>
+          </form>
+        </div>
+      </main>
     </div>
   );
 }
