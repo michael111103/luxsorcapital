@@ -30,7 +30,7 @@ export default function Navbar() {
         }`}
       >
         <nav className="max-w-7xl mx-auto flex items-center justify-between px-5 sm:px-8 h-16 sm:h-[72px]">
-          <Link href="#top" className="flex items-center gap-1.5 shrink-0">
+          <Link href="#top" className="flex items-center gap-0.5 shrink-0">
             <Image
               src="/logo.png"
               alt="Luxsor Capital"
