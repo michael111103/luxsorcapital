@@ -36,7 +36,7 @@ export default function Navbar() {
               alt="Luxsor Capital"
               width={32}
               height={32}
-              className="w-7 h-7 sm:w-8 sm:h-8 object-contain"
+              className="w-10 h-10 sm:w-14 sm:h-14 object-contain"
               priority
             />
             <LuxsorWordmark className="text-[15px] sm:text-lg" />
