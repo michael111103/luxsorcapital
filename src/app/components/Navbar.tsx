@@ -32,7 +32,7 @@ export default function Navbar() {
         <nav className="max-w-7xl mx-auto flex items-center justify-between px-5 sm:px-8 h-16 sm:h-[72px]">
           <Link href="#top" className="flex items-center gap-0.5 shrink-0">
             <Image
-              src="/logo.png"
+              src="/logo2.png"
               alt="Luxsor Capital"
               width={32}
               height={32}
