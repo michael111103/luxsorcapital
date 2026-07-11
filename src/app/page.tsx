@@ -1,21 +1,32 @@
-"use client";
-import { useEffect, useState } from "react";
-import DesktopHome from "./components/DekstopHome";
-import MobileHome from "./components/MobileHome";
+// src/app/page.tsx
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import WhySection from "./components/WhySection";
+import EducationModules from "./components/EducationModules";
+import BonusSection from "./components/BonusSection";
+import TypeSection from "./components/TypeSection";
+import PricingSection from "./components/PricingSection";
+import TestimonialCarousel from "./components/TestimonialCarousel";
+import QuoteSection from "./components/QuoteSection";
+import FAQSection from "./components/FAQSection";
+import Footer from "./components/Footer";
+import FloatingTelegramButton from "./components/FloatingTelegramButton";
 
-function useMediaQuery(query: string) {
-  const [match, setMatch] = useState(false);
-  useEffect(() => {
-    const mql = window.matchMedia(query);
-    const handler = (e: MediaQueryListEvent) => setMatch(e.matches);
-    setMatch(mql.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, [query]);
-  return match;
-}
-
-export default function PageClient() {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  return isMobile ? <MobileHome /> : <DesktopHome />;
+export default function Home() {
+  return (
+    <main className="relative bg-black text-white min-h-screen selection:bg-white selection:text-black">
+      <Navbar />
+      <Hero />
+      <WhySection />
+      <EducationModules />
+      <BonusSection />
+      <TypeSection />
+      <PricingSection />
+      <TestimonialCarousel />
+      <QuoteSection />
+      <FAQSection />
+      <Footer />
+      <FloatingTelegramButton />
+    </main>
+  );
 }
