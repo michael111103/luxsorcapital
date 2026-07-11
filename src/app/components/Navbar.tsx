@@ -3,9 +3,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { LuxsorMark, LuxsorWordmark, TelegramIcon } from "./icons/BrandIcons";
+import { LuxsorWordmark, TelegramIcon } from "./icons/BrandIcons";
 import { NAV_LINKS, SITE } from "@/lib/data";
 
 export default function Navbar() {
@@ -30,7 +31,14 @@ export default function Navbar() {
       >
         <nav className="max-w-7xl mx-auto flex items-center justify-between px-5 sm:px-8 h-16 sm:h-[72px]">
           <Link href="#top" className="flex items-center gap-2.5 shrink-0">
-            <LuxsorMark className="w-7 h-7 sm:w-8 sm:h-8" />
+            <Image
+              src="/logo.png"
+              alt="Luxsor Capital"
+              width={32}
+              height={32}
+              className="w-7 h-7 sm:w-8 sm:h-8 object-contain"
+              priority
+            />
             <LuxsorWordmark className="text-[15px] sm:text-lg" />
           </Link>
 
