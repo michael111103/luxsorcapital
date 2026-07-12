@@ -47,9 +47,11 @@ export default function Hero() {
         </Reveal>
 
         <Reveal delay={0.22}>
-          <div className="relative mt-12 sm:mt-14 mx-auto max-w-3xl">
-            {/* thin light-blue glow behind the image */}
-            <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[220px] w-[92%] sm:h-[300px] sm:w-[720px] rounded-full bg-sky-400/[0.16] blur-[100px]" />
+          <div className="relative isolate mt-12 sm:mt-14 mx-auto max-w-3xl">
+            {/* thin light-blue glow behind the image — sized relative to the
+                card (not fixed px) so it stays bigger than the card and
+                still bleeds out once hero.png loads and the card grows */}
+            <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[160%] w-[130%] rounded-full bg-sky-400/[0.18] blur-[110px]" />
 
             {/* rotating comet beam tracing the outline */}
             <div className="relative rounded-3xl p-[1.5px] overflow-hidden">
