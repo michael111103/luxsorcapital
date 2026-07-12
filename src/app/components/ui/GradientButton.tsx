@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
 import { TelegramIcon } from "../icons/BrandIcons";
 import { SITE } from "@/lib/data";
 
@@ -59,7 +60,20 @@ export default function GradientButton({
       )}
       {/* subtle shimmer sweep on hover */}
       <span className="pointer-events-none absolute inset-0 -z-10 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] transition-transform duration-700 group-hover:translate-x-[120%]" />
-      {telegram && <TelegramIcon className="w-4 h-4 shrink-0" />}
+      {telegram && (
+        <motion.span
+          className="inline-flex shrink-0"
+          animate={{ x: [0, 5, 0], y: [0, -4, 0], rotate: [0, -6, 0] }}
+          transition={{
+            duration: 1.3,
+            repeat: Infinity,
+            repeatDelay: 0.7,
+            ease: "easeInOut",
+          }}
+        >
+          <TelegramIcon className="w-4 h-4" />
+        </motion.span>
+      )}
       <span>{children}</span>
     </Link>
   );
