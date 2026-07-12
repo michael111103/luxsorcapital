@@ -6,7 +6,7 @@ import TimelineItem from "./ui/TimelineItem";
 import GradientButton from "./ui/GradientButton";
 import CurriculumSection from "./CurriculumSection";
 import CommunitySection from "./CommunitySection";
-import { EDUCATION_MODULES, ph } from "@/lib/data";
+import { EDUCATION_MODULES } from "@/lib/data";
 
 export default function EducationModules() {
   return (
@@ -31,7 +31,7 @@ export default function EducationModules() {
               <Reveal>
                 <div className="rounded-2xl overflow-hidden border border-white/10 max-w-xl">
                   <img
-                    src={ph(mod.title, 800, 420)}
+                    src={mod.image}
                     alt={mod.title}
                     className="w-full h-auto object-cover"
                     loading="lazy"
