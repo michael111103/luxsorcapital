@@ -81,15 +81,15 @@ export default function Hero() {
         </Reveal>
 
         <Reveal delay={0.3}>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-9 flex flex-nowrap items-center justify-center gap-2 sm:gap-3">
             <GradientButton
               href="https://ma.valetax.com/p/6860161"
               telegram={false}
-              size="lg"
+              size="sm"
             >
               Daftar Akun Broker
             </GradientButton>
-            <GradientButton size="lg">Gabung Sekarang</GradientButton>
+            <GradientButton size="sm">Gabung Sekarang</GradientButton>
           </div>
         </Reveal>
       </div>
