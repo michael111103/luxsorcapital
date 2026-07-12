@@ -101,7 +101,7 @@ export const EDUCATION_MODULES = [
   {
     number: "03",
     image: "/gambar3.png",
-    label: "Trading & Investing",
+    label: "Forex & Gold Investing",
     title: "Forex & Gold Investing",
     accent: "Investing",
     boldText:
@@ -112,7 +112,8 @@ export const EDUCATION_MODULES = [
   {
     number: "04",
     image: "/gambar4.jpeg",
-    label: "Trading & Investing",
+    label: "A minimalist 3D render of a glowing brain made of frosted glass and circuit-like lines, merged with a candlestick trading chart, symbolizing trading psychology and discipline. Monochrome black, white, and silver color palette, frosted glass and liquid metal textures, futuristic premium fintech aesthetic. Dark atmospheric studio background, deep black to charcoal gradient with soft cinematic rim lighting, no text, no logo, centered composition, wide 16:9 landscape format, exactly 877x480 pixels, ultra-clean, 4k.
+",
     title: "Forex & Gold Trading",
     accent: "Trading",
     boldText: "90% trader ritel gagal. Kamu tidak harus jadi salah satunya.",
