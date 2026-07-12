@@ -51,7 +51,7 @@ export default function Hero() {
             {/* thin light-blue glow hugging just the card's edge — reactive
                 to the card's own size (not fixed px), so it stays correctly
                 sized once hero.png finishes loading */}
-            <div className="pointer-events-none absolute -inset-x-1.5 -inset-y-2 sm:-inset-x-3 sm:-inset-y-4 -z-10 rounded-[1.75rem] bg-sky-400/[0.2] blur-[12px]" />
+            <div className="pointer-events-none absolute -inset-x-1.5 -inset-y-2 sm:-inset-x-3 sm:-inset-y-4 -z-10 rounded-[1.75rem] bg-sky-400/[0.2] blur-[20px]" />
 
             {/* rotating comet beam tracing the outline */}
             <div className="relative rounded-3xl p-[1.5px] overflow-hidden">
@@ -81,7 +81,14 @@ export default function Hero() {
         </Reveal>
 
         <Reveal delay={0.3}>
-          <div className="mt-9 flex justify-center">
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <GradientButton
+              href="https://ma.valetax.com/p/6860161"
+              telegram={false}
+              size="lg"
+            >
+              Daftar Akun Broker
+            </GradientButton>
             <GradientButton size="lg">Gabung Sekarang</GradientButton>
           </div>
         </Reveal>
