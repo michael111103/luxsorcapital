@@ -1,16 +1,23 @@
 /* ---- Tailwind v4 ---- */
 @import "tailwindcss";
 
+/* Avoid pure #000 everywhere: redefine Tailwind's "black" token once here.
+   Every bg-black / from-black / border-black / text-black class site-wide
+   now resolves to this softer near-black instead of true black. */
+@theme {
+  --color-black: #0a0a0c;
+}
+
 /* ----- Base ----- */
 @layer base {
   :root {
-    --background: #000000;
+    --background: #0a0a0c;
     --foreground: #f5f5f5;
   }
 
   html {
     scroll-behavior: smooth;
-    background: #000;
+    background: #0a0a0c;
   }
 
   body {
