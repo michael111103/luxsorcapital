@@ -127,24 +127,6 @@ export const EDUCATION_MODULES = [
     restText:
       "Padahal, mereka yang memahami fondasinya itulah yang selangkah lebih maju, baik sebagai trader, analyst, maupun fund manager. Di modul ini, kamu belajar makro dari nol secara praktis, bukan hafalan teori, dibawakan langsung oleh praktisi berpengalaman. Kamu akan memahami bagaimana kebijakan bank sentral membentuk arah pasar, bagaimana inflasi dan suku bunga bekerja di balik layar, apa itu correlation & hedging dan mengapa itu mengubah cara mengelola risiko, hingga cara membaca data ekonomi terbaru yang membentuk masa depan market.",
   },
-  {
-    number: "06",
-    label: "Trading Technology",
-    title: "Algorithmic Trading Development",
-    accent: "Development",
-    boldText: "Skill paling dicari di industri trading modern.",
-    restText:
-      "Sementara banyak orang berlomba trading manual, hanya segelintir yang mau membangun sistem otomatis di baliknya. Mereka yang bisa membangun algoritma adalah yang menentukan bagaimana masa depan trading mereka sendiri. Di modul ini, kamu tidak hanya belajar teori — kamu dibimbing langsung step by step oleh praktisi aktif di industri, mulai dari nol hingga kamu bisa men-deploy Expert Advisor kamu sendiri. Kamu akan menguasai Python & MQL5, memahami struktur strategi yang benar, backtesting yang jujur, mengamankan API key dengan benar, hingga proses deployment yang sesungguhnya.",
-  },
-  {
-    number: "07",
-    label: "Quantitative Trading",
-    title: "Quantitative Trading Foundation Analytics",
-    accent: "Analytics",
-    boldText: "Intern quant desk digaji 3–5 miliar per tahun.",
-    restText:
-      "Trader biasa mengandalkan intuisi. Quant trader mengandalkan algoritma dan sistem yang bekerja tanpa emosi, tanpa panik, tanpa bias — di pasar forex dan gold yang bergerak 24 jam. Selama ini, ilmu ini hanya beredar di hedge fund dan quant firm elite. Di modul ini, kamu belajar langsung dari praktisi berpengalaman yang mengajarkannya dari nol sampai kamu benar-benar bisa membangun dan menjalankan algoritma trading kamu sendiri. Mulai dari Python dasar hingga mahir, kamu akan belajar membuat algoritma, membangun strategi, melakukan backtest, dan menjalankannya di market forex & gold.",
-  },
 ] as const;
 
 export const BONUS = {
