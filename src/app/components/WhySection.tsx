@@ -2,7 +2,6 @@
 "use client";
 
 import Reveal from "./ui/Reveal";
-import ChatBubble from "./ui/ChatBubble";
 import { WHY } from "@/lib/data";
 
 export default function WhySection() {
@@ -16,24 +15,13 @@ export default function WhySection() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="relative flex flex-col sm:flex-row gap-4 sm:gap-6 max-w-2xl mx-auto mb-12 sm:mb-16">
-            <div className="sm:mt-8 sm:-mr-8 relative z-0">
-              <ChatBubble
-                name={WHY.bubbles[0].name}
-                role={WHY.bubbles[0].role}
-                time={WHY.bubbles[0].time}
-                lines={[WHY.bubbles[0].text]}
-              />
-            </div>
-            <div className="sm:-ml-8 relative z-10">
-              <ChatBubble
-                name={WHY.bubbles[1].name}
-                role={WHY.bubbles[1].role}
-                time={WHY.bubbles[1].time}
-                lines={[WHY.bubbles[1].text]}
-                source={WHY.bubbles[1].source}
-              />
-            </div>
+          <div className="group relative mx-auto mb-12 sm:mb-16 max-w-2xl rounded-3xl border border-white/10 overflow-hidden transition-colors duration-300 hover:border-white/30 hover:shadow-[0_20px_60px_-20px_rgba(255,255,255,0.15)]">
+            <img
+              src="/why.png"
+              alt="Kenapa Luxsor Capital"
+              className="w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              loading="lazy"
+            />
           </div>
         </Reveal>
 
