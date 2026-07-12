@@ -1,6 +1,7 @@
 // src/app/components/Hero.tsx
 "use client";
 
+import { motion } from "framer-motion";
 import GradientButton from "./ui/GradientButton";
 import Reveal from "./ui/Reveal";
 import { HERO } from "@/lib/data";
@@ -51,12 +52,44 @@ export default function Hero() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.24}>
+        <Reveal delay={0.22}>
+          <div className="relative mt-12 sm:mt-14 mx-auto max-w-3xl">
+            {/* thin light-blue glow behind the image */}
+            <div className="pointer-events-none absolute -inset-8 sm:-inset-14 -z-10 rounded-[2.5rem] bg-sky-300/[0.08] blur-[90px]" />
+
+            {/* rotating comet beam tracing the outline */}
+            <div className="relative rounded-3xl p-[1.5px] overflow-hidden">
+              <motion.div
+                className="absolute left-1/2 top-1/2 h-[300%] w-[300%] -translate-x-1/2 -translate-y-1/2"
+                style={{
+                  background:
+                    "conic-gradient(from 0deg, transparent 0%, transparent 80%, rgba(255,255,255,0.35) 88%, rgba(255,255,255,0.95) 91%, rgba(255,255,255,0.35) 94%, transparent 100%)",
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+              />
+              <div className="relative rounded-[calc(1.5rem-1.5px)] overflow-hidden bg-black border border-white/5">
+                <img
+                  src="/hero.png"
+                  alt="Luxsor Capital"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.3}>
           <div className="mt-9 flex justify-center">
             <GradientButton size="lg">Gabung Sekarang</GradientButton>
           </div>
         </Reveal>
       </div>
+
+      <Reveal delay={0.36}>
+        <div className="mt-16 sm:mt-20 h-px w-full max-w-3xl mx-auto bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+      </Reveal>
     </section>
   );
 }
