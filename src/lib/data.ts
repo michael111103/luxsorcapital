@@ -100,25 +100,28 @@ export const COMMUNITY = {
 export const EDUCATION_MODULES = [
   {
     number: "03",
+    image: "/gambar3.png",
     label: "Trading & Investing",
     title: "Forex & Gold Investing",
     accent: "Investing",
     boldText:
       "Kebanyakan orang buka posisi karena FOMO dan rugi karena tidak tahu kapan masuk dan kapan keluar.",
     restText:
-      "Modul ini mengubah cara kamu berpikir: dari spekulan menjadi investor yang berpikir seperti fund manager dan bank besar. Bukan teori — ini framework nyata yang dipakai desk trading profesional. Kamu akan menguasai cara membaca siklus market sebelum publik sadar, strategi entry & exit berbasis data, alokasi portofolio yang tahan banting, riset fundamental pair dan komoditas dari nol, hingga cara membaca indikator makro yang dipakai institusi untuk bergerak sebelum harga naik.",
+      "Luxsor Capital mengubah cara kamu berpikir: dari spekulan menjadi investor yang berpikir seperti fund manager dan bank besar. Bukan teori — ini framework nyata yang dipakai desk trading profesional. Kamu akan menguasai cara membaca siklus market sebelum publik sadar, strategi entry & exit berbasis data, alokasi portofolio yang tahan banting, riset fundamental pair dan komoditas dari nol, hingga cara membaca indikator makro yang dipakai institusi untuk bergerak sebelum harga naik.",
   },
   {
     number: "04",
+    image: "/gambar4.jpeg",
     label: "Trading & Investing",
     title: "Forex & Gold Trading",
     accent: "Trading",
     boldText: "90% trader ritel gagal. Kamu tidak harus jadi salah satunya.",
     restText:
-      "Kebanyakan orang kalah di market bukan karena strategi yang salah, tapi karena belum menguasai satu hal yang tidak diajarkan di mana-mana: psikologi dan sistem yang benar. Di kelas ini kamu belajar cara membaca emosi sendiri saat trading, mengenali bias seperti overconfidence, herding, dan fear of loss sebelum bias itu menguras akun. Kamu juga akan memahami bagaimana market maker bermain, cara membaca order flow untuk keuntunganmu, dan bagaimana menerapkan strategi scalping, swing, serta day trading sesuai karakter kamu sendiri.",
+      "Kebanyakan orang kalah di market bukan karena strategi yang salah, tapi karena belum menguasai satu hal yang tidak diajarkan di mana-mana: psikologi dan sistem yang benar. Di Luksor Capital ini kamu belajar cara membaca emosi sendiri saat trading, mengenali bias seperti overconfidence, herding, dan fear of loss sebelum bias itu menguras akun. Kamu juga akan memahami bagaimana market maker bermain, cara membaca order flow untuk keuntunganmu, dan bagaimana menerapkan strategi scalping, swing, serta day trading sesuai karakter kamu sendiri.",
   },
   {
     number: "05",
+    image: "/gambar5.jpeg",
     label: "Macro & Fundamental",
     title: "Macro & Fundamental Analysis",
     accent: "Analysis",
@@ -134,11 +137,11 @@ export const BONUS = {
   items: [
     {
       number: "01",
-      title: "Monthly Live Market Update",
+      title: "Live Market Update",
       boldText:
-        "Market forex & gold berubah setiap bulan. Strategi yang bekerja di Januari belum tentu relevan di Maret.",
+        "Market forex & gold berubah setiap saat. Strategi yang bekerja di Januari belum tentu relevan di Maret.",
       restText:
-        "Dengan sesi update bulanan, kamu tidak akan ketinggalan pergeseran tren, narasi baru, dan peluang yang sedang terbuka di market langsung dari desk yang aktif trading setiap harinya.",
+        "Dengan sesi update, kamu tidak akan ketinggalan pergeseran tren, narasi baru, dan peluang yang sedang terbuka di market langsung dari desk yang aktif trading setiap harinya.",
     },
     {
       number: "02",
