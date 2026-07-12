@@ -23,7 +23,6 @@ export const NAV_LINKS = [
   { label: "Kenapa Luxsor", href: "#kenapa" },
   { label: "Kurikulum", href: "#kurikulum" },
   { label: "Bonus", href: "#bonus" },
-  { label: "Harga", href: "#harga" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -201,23 +200,6 @@ export const TYPE_SECTION = {
   cardA: { label: "Orang Yang Mau Melompat", highlight: "Untuk Merubah Hidupnya", img: "Take The Leap" },
   cardB: { label: "Dan Yang Mau", highlight: "Berdiam Diri.", img: "Stay Still" },
   cta: "Take Action Sekarang",
-};
-
-export const PRICING = {
-  eyebrow: "Pricing",
-  title: "Daftar & Join Sekarang",
-  planTitle: "12 Bulan Akses Penuh Luxsor Capital",
-  price: "Rp 5.000.000",
-  priceNote: "/ 12 bulan",
-  bullets: [
-    "Analisa level institusi yang biasanya hanya bisa diakses oleh fund manager, membuat keputusan yang kamu ambil lebih tajam di market.",
-    "Ratusan jam modul dari fundamental hingga strategi quantitative yang relevan dengan kondisi market hari ini.",
-    "Sesi mentoring langsung dengan praktisi setiap bulannya secara LIVE.",
-    "Rekaman semua sesi webinar & mentoring, yang bisa ditonton ulang selamanya.",
-    "Aktivitas offline tahunan untuk sesi networking dengan sesama trader.",
-  ],
-  cta: "Dapatkan Akses Sekarang",
-  promo: "Punya Kode Promo?",
 };
 
 export const TESTIMONIALS = [
