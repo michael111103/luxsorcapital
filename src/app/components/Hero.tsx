@@ -23,12 +23,6 @@ export default function Hero() {
       </div>
 
       <div className="max-w-4xl mx-auto text-center">
-        <Reveal>
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-md px-4 py-1.5 text-xs sm:text-sm text-white/70 tracking-wide">
-            {HERO.eyebrow}
-          </span>
-        </Reveal>
-
         <Reveal delay={0.08}>
           <h1 className="mt-6 text-[2.1rem] leading-[1.15] sm:text-6xl sm:leading-[1.1] font-bold tracking-tight">
             {HERO.headline.map((part, i) =>
@@ -55,13 +49,17 @@ export default function Hero() {
         <Reveal delay={0.22}>
           <div className="relative mt-12 sm:mt-14 mx-auto max-w-3xl">
             {/* thin light-blue glow behind the image */}
-            <div className="pointer-events-none absolute -inset-8 sm:-inset-14 -z-10 rounded-[2.5rem] bg-sky-300/[0.08] blur-[90px]" />
+            <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[220px] w-[92%] sm:h-[300px] sm:w-[720px] rounded-full bg-sky-400/[0.16] blur-[100px]" />
 
             {/* rotating comet beam tracing the outline */}
             <div className="relative rounded-3xl p-[1.5px] overflow-hidden">
               <motion.div
-                className="absolute left-1/2 top-1/2 h-[300%] w-[300%] -translate-x-1/2 -translate-y-1/2"
+                className="absolute h-[300%] w-[300%] will-change-transform"
                 style={{
+                  left: "50%",
+                  top: "50%",
+                  x: "-50%",
+                  y: "-50%",
                   background:
                     "conic-gradient(from 0deg, transparent 0%, transparent 80%, rgba(255,255,255,0.35) 88%, rgba(255,255,255,0.95) 91%, rgba(255,255,255,0.35) 94%, transparent 100%)",
                 }}
