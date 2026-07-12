@@ -19,7 +19,7 @@ export default function FloatingTelegramButton() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat via Telegram"
-        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-white via-neutral-200 to-neutral-400 text-black shadow-[0_10px_40px_-10px_rgba(255,255,255,0.5)] transition-transform hover:scale-110 active:scale-95"
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#2AABEE] to-[#229ED9] text-white shadow-[0_10px_40px_-10px_rgba(42,171,238,0.6)] transition-transform hover:scale-110 active:scale-95"
       >
         <span className="absolute inset-0 rounded-full bg-white/40 animate-ping" />
         <TelegramIcon className="relative w-6 h-6" />
