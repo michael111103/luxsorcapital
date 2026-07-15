@@ -101,7 +101,7 @@ export const EDUCATION_MODULES = [
   {
     number: "03",
     image: "/gambar3.png",
-    label: "Forex & Gold Investing",
+    label: "Forex & Gold",
     title: "Forex & Gold Investing",
     accent: "Investing",
     boldText:
@@ -112,8 +112,7 @@ export const EDUCATION_MODULES = [
   {
     number: "04",
     image: "/gambar4.jpeg",
-    label: "A minimalist 3D render of a glowing brain made of frosted glass and circuit-like lines, merged with a candlestick trading chart, symbolizing trading psychology and discipline. Monochrome black, white, and silver color palette, frosted glass and liquid metal textures, futuristic premium fintech aesthetic. Dark atmospheric studio background, deep black to charcoal gradient with soft cinematic rim lighting, no text, no logo, centered composition, wide 16:9 landscape format, exactly 877x480 pixels, ultra-clean, 4k.
-",
+    label: "Forex & Gold",
     title: "Forex & Gold Trading",
     accent: "Trading",
     boldText: "90% trader ritel gagal. Kamu tidak harus jadi salah satunya.",
@@ -226,7 +225,7 @@ export const FAQS = [
     q: "Tidak di-support oleh teman dan keluarga, apakah tetap bisa menjadi trader yang sukses?",
     a: "Bisa. Di Luxsor Capital kamu akan masuk ke komunitas dengan tujuan yang sama, sehingga kamu tetap punya lingkungan yang mendorong kamu maju meskipun lingkungan sekitar belum paham.",
   },
-];
+]; 
 
 export const FOOTER_DISCLAIMER =
   "Trading forex, emas, dan instrumen leverage lainnya mengandung risiko tinggi dan tidak cocok untuk semua investor. Kinerja masa lalu tidak menjamin hasil di masa depan. Seluruh materi, sinyal, dan analisa di Luxsor Capital bersifat edukasi dan bukan merupakan saran keuangan atau ajakan untuk bertransaksi.";
