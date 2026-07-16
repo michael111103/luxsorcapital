@@ -62,6 +62,10 @@ export default function EducationModules() {
           </div>
         </Reveal>
       </div>
+
+      <Reveal delay={0.06}>
+        <div className="mt-16 sm:mt-20 h-px w-full max-w-3xl mx-auto bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+      </Reveal>
     </section>
   );
 }
