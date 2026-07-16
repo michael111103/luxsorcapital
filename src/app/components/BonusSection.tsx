@@ -5,7 +5,7 @@ import { Eye, Radio } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import ChatBubble from "./ui/ChatBubble";
 import { LuxsorMark } from "./icons/BrandIcons";
-import { BONUS, ph } from "@/lib/data";
+import { BONUS } from "@/lib/data";
 
 export default function BonusSection() {
   return (
@@ -22,7 +22,7 @@ export default function BonusSection() {
           <Reveal>
             <div className="rounded-2xl overflow-hidden border border-white/10 max-w-2xl relative">
               <img
-                src={ph("Monthly Live Market Update", 900, 500)}
+                src="/live.png"
                 alt={BONUS.items[0].title}
                 className="w-full h-auto object-cover"
                 loading="lazy"
