@@ -46,9 +46,9 @@ export default function BonusSection() {
           {/* 02 — Real Time Macro Update */}
           <Reveal>
             <div className="relative max-w-xl">
-              {/* screenshot sits above and overlaps down into the box,
-                  naturally occluding/"piercing" the top border there */}
-              <div className="relative z-10 -mb-16 sm:-mb-24 px-6 sm:px-10">
+              {/* screenshot pulled further down so it visibly bites into
+                  the box's top border */}
+              <div className="relative z-10 -mb-24 sm:-mb-32 px-6 sm:px-10">
                 <img
                   src="/nomer2.png"
                   alt="Real Time Macro Update"
@@ -57,8 +57,9 @@ export default function BonusSection() {
                 />
               </div>
 
-              {/* glowing outline, no card fill — page background shows through */}
-              <div className="relative rounded-3xl border border-white/25 shadow-[0_0_25px_rgba(255,255,255,0.15),0_0_60px_-10px_rgba(255,255,255,0.2)] px-6 sm:px-8 pb-6 sm:pb-8 pt-20 sm:pt-28">
+              {/* plain thin line, no glow — left side deliberately has no
+                  border at all, so the loop reads as broken/interrupted there */}
+              <div className="relative rounded-3xl border-t border-r border-b border-white/30 px-6 sm:px-8 pb-6 sm:pb-8 pt-28 sm:pt-36">
                 <p className="text-[15px] sm:text-lg leading-relaxed">
                   <span className="font-semibold text-white">{BONUS.items[1].boldText}</span>{" "}
                   <span className="text-white/45">{BONUS.items[1].restText}</span>
