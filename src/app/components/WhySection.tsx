@@ -17,7 +17,7 @@ export default function WhySection() {
         <Reveal delay={0.1}>
           <div className="group relative mx-auto mb-12 sm:mb-16 max-w-2xl rounded-3xl overflow-hidden transition-shadow duration-300 hover:shadow-[0_20px_60px_-20px_rgba(255,255,255,0.15)]">
             <img
-              src="/why.png"
+              src="/bersama.png"
               alt="Kenapa Luxsor Capital"
               className="w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-105"
               loading="lazy"
