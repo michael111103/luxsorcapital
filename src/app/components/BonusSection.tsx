@@ -47,9 +47,13 @@ export default function BonusSection() {
           <Reveal>
             <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-10">
               <span className="h-px flex-1 bg-gradient-to-r from-transparent to-white/25" />
-              <p className="shrink-0 text-sm sm:text-base font-medium text-white/70 whitespace-nowrap">
-                <span className="text-white/35">{BONUS.items[1].number}.</span>{" "}
-                {BONUS.items[1].title}
+              <p className="shrink-0 text-xl sm:text-3xl font-bold tracking-tight whitespace-nowrap">
+                <span className="mr-1.5 align-middle text-sm sm:text-base font-normal text-white/35">
+                  {BONUS.items[1].number}.
+                </span>
+                <span className="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">
+                  {BONUS.items[1].title}
+                </span>
               </p>
               <span className="h-px flex-1 bg-gradient-to-l from-transparent to-white/25" />
             </div>
@@ -68,7 +72,7 @@ export default function BonusSection() {
 
               {/* plain thin line, no glow — left side deliberately has no
                   border at all, so the loop reads as broken/interrupted there */}
-              <div className="relative rounded-3xl border-t border-r border-b border-white/30 px-6 sm:px-8 pb-6 sm:pb-8 pt-16 sm:pt-20">
+              <div className="relative rounded-3xl border-t border-r border-b border-white/30 px-6 sm:px-8 pb-12 sm:pb-16 pt-16 sm:pt-20">
                 <p className="text-[15px] sm:text-lg leading-relaxed">
                   <span className="font-semibold text-white">{BONUS.items[1].boldText}</span>{" "}
                   <span className="text-white/45">{BONUS.items[1].restText}</span>
