@@ -45,10 +45,19 @@ export default function BonusSection() {
 
           {/* 02 — Real Time Macro Update */}
           <Reveal>
+            <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-10">
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-white/25" />
+              <p className="shrink-0 text-sm sm:text-base font-medium text-white/70 whitespace-nowrap">
+                <span className="text-white/35">{BONUS.items[1].number}.</span>{" "}
+                {BONUS.items[1].title}
+              </p>
+              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-white/25" />
+            </div>
+
             <div className="relative max-w-xl">
-              {/* screenshot pulled further down so it visibly bites into
-                  the box's top border */}
-              <div className="relative z-10 -mb-24 sm:-mb-32 px-6 sm:px-10">
+              {/* bigger image, pulled further down so it sits close to the
+                  paragraph text */}
+              <div className="relative z-10 -mb-32 sm:-mb-40 px-2 sm:px-4">
                 <img
                   src="/nomer2.png"
                   alt="Real Time Macro Update"
@@ -59,7 +68,7 @@ export default function BonusSection() {
 
               {/* plain thin line, no glow — left side deliberately has no
                   border at all, so the loop reads as broken/interrupted there */}
-              <div className="relative rounded-3xl border-t border-r border-b border-white/30 px-6 sm:px-8 pb-6 sm:pb-8 pt-28 sm:pt-36">
+              <div className="relative rounded-3xl border-t border-r border-b border-white/30 px-6 sm:px-8 pb-6 sm:pb-8 pt-16 sm:pt-20">
                 <p className="text-[15px] sm:text-lg leading-relaxed">
                   <span className="font-semibold text-white">{BONUS.items[1].boldText}</span>{" "}
                   <span className="text-white/45">{BONUS.items[1].restText}</span>
@@ -71,10 +80,6 @@ export default function BonusSection() {
                 />
               </div>
             </div>
-            <p className="mt-6 text-xs sm:text-sm text-white/30">{BONUS.items[1].number}.</p>
-            <h3 className="text-xl sm:text-3xl font-bold tracking-tight mt-1">
-              {BONUS.items[1].title}
-            </h3>
           </Reveal>
 
           {/* 03 — Trading & Investment Ideas */}
