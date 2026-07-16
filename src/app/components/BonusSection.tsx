@@ -1,10 +1,9 @@
 // src/app/components/BonusSection.tsx
 "use client";
 
-import { Eye, Radio } from "lucide-react";
+import { Eye } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import ChatBubble from "./ui/ChatBubble";
-import { LuxsorMark } from "./icons/BrandIcons";
 import { BONUS } from "@/lib/data";
 
 export default function BonusSection() {
@@ -46,28 +45,47 @@ export default function BonusSection() {
 
           {/* 02 — Real Time Macro Update */}
           <Reveal>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 sm:p-6 max-w-xl relative overflow-hidden">
-              <div className="flex items-center gap-2 mb-4">
-                <LuxsorMark className="w-5 h-5" />
-                <span className="text-sm font-semibold">Luxsor Capital</span>
-                <span className="text-white/30 text-xs ml-auto flex items-center gap-1">
-                  <Radio className="w-3 h-3" /> Market Update
-                </span>
+            <div className="relative max-w-xl">
+              {/* screenshot "pierces" through the top of the outline */}
+              <div className="relative z-10 -mb-14 sm:-mb-20 px-6 sm:px-10">
+                <img
+                  src="/nomer2.png"
+                  alt="Real Time Macro Update"
+                  className="w-full h-auto rounded-2xl shadow-[0_25px_60px_-18px_rgba(0,0,0,0.85)]"
+                  loading="lazy"
+                />
               </div>
-              <ChatBubble
-                name={BONUS.items[1].chat!.name}
-                time={BONUS.items[1].chat!.time}
-                lines={BONUS.items[1].chat!.lines}
-              />
+
+              {/* outline with a soft fade-out/fade-in gap instead of a full loop */}
+              <div className="relative rounded-3xl p-px">
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-3xl"
+                  style={{
+                    background:
+                      "conic-gradient(from 210deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.45) 44%, transparent 56%, transparent 70%, rgba(255,255,255,0.45) 82%, rgba(255,255,255,0.45) 100%)",
+                    WebkitMask:
+                      "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                  }}
+                />
+                <div className="relative rounded-[calc(1.5rem-1px)] bg-white/[0.03] backdrop-blur-xl px-6 sm:px-8 pb-6 sm:pb-8 pt-16 sm:pt-24">
+                  <p className="text-[15px] sm:text-lg leading-relaxed">
+                    <span className="font-semibold text-white">{BONUS.items[1].boldText}</span>{" "}
+                    <span className="text-white/45">{BONUS.items[1].restText}</span>
+                  </p>
+                  <img
+                    src="/logo.png"
+                    alt="Luxsor Capital"
+                    className="absolute bottom-4 right-5 w-7 h-7 sm:w-8 sm:h-8 object-contain opacity-60"
+                  />
+                </div>
+              </div>
             </div>
             <p className="mt-6 text-xs sm:text-sm text-white/30">{BONUS.items[1].number}.</p>
             <h3 className="text-xl sm:text-3xl font-bold tracking-tight mt-1">
               {BONUS.items[1].title}
             </h3>
-            <p className="mt-3 max-w-xl text-[15px] sm:text-lg leading-relaxed">
-              <span className="font-semibold text-white">{BONUS.items[1].boldText}</span>{" "}
-              <span className="text-white/45">{BONUS.items[1].restText}</span>
-            </p>
           </Reveal>
 
           {/* 03 — Trading & Investment Ideas */}
