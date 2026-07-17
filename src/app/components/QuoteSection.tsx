@@ -3,13 +3,13 @@
 
 import Reveal from "./ui/Reveal";
 import GradientButton from "./ui/GradientButton";
-import { QUOTE, ph } from "@/lib/data";
+import { QUOTE } from "@/lib/data";
 
 export default function QuoteSection() {
   return (
     <section className="relative px-5 sm:px-8 py-24 sm:py-32 overflow-hidden">
       <img
-        src={ph("City Skyline", 1600, 900)}
+        src="/nomer5.PNG"
         alt=""
         className="absolute inset-0 w-full h-full object-cover opacity-40"
         loading="lazy"
