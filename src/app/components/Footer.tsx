@@ -1,6 +1,6 @@
 // src/app/components/Footer.tsx
-import { Mail, Phone } from "lucide-react";
-import { LuxsorMark, LuxsorWordmark } from "./icons/BrandIcons";
+import Image from "next/image";
+import { LuxsorWordmark } from "./icons/BrandIcons";
 import { SITE, FOOTER_DISCLAIMER } from "@/lib/data";
 
 export default function Footer() {
@@ -8,17 +8,27 @@ export default function Footer() {
     <footer className="relative border-t border-white/10 px-5 sm:px-8 py-14 sm:py-16">
       <div className="max-w-3xl mx-auto text-center">
         <div className="flex justify-center items-center gap-2.5">
-          <LuxsorMark className="w-7 h-7" />
+          <Image src="/logo.png" alt="Luxsor Capital" width={32} height={32} className="w-7 h-7 object-contain" />
           <LuxsorWordmark className="text-base" />
         </div>
 
-        <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-5 text-sm text-white/50">
-          <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 hover:text-white transition-colors">
-            <Phone className="w-3.5 h-3.5" /> {SITE.phone}
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-white/50">
+          <a
+            href="https://t.me/luxoradmin"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-white/30 underline-offset-4 hover:text-white transition-colors"
+          >
+            @luxoradmin
           </a>
-          <span className="hidden sm:inline text-white/20">|</span>
-          <a href={`mailto:${SITE.email}`} className="inline-flex items-center gap-1.5 hover:text-white transition-colors">
-            <Mail className="w-3.5 h-3.5" /> {SITE.email}
+          <span className="text-white/20">|</span>
+          <a
+            href="https://t.me/LuxorCapital"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-white/30 underline-offset-4 hover:text-white transition-colors"
+          >
+            Komunitas Trading LuxorCapital
           </a>
         </div>
 
