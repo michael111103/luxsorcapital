@@ -20,11 +20,11 @@ export default function TypeSection() {
 
         <div className="flex flex-col gap-6">
           <Reveal>
-            <div className="group relative rounded-3xl overflow-hidden border border-white/15 aspect-[4/3] sm:aspect-[16/8]">
+            <div className="group relative rounded-3xl overflow-hidden border border-white/15">
               <img
                 src="/motivasi1.PNG"
                 alt={TYPE_SECTION.cardA.img}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               {/* dark scrim so white text stays readable no matter how
@@ -43,11 +43,11 @@ export default function TypeSection() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="group relative rounded-3xl overflow-hidden border border-white/10 aspect-[4/3] sm:aspect-[16/8]">
+            <div className="group relative rounded-3xl overflow-hidden border border-white/10">
               <img
                 src="/motivasi2.PNG"
                 alt={TYPE_SECTION.cardB.img}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/5" />
