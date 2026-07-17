@@ -90,7 +90,7 @@ export default function BonusSection() {
             <div className="relative max-w-xl">
               {/* image, positioned/sized like the reference, overlapping
                   down into the box */}
-              <div className="relative z-10 -mb-32 sm:-mb-40 px-2 sm:px-4">
+              <div className="relative z-10 -mb-20 sm:-mb-28 px-2 sm:px-4">
                 <img
                   src="/nomer3.png"
                   alt="Trading & Investment Ideas"
@@ -102,7 +102,7 @@ export default function BonusSection() {
               {/* plain thin line, no glow — both left AND right sides
                   deliberately have no border, so the loop reads as
                   broken/interrupted on both sides */}
-              <div className="relative rounded-3xl border-t border-b border-white/30 px-6 sm:px-8 pb-12 sm:pb-16 pt-16 sm:pt-20">
+              <div className="relative rounded-3xl border-t border-b border-white/30 px-6 sm:px-8 pb-12 sm:pb-16 pt-28 sm:pt-36">
                 <p className="text-xl sm:text-3xl font-bold tracking-tight mb-3">
                   <span className="mr-1.5 align-middle text-sm sm:text-base font-normal text-white/35">
                     {BONUS.items[2].number}.
