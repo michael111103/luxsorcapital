@@ -83,7 +83,7 @@ export default function Hero() {
         <Reveal delay={0.3}>
           <div className="mt-9 flex flex-nowrap items-center justify-center gap-2 sm:gap-3">
             <GradientButton
-              href="https://ma.valetax.com/p/6860161"
+              href="https://t.me/luxsorcapital_bot"
               telegram={false}
               size="sm"
             >
