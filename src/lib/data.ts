@@ -207,11 +207,11 @@ export const FAQS = [
   },
   {
     q: "Apakah butuh modal yang besar untuk mulai trading?",
-    a: "Tidak. Kamu bisa mulai belajar dan latihan dengan akun demo terlebih dahulu. Modul kami juga membahas position sizing supaya kamu tahu cara mengatur risiko sesuai modal yang kamu punya, sekecil apa pun itu.",
+    a: "Tidak. Kamu bisa mulai belajar dan latihan dengan akun demo terlebih dahulu. Channel telegram kami juga membahas position sizing supaya kamu tahu cara mengatur risiko sesuai modal yang kamu punya, sekecil apa pun itu.",
   },
   {
     q: "Saya benar-benar awam tentang forex, apakah akan menjadi masalah?",
-    a: "Tidak. Kurikulum kami dirancang dari nol, mulai dari dasar keuangan pribadi sampai analisa institusional, jadi kamu tidak perlu pengalaman sebelumnya untuk mulai.",
+    a: "Tidak. Kami ajarkan dari nol, mulai dari dasar keuangan pribadi sampai analisa institusional, jadi kamu tidak perlu pengalaman sebelumnya untuk mulai.",
   },
   {
     q: "Saya masih muda, apakah umur akan menjadi masalah?",
