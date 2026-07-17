@@ -58,6 +58,18 @@
   display: flex;
 }
 
+/* ----- Image download deterrents -----
+   Not an absolute lock (dev tools / view-source can still reach files),
+   but blocks the common casual paths: drag-to-save, iOS long-press "Save
+   Image", and text-style selection of images. */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 /* ----- Reduced motion ----- */
 @media (prefers-reduced-motion: reduce) {
   *,
