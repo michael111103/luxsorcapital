@@ -11,7 +11,7 @@ export default function QuoteSection() {
       <img
         src="/nomer5.PNG"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover opacity-40"
+        className="absolute inset-0 w-full h-full object-cover opacity-75"
         loading="lazy"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/70 to-black" />
