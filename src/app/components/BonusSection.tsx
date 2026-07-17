@@ -3,7 +3,6 @@
 
 import { Eye } from "lucide-react";
 import Reveal from "./ui/Reveal";
-import ChatBubble from "./ui/ChatBubble";
 import { BONUS } from "@/lib/data";
 
 export default function BonusSection() {
@@ -88,22 +87,41 @@ export default function BonusSection() {
 
           {/* 03 — Trading & Investment Ideas */}
           <Reveal>
-            <div className="max-w-xl">
-              <ChatBubble
-                name={BONUS.items[2].chat!.name}
-                time={BONUS.items[2].chat!.time}
-                lines={BONUS.items[2].chat!.lines}
-                chart
-              />
+            <div className="relative max-w-xl">
+              {/* image, positioned/sized like the reference, overlapping
+                  down into the box */}
+              <div className="relative z-10 -mb-32 sm:-mb-40 px-2 sm:px-4">
+                <img
+                  src="/nomer3.png"
+                  alt="Trading & Investment Ideas"
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* plain thin line, no glow — both left AND right sides
+                  deliberately have no border, so the loop reads as
+                  broken/interrupted on both sides */}
+              <div className="relative rounded-3xl border-t border-b border-white/30 px-6 sm:px-8 pb-12 sm:pb-16 pt-16 sm:pt-20">
+                <p className="text-xl sm:text-3xl font-bold tracking-tight mb-3">
+                  <span className="mr-1.5 align-middle text-sm sm:text-base font-normal text-white/35">
+                    {BONUS.items[2].number}.
+                  </span>
+                  <span className="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">
+                    {BONUS.items[2].title}
+                  </span>
+                </p>
+                <p className="text-[15px] sm:text-lg leading-relaxed">
+                  <span className="font-semibold text-white">{BONUS.items[2].boldText}</span>{" "}
+                  <span className="text-white/45">{BONUS.items[2].restText}</span>
+                </p>
+                <img
+                  src="/logo.png"
+                  alt="Luxsor Capital"
+                  className="absolute bottom-4 right-5 w-7 h-7 sm:w-8 sm:h-8 object-contain opacity-60"
+                />
+              </div>
             </div>
-            <p className="mt-6 text-xs sm:text-sm text-white/30">{BONUS.items[2].number}.</p>
-            <h3 className="text-xl sm:text-3xl font-bold tracking-tight mt-1">
-              {BONUS.items[2].title}
-            </h3>
-            <p className="mt-3 max-w-xl text-[15px] sm:text-lg leading-relaxed">
-              <span className="font-semibold text-white">{BONUS.items[2].boldText}</span>{" "}
-              <span className="text-white/45">{BONUS.items[2].restText}</span>
-            </p>
           </Reveal>
         </div>
       </div>
