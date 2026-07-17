@@ -3,7 +3,7 @@
 
 import Reveal from "./ui/Reveal";
 import GradientButton from "./ui/GradientButton";
-import { TYPE_SECTION, ph } from "@/lib/data";
+import { TYPE_SECTION } from "@/lib/data";
 
 export default function TypeSection() {
   return (
@@ -22,12 +22,14 @@ export default function TypeSection() {
           <Reveal>
             <div className="group relative rounded-3xl overflow-hidden border border-white/15 aspect-[4/3] sm:aspect-[16/8]">
               <img
-                src={ph(TYPE_SECTION.cardA.img, 1000, 560)}
+                src="/motivasi1.PNG"
                 alt={TYPE_SECTION.cardA.img}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+              {/* dark scrim so white text stays readable no matter how
+                  light the source image is */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/5" />
               <div className="absolute bottom-5 sm:bottom-8 left-5 sm:left-8 text-left">
                 <p className="text-xl sm:text-3xl font-bold leading-tight">
                   {TYPE_SECTION.cardA.label}
@@ -41,14 +43,14 @@ export default function TypeSection() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="group relative rounded-3xl overflow-hidden border border-white/10 aspect-[4/3] sm:aspect-[16/8] opacity-80">
+            <div className="group relative rounded-3xl overflow-hidden border border-white/10 aspect-[4/3] sm:aspect-[16/8]">
               <img
-                src={ph(TYPE_SECTION.cardB.img, 1000, 560)}
+                src="/motivasi2.PNG"
                 alt={TYPE_SECTION.cardB.img}
-                className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/5" />
               <div className="absolute bottom-5 sm:bottom-8 left-5 sm:left-8 text-left">
                 <p className="text-xl sm:text-3xl font-bold leading-tight text-white/70">
                   {TYPE_SECTION.cardB.label}
