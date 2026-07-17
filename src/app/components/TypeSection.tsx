@@ -20,7 +20,7 @@ export default function TypeSection() {
 
         <div className="flex flex-col gap-6">
           <Reveal>
-            <div className="group relative rounded-3xl overflow-hidden border border-white/15">
+            <div className="group relative rounded-3xl overflow-hidden">
               <img
                 src="/motivasi1.PNG"
                 alt={TYPE_SECTION.cardA.img}
@@ -43,7 +43,7 @@ export default function TypeSection() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="group relative rounded-3xl overflow-hidden border border-white/10">
+            <div className="group relative rounded-3xl overflow-hidden">
               <img
                 src="/motivasi2.PNG"
                 alt={TYPE_SECTION.cardB.img}
