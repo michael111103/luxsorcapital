@@ -5,7 +5,6 @@ import WhySection from "./components/WhySection";
 import EducationModules from "./components/EducationModules";
 import BonusSection from "./components/BonusSection";
 import TypeSection from "./components/TypeSection";
-import TestimonialCarousel from "./components/TestimonialCarousel";
 import QuoteSection from "./components/QuoteSection";
 import FAQSection from "./components/FAQSection";
 import Footer from "./components/Footer";
@@ -20,7 +19,6 @@ export default function Home() {
       <EducationModules />
       <BonusSection />
       <TypeSection />
-      <TestimonialCarousel />
       <QuoteSection />
       <FAQSection />
       <Footer />
